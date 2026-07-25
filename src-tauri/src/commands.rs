@@ -57,6 +57,11 @@ pub struct NewPlant {
     pub is_hanging: bool,
     pub notes: String,
     pub space_id: String,
+    /// Set when the user picked a species from the bundled catalog. The
+    /// knowledge copy is looked up server-side from this rather than sent
+    /// by the client, so the details panel can't be fed arbitrary text.
+    #[serde(default)]
+    pub catalog_id: Option<String>,
 }
 
 fn cue_label(task_type: TaskType, days_until: i64) -> String {
@@ -329,6 +334,11 @@ pub fn add_plant(state: tauri::State<AppState>, plant: NewPlant) -> Result<Plant
         DEFAULT_SPACE_ID.to_string()
     };
 
+    // Knowledge copy comes from the bundled catalog when the user picked a
+    // species, so a plant added as "Curry Leaf" still gets its details and
+    // can appear in the all-clear fun fact.
+    let known = plant.catalog_id.as_deref().and_then(crate::catalog::get);
+
     let profile = PlantProfile {
         id: new_plant_id(name),
         common_name: name.to_string(),
@@ -341,9 +351,9 @@ pub fn add_plant(state: tauri::State<AppState>, plant: NewPlant) -> Result<Plant
         notes: plant.notes.trim().to_string(),
         inferred: false,
         space_id,
-        uses: String::new(),
-        significance: String::new(),
-        fun_fact: String::new(),
+        uses: known.map(|k| k.uses.clone()).unwrap_or_default(),
+        significance: known.map(|k| k.significance.clone()).unwrap_or_default(),
+        fun_fact: known.map(|k| k.fun_fact.clone()).unwrap_or_default(),
     };
 
     let today = today_ist();
@@ -373,6 +383,13 @@ pub fn delete_plant(state: tauri::State<AppState>, plant_id: String) -> Result<(
     store.save_plants(&plants).map_err(|e| e.to_string())?;
     store.save_events(&events).map_err(|e| e.to_string())?;
     Ok(())
+}
+
+/// Species lookup for the add-plant form. Read-only and offline -- the
+/// catalog is compiled into the binary.
+#[tauri::command]
+pub fn search_catalog(query: String, limit: Option<usize>) -> Vec<&'static crate::catalog::CatalogEntry> {
+    crate::catalog::search(&query, limit.unwrap_or(8))
 }
 
 #[tauri::command]

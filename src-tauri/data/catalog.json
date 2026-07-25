@@ -1,0 +1,296 @@
+[
+  { "id": "golden-pothos", "common_name": "Golden Pothos", "aliases": ["money plant", "devils ivy", "epipremnum"], "scientific_name": "Epipremnum aureum", "category": "Foliage", "light": "bright_indirect", "moisture_class": "moderate", "fertilize_group": "foliage", "typically_hanging": true,
+    "uses": "Hardy trailing vine for hanging pots and shelves; tolerates low light well.",
+    "significance": "Among the most forgiving houseplants there is -- often the first plant a new grower keeps alive.",
+    "fun_fact": "In the wild it climbs trees and its leaves grow enormous; indoors they stay small because it never gets to climb." },
+
+  { "id": "snake-plant", "common_name": "Snake Plant", "aliases": ["mother in laws tongue", "sansevieria", "dracaena trifasciata"], "scientific_name": "Dracaena trifasciata", "category": "Succulent", "light": "bright_indirect", "moisture_class": "drier", "fertilize_group": "herb_succulent", "typically_hanging": false,
+    "uses": "Architectural upright foliage that copes with low light and long gaps between watering.",
+    "significance": "A fixture of offices and airports worldwide precisely because it survives near-total neglect.",
+    "fun_fact": "It photosynthesises at night using CAM metabolism, the same trick cacti use to save water." },
+
+  { "id": "monstera-deliciosa", "common_name": "Monstera Deliciosa", "aliases": ["swiss cheese plant", "split leaf philodendron"], "scientific_name": "Monstera deliciosa", "category": "Tropical", "light": "bright_indirect", "moisture_class": "moderate", "fertilize_group": "foliage", "typically_hanging": false,
+    "uses": "Statement foliage plant for a bright corner; grows large given room.",
+    "significance": "The defining houseplant of the last decade, though it has been a conservatory favourite since Victorian times.",
+    "fun_fact": "Its ripe fruit is genuinely edible and tastes like a fruit salad -- unripe, it burns the mouth badly." },
+
+  { "id": "monstera-adansonii", "common_name": "Monstera Adansonii", "aliases": ["swiss cheese vine"], "scientific_name": "Monstera adansonii", "category": "Tropical Vine", "light": "bright_indirect", "moisture_class": "moderate", "fertilize_group": "foliage", "typically_hanging": true,
+    "uses": "Trailing or climbing foliage vine for a bright indirect spot.",
+    "significance": "Known as the Swiss Cheese Vine for its perforated leaves, and a mainstay of modern plant collections.",
+    "fun_fact": "The holes are called fenestrations, and they let wind and light pass through to the leaves below." },
+
+  { "id": "zz-plant", "common_name": "ZZ Plant", "aliases": ["zanzibar gem", "zamioculcas"], "scientific_name": "Zamioculcas zamiifolia", "category": "Foliage", "light": "bright_indirect", "moisture_class": "drier", "fertilize_group": "foliage", "typically_hanging": false,
+    "uses": "Glossy upright foliage for dim corners where almost nothing else survives.",
+    "significance": "Only widely cultivated since the 1990s, but now everywhere for its near-indestructibility.",
+    "fun_fact": "It stores water in potato-like rhizomes underground, which is why forgetting it for a month barely registers." },
+
+  { "id": "peace-lily", "common_name": "Peace Lily", "aliases": ["spathiphyllum"], "scientific_name": "Spathiphyllum wallisii", "category": "Flowering", "light": "bright_indirect", "moisture_class": "consistently_moist", "fertilize_group": "flowering_fruiting", "typically_hanging": false,
+    "uses": "Shade-tolerant foliage with white flower spathes; good for rooms with little direct sun.",
+    "significance": "Widely given as a sympathy plant in the West, hence the name.",
+    "fun_fact": "It wilts dramatically when thirsty and recovers within hours of watering -- effectively a built-in moisture gauge." },
+
+  { "id": "spider-plant", "common_name": "Spider Plant", "aliases": ["chlorophytum", "airplane plant"], "scientific_name": "Chlorophytum comosum", "category": "Foliage", "light": "bright_indirect", "moisture_class": "moderate", "fertilize_group": "foliage", "typically_hanging": true,
+    "uses": "Fast, forgiving trailer for hanging baskets; endlessly propagatable.",
+    "significance": "A staple of 1970s interiors that never really went away.",
+    "fun_fact": "The dangling plantlets are clones ready to root -- one plant can furnish a whole house for free." },
+
+  { "id": "rubber-plant", "common_name": "Rubber Plant", "aliases": ["ficus elastica", "rubber fig"], "scientific_name": "Ficus elastica", "category": "Tree", "light": "bright_light", "moisture_class": "moderate", "fertilize_group": "foliage", "typically_hanging": false,
+    "uses": "Bold glossy foliage; grows into a small indoor tree.",
+    "significance": "Tapped for latex before synthetic rubber took over, and still planted for living root bridges in Meghalaya.",
+    "fun_fact": "In Meghalaya its aerial roots are trained across rivers into bridges that strengthen for decades." },
+
+  { "id": "fiddle-leaf-fig", "common_name": "Fiddle Leaf Fig", "aliases": ["ficus lyrata"], "scientific_name": "Ficus lyrata", "category": "Tree", "light": "bright_light", "moisture_class": "moderate", "fertilize_group": "foliage", "typically_hanging": false,
+    "uses": "Sculptural indoor tree with large violin-shaped leaves.",
+    "significance": "The interiors-magazine plant of the 2010s, and notoriously fussier than it looks.",
+    "fun_fact": "It hates being moved -- rotating or relocating it often triggers a round of leaf drop." },
+
+  { "id": "heartleaf-philodendron", "common_name": "Heartleaf Philodendron", "aliases": ["philodendron hederaceum", "sweetheart plant"], "scientific_name": "Philodendron hederaceum", "category": "Tropical Vine", "light": "bright_indirect", "moisture_class": "moderate", "fertilize_group": "foliage", "typically_hanging": true,
+    "uses": "Soft trailing vine that copes with lower light than most.",
+    "significance": "Frequently confused with pothos; the giveaway is its thinner, matte, heart-shaped leaves.",
+    "fun_fact": "Philodendron means 'tree loving' in Greek, after its habit of climbing trunks toward the canopy." },
+
+  { "id": "chinese-evergreen", "common_name": "Chinese Evergreen", "aliases": ["aglaonema"], "scientific_name": "Aglaonema commutatum", "category": "Foliage", "light": "bright_indirect", "moisture_class": "moderate", "fertilize_group": "foliage", "typically_hanging": false,
+    "uses": "Patterned foliage for low to medium light; slow and undemanding.",
+    "significance": "Regarded as a luck-bringing plant across parts of Southeast Asia.",
+    "fun_fact": "Breeders have pushed it from plain green into pinks and reds that look almost artificial." },
+
+  { "id": "areca-palm", "common_name": "Areca Palm", "aliases": ["butterfly palm", "dypsis"], "scientific_name": "Dypsis lutescens", "category": "Palm", "light": "bright_light", "moisture_class": "consistently_moist", "fertilize_group": "foliage", "typically_hanging": false,
+    "uses": "Feathery clumping palm that softens a bright room or balcony corner.",
+    "significance": "Endangered in its native Madagascar even while being one of the most sold palms on earth.",
+    "fun_fact": "It is thirstier than most houseplants and will crisp at the tips if the air is very dry." },
+
+  { "id": "parlour-palm", "common_name": "Parlour Palm", "aliases": ["chamaedorea", "neanthe bella"], "scientific_name": "Chamaedorea elegans", "category": "Palm", "light": "bright_indirect", "moisture_class": "moderate", "fertilize_group": "foliage", "typically_hanging": false,
+    "uses": "Compact slow palm that tolerates dim rooms better than most palms.",
+    "significance": "A Victorian parlour favourite, valued then as now for surviving gloomy interiors.",
+    "fun_fact": "It grows a few centimetres a year, so a knee-high plant may be over a decade old." },
+
+  { "id": "boston-fern", "common_name": "Boston Fern", "aliases": ["nephrolepis", "sword fern"], "scientific_name": "Nephrolepis exaltata", "category": "Fern", "light": "bright_indirect", "moisture_class": "consistently_moist", "fertilize_group": "foliage", "typically_hanging": true,
+    "uses": "Classic arching fern for humid spots and hanging baskets.",
+    "significance": "A Victorian conservatory staple during the 19th-century fern craze known as pteridomania.",
+    "fun_fact": "Ferns predate flowering plants by roughly 200 million years and reproduce by spores, never seeds." },
+
+  { "id": "bird-of-paradise", "common_name": "Bird of Paradise", "aliases": ["strelitzia"], "scientific_name": "Strelitzia nicolai", "category": "Tropical", "light": "bright_indirect", "moisture_class": "consistently_moist", "fertilize_group": "foliage", "typically_hanging": false,
+    "uses": "Dramatic large-leaved foliage that anchors a bright corner.",
+    "significance": "Named after Queen Charlotte of Mecklenburg-Strelitz; native to South Africa.",
+    "fun_fact": "Those huge leaves split along the veins on purpose -- it is wind adaptation, not damage." },
+
+  { "id": "umbrella-tree", "common_name": "Umbrella Tree", "aliases": ["schefflera", "dwarf umbrella"], "scientific_name": "Schefflera arboricola", "category": "Tree", "light": "bright_light", "moisture_class": "drier", "fertilize_group": "foliage", "typically_hanging": false,
+    "uses": "Structural evergreen foliage; takes pruning well and keeps a compact shape.",
+    "significance": "One of the most widely grown foliage plants worldwide, valued for tolerating low light and irregular care.",
+    "fun_fact": "Its leaflets radiate from a single point like the spokes of an umbrella -- hence the name." },
+
+  { "id": "english-ivy", "common_name": "English Ivy", "aliases": ["hedera"], "scientific_name": "Hedera helix", "category": "Vine", "light": "bright_indirect", "moisture_class": "moderate", "fertilize_group": "foliage", "typically_hanging": true,
+    "uses": "Trailing or climbing evergreen for hanging pots and screening.",
+    "significance": "An old European symbol of fidelity and eternal life, wound into wreaths and crowns.",
+    "fun_fact": "Ivy leads two lives -- a lobed climbing form, and a mature shrubby form with plain leaves that finally flowers." },
+
+  { "id": "turtle-vine", "common_name": "Turtle Vine", "aliases": ["callisia", "bolivian jew"], "scientific_name": "Callisia repens", "category": "Vine", "light": "bright_indirect", "moisture_class": "consistently_moist", "fertilize_group": "herb_succulent", "typically_hanging": true,
+    "uses": "Fast-spreading trailing groundcover, ideal for hanging baskets.",
+    "significance": "A popular low-maintenance 'spiller' for the edges of mixed container plantings.",
+    "fun_fact": "The tiny overlapping leaves are said to resemble a turtle's shell -- hence the name." },
+
+  { "id": "peperomia", "common_name": "Peperomia", "aliases": ["radiator plant", "trailing peperomia"], "scientific_name": "Peperomia sp.", "category": "Semi-succulent", "light": "bright_indirect", "moisture_class": "drier", "fertilize_group": "herb_succulent", "typically_hanging": true,
+    "uses": "Compact semi-succulent for shelves and small pots.",
+    "significance": "An enormous genus of over a thousand species, many growing on trees as epiphytes.",
+    "fun_fact": "Its thick leaves store water like a succulent, so overwatering harms it faster than forgetting to water." },
+
+  { "id": "calathea", "common_name": "Calathea", "aliases": ["prayer plant", "goeppertia"], "scientific_name": "Goeppertia sp.", "category": "Tropical", "light": "bright_indirect", "moisture_class": "consistently_moist", "fertilize_group": "foliage", "typically_hanging": false,
+    "uses": "Boldly patterned foliage for humid, shaded spots.",
+    "significance": "Leaves of some species are still used across South America to wrap food.",
+    "fun_fact": "It folds its leaves upward at night and lowers them at dawn -- you can hear the rustle in a quiet room." },
+
+  { "id": "croton", "common_name": "Croton", "aliases": ["codiaeum", "joseph's coat"], "scientific_name": "Codiaeum variegatum", "category": "Foliage", "light": "full_sun", "moisture_class": "moderate", "fertilize_group": "foliage", "typically_hanging": false,
+    "uses": "Vivid multicoloured foliage for a very bright spot.",
+    "significance": "Widely planted as ornamental hedging across the tropics.",
+    "fun_fact": "The colours only develop in strong light -- in shade it quietly reverts to plain green." },
+
+  { "id": "dracaena-marginata", "common_name": "Dragon Tree", "aliases": ["dracaena marginata", "madagascar dragon tree"], "scientific_name": "Dracaena marginata", "category": "Tree", "light": "bright_indirect", "moisture_class": "drier", "fertilize_group": "foliage", "typically_hanging": false,
+    "uses": "Slim spiky architectural plant for narrow bright spaces.",
+    "significance": "Related to the dragon trees of Socotra, whose red sap was traded as 'dragon's blood'.",
+    "fun_fact": "It is sensitive to fluoride in tap water, which shows up as brown leaf tips." },
+
+  { "id": "aloe-vera", "common_name": "Aloe Vera", "aliases": ["aloe", "ghritkumari"], "scientific_name": "Aloe barbadensis miller", "category": "Succulent", "light": "full_sun", "moisture_class": "drier", "fertilize_group": "herb_succulent", "typically_hanging": false,
+    "uses": "Grown for its leaf gel, long used traditionally on minor burns and skin irritation.",
+    "significance": "Cultivated for thousands of years; recorded in Egyptian, Greek and Ayurvedic medical texts.",
+    "fun_fact": "There is no known truly wild population -- humans have carried it around so long its origin is uncertain." },
+
+  { "id": "jade-plant", "common_name": "Jade Plant", "aliases": ["crassula", "money tree", "lucky plant"], "scientific_name": "Crassula ovata", "category": "Succulent", "light": "full_sun", "moisture_class": "drier", "fertilize_group": "herb_succulent", "typically_hanging": false,
+    "uses": "Sturdy succulent that slowly forms a miniature tree.",
+    "significance": "Considered a symbol of prosperity and often given to mark a new home or business.",
+    "fun_fact": "A single fallen leaf laid on soil will root and become a whole new plant." },
+
+  { "id": "echeveria", "common_name": "Echeveria", "aliases": ["hen and chicks", "rosette succulent"], "scientific_name": "Echeveria sp.", "category": "Succulent", "light": "full_sun", "moisture_class": "drier", "fertilize_group": "herb_succulent", "typically_hanging": false,
+    "uses": "Compact rosette succulent for sunny sills and shallow pots.",
+    "significance": "Named after Atanasio Echeverria, an 18th-century Mexican botanical illustrator.",
+    "fun_fact": "The chalky bloom on the leaves is a natural sunscreen -- rubbing it off does not grow back." },
+
+  { "id": "christmas-cactus", "common_name": "Christmas Cactus", "aliases": ["schlumbergera", "holiday cactus"], "scientific_name": "Schlumbergera sp.", "category": "Cactus", "light": "bright_indirect", "moisture_class": "moderate", "fertilize_group": "flowering_fruiting", "typically_hanging": true,
+    "uses": "Winter-flowering trailing cactus for a bright indoor spot.",
+    "significance": "Often passed down through families; specimens can outlive their original owner.",
+    "fun_fact": "Unlike desert cacti it is a Brazilian rainforest epiphyte, growing on tree branches, so it wants more water than you expect." },
+
+  { "id": "string-of-pearls", "common_name": "String of Pearls", "aliases": ["curio rowleyanus", "senecio rowleyanus"], "scientific_name": "Curio rowleyanus", "category": "Succulent", "light": "bright_light", "moisture_class": "drier", "fertilize_group": "herb_succulent", "typically_hanging": true,
+    "uses": "Striking bead-like trailer for a bright hanging position.",
+    "significance": "One of the most photographed houseplants, and one of the easiest to rot.",
+    "fun_fact": "Each 'pearl' has a translucent stripe that acts as a window, letting light into the leaf interior." },
+
+  { "id": "haworthia", "common_name": "Haworthia", "aliases": ["zebra plant", "haworthiopsis"], "scientific_name": "Haworthiopsis attenuata", "category": "Succulent", "light": "bright_indirect", "moisture_class": "drier", "fertilize_group": "herb_succulent", "typically_hanging": false,
+    "uses": "Small banded succulent, happy on a desk or windowsill.",
+    "significance": "Tolerates less light than most succulents, which makes it a good indoor starter.",
+    "fun_fact": "Some relatives grow almost buried in sand with only transparent leaf windows exposed to the sun." },
+
+  { "id": "basil", "common_name": "Basil", "aliases": ["sweet basil", "ocimum basilicum"], "scientific_name": "Ocimum basilicum", "category": "Herb", "light": "full_sun", "moisture_class": "consistently_moist", "fertilize_group": "herb_succulent", "typically_hanging": false,
+    "uses": "Culinary herb for Mediterranean and Southeast Asian cooking; pick often to keep it bushy.",
+    "significance": "Carried from India to the Mediterranean along ancient spice routes.",
+    "fun_fact": "Pinching out the flower buds keeps the leaves sweet -- once it blooms, the flavour turns bitter." },
+
+  { "id": "tulsi", "common_name": "Tulsi", "aliases": ["holy basil", "ocimum tenuiflorum"], "scientific_name": "Ocimum tenuiflorum", "category": "Herb", "light": "full_sun", "moisture_class": "moderate", "fertilize_group": "herb_succulent", "typically_hanging": false,
+    "uses": "Aromatic leaves brewed as tea; a fixture of traditional Indian home remedies.",
+    "significance": "Held sacred in Hinduism and grown in a dedicated tulsi vrindavan in many Indian courtyards.",
+    "fun_fact": "It is a different species from culinary sweet basil, with a sharper, more clove-like scent." },
+
+  { "id": "mint", "common_name": "Mint", "aliases": ["pudina", "spearmint", "mentha"], "scientific_name": "Mentha spicata", "category": "Herb", "light": "bright_light", "moisture_class": "consistently_moist", "fertilize_group": "herb_succulent", "typically_hanging": false,
+    "uses": "Culinary herb for chutneys, drinks and salads; thrives with frequent cutting.",
+    "significance": "One of the oldest cultivated herbs, recorded in Greek, Roman and Ayurvedic texts.",
+    "fun_fact": "Always keep it in its own pot -- its runners will colonise and smother anything sharing the container." },
+
+  { "id": "curry-leaf", "common_name": "Curry Leaf", "aliases": ["kadi patta", "murraya", "sweet neem"], "scientific_name": "Murraya koenigii", "category": "Herb", "light": "full_sun", "moisture_class": "moderate", "fertilize_group": "foliage", "typically_hanging": false,
+    "uses": "Aromatic leaves used as a staple tempering ingredient in South Indian cooking.",
+    "significance": "A near-essential kitchen-garden plant in Indian homes, picked fresh straight off the plant.",
+    "fun_fact": "It belongs to the citrus family -- crush a leaf and you can catch a faint citrus note beneath the spice." },
+
+  { "id": "rosemary", "common_name": "Rosemary", "aliases": ["salvia rosmarinus"], "scientific_name": "Salvia rosmarinus", "category": "Herb", "light": "full_sun", "moisture_class": "drier", "fertilize_group": "herb_succulent", "typically_hanging": false,
+    "uses": "Woody culinary herb for roasting and breads; prefers to dry out between waterings.",
+    "significance": "A long-standing emblem of remembrance, traditionally carried at funerals and weddings alike.",
+    "fun_fact": "Its name comes from Latin for 'dew of the sea' -- it grows wild on Mediterranean coastal cliffs." },
+
+  { "id": "thyme", "common_name": "Thyme", "aliases": ["thymus"], "scientific_name": "Thymus vulgaris", "category": "Herb", "light": "full_sun", "moisture_class": "drier", "fertilize_group": "herb_succulent", "typically_hanging": false,
+    "uses": "Low-growing culinary herb for slow-cooked dishes; very drought tolerant once established.",
+    "significance": "Burned as incense by the Greeks and used by the Egyptians in embalming.",
+    "fun_fact": "Bees worked on thyme-covered hillsides produce a honey prized since antiquity." },
+
+  { "id": "oregano", "common_name": "Oregano", "aliases": ["origanum"], "scientific_name": "Origanum vulgare", "category": "Herb", "light": "full_sun", "moisture_class": "drier", "fertilize_group": "herb_succulent", "typically_hanging": false,
+    "uses": "Pungent culinary herb central to Italian, Greek and Mexican cooking.",
+    "significance": "Its name comes from Greek for 'joy of the mountain', after the hillsides it grows wild on.",
+    "fun_fact": "It tastes stronger dried than fresh, which is unusual among culinary herbs." },
+
+  { "id": "lemongrass", "common_name": "Lemongrass", "aliases": ["cymbopogon", "citronella grass"], "scientific_name": "Cymbopogon citratus", "category": "Herb", "light": "full_sun", "moisture_class": "consistently_moist", "fertilize_group": "herb_succulent", "typically_hanging": false,
+    "uses": "Aromatic stalks and leaves for teas, curries and Southeast Asian broths.",
+    "significance": "A staple flavouring across Thai, Vietnamese and Sri Lankan cooking.",
+    "fun_fact": "A supermarket stalk stood in water will often root and grow into a full clump." },
+
+  { "id": "indian-borage", "common_name": "Indian Borage", "aliases": ["ajwain patta", "karpooravalli", "mexican mint", "cuban oregano"], "scientific_name": "Plectranthus amboinicus", "category": "Herb", "light": "bright_light", "moisture_class": "drier", "fertilize_group": "herb_succulent", "typically_hanging": false,
+    "uses": "Thick aromatic leaves used sparingly in cooking, and long featured in traditional home remedies across India.",
+    "significance": "Goes by many regional names and is commonly kept just outside the kitchen door.",
+    "fun_fact": "Despite names like 'Mexican mint' and 'Cuban oregano', it originally comes from southern and eastern Africa." },
+
+  { "id": "parsley", "common_name": "Parsley", "aliases": ["petroselinum"], "scientific_name": "Petroselinum crispum", "category": "Herb", "light": "bright_light", "moisture_class": "consistently_moist", "fertilize_group": "herb_succulent", "typically_hanging": false,
+    "uses": "Culinary herb and garnish; cut outer stems first and it keeps producing.",
+    "significance": "Used by the Greeks to crown athletes long before it was considered food.",
+    "fun_fact": "It is biennial -- it makes leaves the first year, then bolts to seed and dies in the second." },
+
+  { "id": "coriander", "common_name": "Coriander", "aliases": ["cilantro", "dhania"], "scientific_name": "Coriandrum sativum", "category": "Herb", "light": "bright_light", "moisture_class": "consistently_moist", "fertilize_group": "herb_succulent", "typically_hanging": false,
+    "uses": "Leaves and seeds both used; sow in succession as each plant is short-lived.",
+    "significance": "One of the oldest known cultivated herbs, found in Bronze Age sites and Egyptian tombs.",
+    "fun_fact": "Whether it tastes fresh or soapy is partly genetic, down to a variant in an olfactory receptor gene." },
+
+  { "id": "scented-geranium", "common_name": "Scented Geranium", "aliases": ["pelargonium", "rose geranium"], "scientific_name": "Pelargonium sp.", "category": "Fragrant", "light": "full_sun", "moisture_class": "drier", "fertilize_group": "herb_succulent", "typically_hanging": false,
+    "uses": "Aromatic leaves used to scent sugars, syrups and soaps; grown for fragrance over flowers.",
+    "significance": "Victorian gardeners collected dozens of scents -- rose, lemon, mint, nutmeg -- as parlour plants.",
+    "fun_fact": "The fragrance is in the leaves, not the flowers, and only releases when you brush or rub them." },
+
+  { "id": "bougainvillea", "common_name": "Bougainvillea", "aliases": ["paper flower"], "scientific_name": "Bougainvillea spp.", "category": "Flowering", "light": "full_sun", "moisture_class": "drier", "fertilize_group": "flowering_fruiting", "typically_hanging": false,
+    "uses": "Ornamental screening along railings and walls; thrives on heat and neglect once established.",
+    "significance": "Named after the French navigator Louis Antoine de Bougainville, whose 1760s voyage first recorded it in Brazil.",
+    "fun_fact": "The papery pink 'petals' are bracts -- the real flowers are the tiny white tubes inside them." },
+
+  { "id": "hibiscus", "common_name": "Hibiscus", "aliases": ["china rose", "gudhal", "rosa sinensis"], "scientific_name": "Hibiscus rosa-sinensis", "category": "Flowering", "light": "full_sun", "moisture_class": "consistently_moist", "fertilize_group": "flowering_fruiting", "typically_hanging": false,
+    "uses": "Large showy flowers over a long season; some species are brewed into a tart red tea.",
+    "significance": "Offered in worship across India and the national flower of Malaysia.",
+    "fun_fact": "Each spectacular bloom usually lasts a single day before dropping." },
+
+  { "id": "jasmine", "common_name": "Jasmine", "aliases": ["mogra", "mallige", "jasminum"], "scientific_name": "Jasminum sambac", "category": "Flowering", "light": "bright_light", "moisture_class": "moderate", "fertilize_group": "flowering_fruiting", "typically_hanging": false,
+    "uses": "Fragrant flowers used in garlands, hair adornment, perfumery and for scenting tea.",
+    "significance": "Central to daily worship and celebration across South India, sold fresh by the metre.",
+    "fun_fact": "Many jasmines release their scent most strongly after dark, timed to night-flying pollinators." },
+
+  { "id": "ixora", "common_name": "Ixora", "aliases": ["thetti", "jungle geranium", "west indian jasmine"], "scientific_name": "Ixora coccinea", "category": "Flowering", "light": "full_sun", "moisture_class": "moderate", "fertilize_group": "flowering_fruiting", "typically_hanging": false,
+    "uses": "Evergreen flowering shrub for hedging or containers; blooms in dense clusters much of the year.",
+    "significance": "Called thetti in Kerala and widely used as a temple offering flower.",
+    "fun_fact": "Each ball of colour is a cluster of many slender, four-petalled tubular flowers." },
+
+  { "id": "butterfly-pea", "common_name": "Butterfly Pea", "aliases": ["aparajita", "shankhpushpi", "clitoria"], "scientific_name": "Clitoria ternatea", "category": "Flowering", "light": "full_sun", "moisture_class": "moderate", "fertilize_group": "flowering_fruiting", "typically_hanging": false,
+    "uses": "Flowers steeped into a vivid blue tea, and used as a natural food colouring.",
+    "significance": "Offered in worship in India and long grown as a soil-enriching cover crop.",
+    "fun_fact": "Its blue tea turns pink the instant you add lemon -- the pigment is a natural pH indicator." },
+
+  { "id": "marigold", "common_name": "Marigold", "aliases": ["genda", "tagetes"], "scientific_name": "Tagetes erecta", "category": "Flowering", "light": "full_sun", "moisture_class": "moderate", "fertilize_group": "flowering_fruiting", "typically_hanging": false,
+    "uses": "Fast, cheerful blooms for pots and borders; widely strung into festival garlands.",
+    "significance": "Essential to Diwali and Day of the Dead alike, on opposite sides of the world.",
+    "fun_fact": "Gardeners plant it among vegetables because its roots deter certain soil nematodes." },
+
+  { "id": "rose", "common_name": "Rose", "aliases": ["gulab", "rosa"], "scientific_name": "Rosa sp.", "category": "Flowering", "light": "full_sun", "moisture_class": "moderate", "fertilize_group": "flowering_fruiting", "typically_hanging": false,
+    "uses": "Ornamental blooms; petals used in rose water, gulkand and perfumery.",
+    "significance": "Cultivated for well over 5,000 years and among the most symbolically loaded flowers anywhere.",
+    "fun_fact": "Rose 'thorns' are technically prickles -- outgrowths of the skin, not modified stems." },
+
+  { "id": "orchid-phalaenopsis", "common_name": "Moth Orchid", "aliases": ["phalaenopsis", "orchid"], "scientific_name": "Phalaenopsis sp.", "category": "Flowering", "light": "bright_indirect", "moisture_class": "moderate", "fertilize_group": "flowering_fruiting", "typically_hanging": false,
+    "uses": "Long-lasting elegant blooms for a bright indoor spot.",
+    "significance": "Once a symbol of wealth, now mass-produced by tissue culture and sold in supermarkets.",
+    "fun_fact": "It is an epiphyte -- its roots want air, not soil, which is why it is potted in bark chips." },
+
+  { "id": "anthurium", "common_name": "Anthurium", "aliases": ["flamingo flower", "laceleaf"], "scientific_name": "Anthurium andraeanum", "category": "Flowering", "light": "bright_indirect", "moisture_class": "moderate", "fertilize_group": "flowering_fruiting", "typically_hanging": false,
+    "uses": "Glossy heart-shaped spathes that hold colour for weeks.",
+    "significance": "A major cut-flower export crop for the Netherlands, Hawaii and Mauritius.",
+    "fun_fact": "The waxy red 'flower' is a modified leaf; the true flowers are the bumps on the central spike." },
+
+  { "id": "passion-fruit", "common_name": "Passion Fruit", "aliases": ["passiflora"], "scientific_name": "Passiflora edulis", "category": "Fruiting Vine", "light": "full_sun", "moisture_class": "consistently_moist", "fertilize_group": "flowering_fruiting", "typically_hanging": false,
+    "uses": "Edible fruit, plus a fast-growing vine for shade and screening on a trellis.",
+    "significance": "Spanish missionaries read the flower's parts as symbols of the Passion of Christ, hence the name.",
+    "fun_fact": "Each of those intricate flowers usually opens for just a single day." },
+
+  { "id": "lemon", "common_name": "Lemon", "aliases": ["lime", "citrus", "nimbu"], "scientific_name": "Citrus limon", "category": "Fruit Tree", "light": "full_sun", "moisture_class": "moderate", "fertilize_group": "citrus", "typically_hanging": false,
+    "uses": "Fruit for the kitchen, plus fragrant blossom and evergreen aromatic leaves.",
+    "significance": "Hung at doorways and used in rituals across India; citrus travelled west along ancient trade routes.",
+    "fun_fact": "Nearly all familiar citrus are hybrids of just a few wild ancestors -- citron, pomelo and mandarin." },
+
+  { "id": "orange", "common_name": "Orange", "aliases": ["sweet orange", "santra"], "scientific_name": "Citrus sinensis", "category": "Fruit Tree", "light": "full_sun", "moisture_class": "moderate", "fertilize_group": "citrus", "typically_hanging": false,
+    "uses": "Edible fruit and intensely fragrant flowers.",
+    "significance": "An ancient hybrid first cultivated in China, reaching Europe through traders.",
+    "fun_fact": "An orange tree can carry flowers and ripening fruit at the very same time." },
+
+  { "id": "chili-pepper", "common_name": "Chilli Pepper", "aliases": ["chili", "mirchi", "capsicum"], "scientific_name": "Capsicum annuum", "category": "Fruiting", "light": "full_sun", "moisture_class": "moderate", "fertilize_group": "flowering_fruiting", "typically_hanging": false,
+    "uses": "Productive container crop; a single plant can supply a kitchen for months.",
+    "significance": "Native to the Americas and absent from Indian cooking until Portuguese traders arrived in the 1500s.",
+    "fun_fact": "Birds feel no heat from capsaicin, which is exactly the point -- they spread the seeds, mammals do not." },
+
+  { "id": "tomato", "common_name": "Tomato", "aliases": ["tamatar", "solanum lycopersicum"], "scientific_name": "Solanum lycopersicum", "category": "Fruiting", "light": "full_sun", "moisture_class": "consistently_moist", "fertilize_group": "flowering_fruiting", "typically_hanging": false,
+    "uses": "Heavy-cropping container vegetable; needs steady water to avoid split fruit.",
+    "significance": "Long shunned in Europe as poisonous because of its nightshade family relatives.",
+    "fun_fact": "Uneven watering causes blossom end rot -- it is a calcium transport failure, not a disease." },
+
+  { "id": "strawberry", "common_name": "Strawberry", "aliases": ["fragaria"], "scientific_name": "Fragaria x ananassa", "category": "Fruiting", "light": "full_sun", "moisture_class": "consistently_moist", "fertilize_group": "flowering_fruiting", "typically_hanging": true,
+    "uses": "Compact fruiting plant, well suited to hanging baskets and balcony rails.",
+    "significance": "The garden strawberry is an 18th-century French hybrid of a North American and a Chilean species.",
+    "fun_fact": "It is not botanically a berry -- the red flesh is swollen stem tissue and the 'seeds' outside are the true fruits." },
+
+  { "id": "desert-rose", "common_name": "Desert Rose", "aliases": ["adenium"], "scientific_name": "Adenium obesum", "category": "Succulent", "light": "full_sun", "moisture_class": "drier", "fertilize_group": "flowering_fruiting", "typically_hanging": false,
+    "uses": "Sculptural swollen-trunk succulent with bright trumpet flowers.",
+    "significance": "Widely trained as bonsai across South and Southeast Asia for its dramatic caudex.",
+    "fun_fact": "That fat trunk is a water store, which is why it wants a hard soak then a long dry spell." },
+
+  { "id": "money-tree", "common_name": "Money Tree", "aliases": ["pachira", "guiana chestnut"], "scientific_name": "Pachira aquatica", "category": "Tree", "light": "bright_indirect", "moisture_class": "moderate", "fertilize_group": "foliage", "typically_hanging": false,
+    "uses": "Braided-trunk indoor tree, tolerant of average indoor light.",
+    "significance": "Popular in feng shui practice as a prosperity plant, usually sold with five braided stems.",
+    "fun_fact": "The braid is done by growers while the stems are young and green -- it does not grow that way." },
+
+  { "id": "ficus-benjamina", "common_name": "Weeping Fig", "aliases": ["ficus benjamina", "benjamin fig"], "scientific_name": "Ficus benjamina", "category": "Tree", "light": "bright_light", "moisture_class": "moderate", "fertilize_group": "foliage", "typically_hanging": false,
+    "uses": "Fine-leaved indoor tree for a bright position.",
+    "significance": "The official tree of Bangkok, and a fixture of shopping centres worldwide.",
+    "fun_fact": "It drops a flush of leaves whenever conditions change -- moving it across the room can be enough." },
+
+  { "id": "purple-aster", "common_name": "Aster", "aliases": ["purple aster", "michaelmas daisy"], "scientific_name": "Symphyotrichum sp.", "category": "Flowering", "light": "bright_light", "moisture_class": "moderate", "fertilize_group": "flowering_fruiting", "typically_hanging": false,
+    "uses": "Ornamental colour and a valuable late-season nectar source for bees and butterflies.",
+    "significance": "'Aster' is simply Greek for star, after the radiating shape of the flower head.",
+    "fun_fact": "What reads as one flower is really a composite head of dozens of tiny individual florets." }
+]

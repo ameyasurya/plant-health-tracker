@@ -1,5 +1,13 @@
 import { invoke } from "@tauri-apps/api/core";
-import type { AllPlantsRow, EventView, NewPlant, PlantProfile, Settings, Space } from "./types";
+import type {
+  AllPlantsRow,
+  CatalogEntry,
+  EventView,
+  NewPlant,
+  PlantProfile,
+  Settings,
+  Space,
+} from "./types";
 
 export const api = {
   listDueToday: () => invoke<EventView[]>("list_due_today"),
@@ -12,6 +20,8 @@ export const api = {
   addPlant: (plant: NewPlant) => invoke<PlantProfile>("add_plant", { plant }),
   updatePlant: (plant: PlantProfile) => invoke<void>("update_plant", { plant }),
   deletePlant: (plantId: string) => invoke<void>("delete_plant", { plantId }),
+  searchCatalog: (query: string, limit?: number) =>
+    invoke<CatalogEntry[]>("search_catalog", { query, limit }),
   listSpaces: () => invoke<Space[]>("list_spaces"),
   addSpace: (name: string) => invoke<Space>("add_space", { name }),
   renameSpace: (spaceId: string, name: string) => invoke<void>("rename_space", { spaceId, name }),

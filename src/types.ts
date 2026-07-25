@@ -61,6 +61,25 @@ export interface NewPlant {
   is_hanging: boolean;
   notes: string;
   space_id: string;
+  /** Set when the species came from the bundled catalog; the backend uses
+   *  it to attach the uses/significance/fun-fact copy. */
+  catalog_id?: string | null;
+}
+
+/** A species in the bundled catalog (see src-tauri/data/catalog.json). */
+export interface CatalogEntry {
+  id: string;
+  common_name: string;
+  aliases: string[];
+  scientific_name: string;
+  category: string;
+  light: Light;
+  moisture_class: MoistureClass;
+  fertilize_group: FertilizeGroup;
+  typically_hanging: boolean;
+  uses: string;
+  significance: string;
+  fun_fact: string;
 }
 
 export const LIGHT_OPTIONS: { value: Light; label: string }[] = [

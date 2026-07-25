@@ -1,8 +1,8 @@
+pub mod catalog;
 pub mod commands;
 pub mod models;
 pub mod reminder;
 pub mod schedule;
-pub mod seed;
 pub mod store;
 pub mod time;
 
@@ -50,6 +50,7 @@ pub fn run() {
             commands::get_plant,
             commands::add_plant,
             commands::delete_plant,
+            commands::search_catalog,
             commands::list_spaces,
             commands::add_space,
             commands::rename_space,
@@ -60,8 +61,8 @@ pub fn run() {
         .setup(|app| {
             let app_data_dir = app.path().app_data_dir()?;
             let store = Store::new(app_data_dir)?;
-            store.ensure_seeded()?;
-            store.backfill_seed_knowledge()?;
+            store.ensure_initialised()?;
+            store.backfill_catalog_knowledge()?;
             app.manage(AppState {
                 store: Mutex::new(store),
             });

@@ -247,6 +247,22 @@ mockIPC((cmd, payload) => {
     }
     case "delete_plant":
       return undefined;
+    case "search_catalog": {
+      // Small stand-in for the Rust-side bundled catalog.
+      const q = ((args.query as string) ?? "").trim().toLowerCase();
+      const mock = [
+        { id: "curry-leaf", common_name: "Curry Leaf", aliases: ["kadi patta"], scientific_name: "Murraya koenigii", category: "Herb", light: "full_sun", moisture_class: "moderate", fertilize_group: "foliage", typically_hanging: false, uses: "Aromatic leaves for South Indian cooking.", significance: "A kitchen-garden staple in Indian homes.", fun_fact: "It belongs to the citrus family." },
+        { id: "golden-pothos", common_name: "Golden Pothos", aliases: ["money plant"], scientific_name: "Epipremnum aureum", category: "Foliage", light: "bright_indirect", moisture_class: "moderate", fertilize_group: "foliage", typically_hanging: true, uses: "Hardy trailing vine.", significance: "Among the most forgiving houseplants.", fun_fact: "Indoors its leaves stay small because it never gets to climb." },
+        { id: "tulsi", common_name: "Tulsi", aliases: ["holy basil"], scientific_name: "Ocimum tenuiflorum", category: "Herb", light: "full_sun", moisture_class: "moderate", fertilize_group: "herb_succulent", typically_hanging: false, uses: "Leaves brewed as tea.", significance: "Held sacred in Hinduism.", fun_fact: "Sharper and more clove-like than sweet basil." },
+      ];
+      if (!q) return mock;
+      return mock.filter(
+        (m) =>
+          m.common_name.toLowerCase().includes(q) ||
+          m.aliases.some((a) => a.includes(q)) ||
+          m.scientific_name.toLowerCase().includes(q),
+      );
+    }
     default:
       if (cmd.startsWith("plugin:window|") || cmd.startsWith("plugin:event|")) {
         return undefined;

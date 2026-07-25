@@ -18,9 +18,6 @@ use uuid::Uuid;
 use crate::models::{
     CareEvent, EventStatus, PlantProfile, Settings, Space, TaskType, DEFAULT_SPACE_ID,
 };
-use crate::schedule;
-use crate::seed;
-use crate::time::today_ist;
 
 #[derive(Debug, Error)]
 pub enum StoreError {
@@ -40,6 +37,12 @@ impl Store {
     pub fn new(app_data_dir: PathBuf) -> StoreResult<Self> {
         fs::create_dir_all(&app_data_dir)?;
         Ok(Self { dir: app_data_dir })
+    }
+
+    /// Directory holding the JSON files. Exposed so tests can plant a
+    /// stray temp file alongside them.
+    pub fn dir(&self) -> &PathBuf {
+        &self.dir
     }
 
     fn path(&self, name: &str) -> PathBuf {
@@ -109,57 +112,53 @@ impl Store {
         self.write_atomic("spaces.json", &spaces)
     }
 
-    /// First-run seed: writes the 19 plants from the inventory and one
-    /// initial pending Water + Fertilize event per plant. No-op if
-    /// plants.json already exists -- there is no ongoing "import" flow,
-    /// this runs exactly once per install.
-    pub fn ensure_seeded(&self) -> StoreResult<()> {
+    /// First-run initialisation.
+    ///
+    /// Deliberately creates NO plants. Earlier builds seeded the author's
+    /// own 19 balcony plants, which is wrong for anyone else installing
+    /// this -- a new user should start empty and add their own via the
+    /// bundled species catalog. Only the containers (an empty plant list,
+    /// one default space, default settings) are written.
+    ///
+    /// No-op once plants.json exists, so existing installs are untouched.
+    pub fn ensure_initialised(&self) -> StoreResult<()> {
         if self.path("plants.json").exists() {
             return Ok(());
         }
-        let plants = seed::seed_plants();
-        let today = today_ist();
-        let mut events = Vec::with_capacity(plants.len() * 2);
-        for plant in &plants {
-            events.push(new_pending_event(plant.id.clone(), TaskType::Water, today));
-            let fert_due = schedule::next_fertilize_due(today, plant);
-            events.push(new_pending_event(plant.id.clone(), TaskType::Fertilize, fert_due));
-        }
-        self.save_plants(&plants)?;
-        self.save_events(&events)?;
+        self.save_plants(&[])?;
+        self.save_events(&[])?;
         self.save_spaces(&[default_space()])?;
         self.save_settings(&Settings::default())?;
         Ok(())
     }
 
-    /// Fills in the uses/significance/fun_fact blurbs on plants that were
-    /// seeded before those fields existed.
+    /// Fills in uses/significance/fun_fact on plants that predate those
+    /// fields, matching against the species catalog by id.
     ///
-    /// `ensure_seeded` deliberately no-ops once plants.json exists, so an
-    /// install from an earlier build would otherwise keep its plants
-    /// forever blank and the details panel and all-clear fun fact would
-    /// look broken on real data. Matching is by seed id, and only empty
-    /// fields are written, so anything the user has typed themselves is
-    /// left alone and this stays a no-op on every run after the first.
-    pub fn backfill_seed_knowledge(&self) -> StoreResult<()> {
+    /// Installs created by an early build have plants with empty knowledge
+    /// copy, and since first-run init no-ops once plants.json exists they
+    /// would stay blank forever -- leaving the details panel and the
+    /// all-clear fun fact looking broken. Only empty fields are written,
+    /// so a user's own edits are never overwritten, and this is a no-op on
+    /// every run after the first.
+    pub fn backfill_catalog_knowledge(&self) -> StoreResult<()> {
         let mut plants = self.load_plants()?;
-        let seeds = seed::seed_plants();
         let mut changed = false;
 
         for plant in plants.iter_mut() {
-            let Some(seed_plant) = seeds.iter().find(|s| s.id == plant.id) else {
+            let Some(entry) = crate::catalog::get(&plant.id) else {
                 continue;
             };
-            if plant.uses.is_empty() && !seed_plant.uses.is_empty() {
-                plant.uses = seed_plant.uses.clone();
+            if plant.uses.is_empty() && !entry.uses.is_empty() {
+                plant.uses = entry.uses.clone();
                 changed = true;
             }
-            if plant.significance.is_empty() && !seed_plant.significance.is_empty() {
-                plant.significance = seed_plant.significance.clone();
+            if plant.significance.is_empty() && !entry.significance.is_empty() {
+                plant.significance = entry.significance.clone();
                 changed = true;
             }
-            if plant.fun_fact.is_empty() && !seed_plant.fun_fact.is_empty() {
-                plant.fun_fact = seed_plant.fun_fact.clone();
+            if plant.fun_fact.is_empty() && !entry.fun_fact.is_empty() {
+                plant.fun_fact = entry.fun_fact.clone();
                 changed = true;
             }
         }

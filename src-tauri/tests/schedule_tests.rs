@@ -1,5 +1,5 @@
 //! Test plan coverage:
-//!   - schedule generation for all 19 plants x 3 seasons
+//!   - schedule generation for every catalog species x 3 seasons
 //!   - month-boundary season transitions
 //!   - done / snooze / skip-soil-wet recompute next due date correctly
 //!   - multi-day-offline catch-up does not backlog/duplicate
@@ -17,7 +17,7 @@ use plant_health_tracker_lib::schedule::{
     next_due, next_fertilize_due, next_water_due, season_for_month, skip_recheck_due,
     water_interval_days,
 };
-use plant_health_tracker_lib::seed::seed_plants;
+use plant_health_tracker_lib::catalog;
 use plant_health_tracker_lib::store::{new_pending_event, Store};
 
 fn temp_store() -> Store {
@@ -27,6 +27,28 @@ fn temp_store() -> Store {
 
 fn date(y: i32, m: u32, d: u32) -> NaiveDate {
     NaiveDate::from_ymd_opt(y, m, d).unwrap()
+}
+
+/// A store populated with every catalog species and an initial water +
+/// fertilize event each.
+///
+/// First-run init deliberately creates nothing now (a new user starts
+/// empty and adds their own plants), so tests that need existing data
+/// build it explicitly instead of leaning on the app's startup path.
+fn store_with_plants(today: NaiveDate) -> Store {
+    let store = temp_store();
+    store.ensure_initialised().unwrap();
+
+    let plants: Vec<_> = catalog::all().iter().map(|e| e.to_profile()).collect();
+    let mut events = Vec::with_capacity(plants.len() * 2);
+    for plant in &plants {
+        events.push(new_pending_event(plant.id.clone(), TaskType::Water, today));
+        let fert = next_fertilize_due(today, plant);
+        events.push(new_pending_event(plant.id.clone(), TaskType::Fertilize, fert));
+    }
+    store.save_plants(&plants).unwrap();
+    store.save_events(&events).unwrap();
+    store
 }
 
 // ---- Season month-boundary transitions ----
@@ -48,8 +70,8 @@ fn season_boundaries_are_correct() {
 
 #[test]
 fn every_plant_has_a_positive_water_interval_in_every_season() {
-    let plants = seed_plants();
-    assert_eq!(plants.len(), 19, "inventory should have exactly 19 plants");
+    let plants: Vec<_> = catalog::all().iter().map(|e| e.to_profile()).collect();
+    assert!(plants.len() >= 40, "catalog should cover a broad set of species");
 
     let sample_dates_per_season = [
         date(2026, 4, 10),  // hot/dry
@@ -93,8 +115,8 @@ fn hanging_plants_get_shorter_or_equal_interval_than_potted_equivalent() {
 
 #[test]
 fn fertilizing_pauses_outside_active_window_and_resumes_correctly() {
-    let plants = seed_plants();
-    let ficus = plants.iter().find(|p| p.id == "ficus").unwrap(); // Foliage group, active Mar-Oct
+    let plants: Vec<_> = catalog::all().iter().map(|e| e.to_profile()).collect();
+    let ficus = plants.iter().find(|p| p.id == "ficus-benjamina").unwrap(); // Foliage group, active Mar-Oct
     let due = next_fertilize_due(date(2026, 11, 15), ficus);
     assert_eq!(due, date(2027, 3, 1), "foliage feed should resume March 1 after the Nov-Feb pause");
 
@@ -107,8 +129,7 @@ fn fertilizing_pauses_outside_active_window_and_resumes_correctly() {
 
 #[test]
 fn mark_done_schedules_next_occurrence_from_today_not_from_old_due_date() {
-    let store = temp_store();
-    store.ensure_seeded().unwrap();
+    let store = store_with_plants(date(2026, 4, 20));
     let plants = store.load_plants().unwrap();
     let mut events = store.load_events().unwrap();
 
@@ -139,8 +160,7 @@ fn mark_done_schedules_next_occurrence_from_today_not_from_old_due_date() {
 
 #[test]
 fn snooze_pushes_due_date_out_without_creating_duplicate_events() {
-    let store = temp_store();
-    store.ensure_seeded().unwrap();
+    let store = store_with_plants(date(2026, 4, 20));
     let mut events = store.load_events().unwrap();
     let before_count = events.len();
 
@@ -160,7 +180,7 @@ fn snooze_pushes_due_date_out_without_creating_duplicate_events() {
 
 #[test]
 fn skip_soil_wet_reschedules_sooner_than_a_full_cycle() {
-    let plants = seed_plants();
+    let plants: Vec<_> = catalog::all().iter().map(|e| e.to_profile()).collect();
     let bougainvillea = plants.iter().find(|p| p.id == "bougainvillea").unwrap();
     let today = date(2026, 4, 10);
     let full_cycle = next_water_due(today, bougainvillea);
@@ -173,7 +193,7 @@ fn skip_soil_wet_reschedules_sooner_than_a_full_cycle() {
 
 #[test]
 fn offline_catch_up_does_not_chain_multiple_missed_cycles() {
-    let plants = seed_plants();
+    let plants: Vec<_> = catalog::all().iter().map(|e| e.to_profile()).collect();
     let plant = plants.iter().find(|p| p.id == "golden-pothos").unwrap();
 
     // Pretend the app was last open 30 days ago and has been closed since.
@@ -198,16 +218,34 @@ fn offline_catch_up_does_not_chain_multiple_missed_cycles() {
 // ---- Atomic write survives a stray leftover temp file ----
 
 #[test]
+fn first_run_starts_empty() {
+    // A fresh install must not inherit anyone else's plants -- the user
+    // adds their own from the catalog.
+    let store = temp_store();
+    store.ensure_initialised().unwrap();
+
+    assert!(store.load_plants().unwrap().is_empty(), "new install should have no plants");
+    assert!(store.load_events().unwrap().is_empty(), "new install should have no care events");
+    assert_eq!(store.load_spaces().unwrap().len(), 1, "should start with one default space");
+}
+
+#[test]
 fn atomic_write_round_trips_and_ignores_stray_tmp_files() {
     let store = temp_store();
-    store.ensure_seeded().unwrap();
+    store.ensure_initialised().unwrap();
 
-    let plants = store.load_plants().unwrap();
-    assert_eq!(plants.len(), 19);
+    let plants: Vec<_> = catalog::all().iter().take(3).map(|e| e.to_profile()).collect();
+    store.save_plants(&plants).unwrap();
+    assert_eq!(store.load_plants().unwrap().len(), 3);
 
-    // A crash mid-write would leave a `plants.json.<uuid>.tmp` sibling file
-    // behind; because reads only ever open the exact `plants.json` name
-    // (never a glob), a stray tmp file must not affect what gets loaded.
+    // A crash mid-write leaves a `plants.json.<uuid>.tmp` sibling behind.
+    // Reads only ever open the exact `plants.json` name (never a glob), so
+    // a stray tmp file -- even one holding different, valid JSON -- must not
+    // change what gets loaded.
+    let stray = store.dir().join(format!("plants.json.{}.tmp", uuid::Uuid::new_v4()));
+    std::fs::write(&stray, b"[]").unwrap();
+
     let reloaded = store.load_plants().unwrap();
-    assert_eq!(reloaded.len(), plants.len());
+    assert_eq!(reloaded.len(), 3, "stray .tmp file must not shadow the real file");
+    assert_eq!(reloaded[0].id, plants[0].id);
 }
