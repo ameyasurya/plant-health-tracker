@@ -1,13 +1,12 @@
-# Balcony
+# Plant Health Tracker
 
-A frameless, always-available Windows desktop widget for keeping balcony
-plants alive. It tracks watering and fertilizing across your plants and
-adjusts the schedule to the season, entirely offline -- no account, no
-network, no cloud. Built for a Bengaluru balcony, so the schedule engine
-thinks in terms of hot-dry, monsoon, and mild seasons on IST.
+A frameless, always-available Windows desktop widget for keeping plants
+alive. It tracks watering and feeding across your plants and adjusts the
+schedule to the season, entirely offline -- no account, no network, no
+cloud. Built for a Bengaluru balcony, so the schedule engine thinks in
+terms of hot-dry, monsoon, and mild seasons on IST.
 
-<!-- Add a screenshot here: the widget over a desktop background shows off
-     the frameless/transparent window better than any description. -->
+![The widget on the desktop](docs/screenshot.png)
 
 ## Why
 
@@ -71,7 +70,7 @@ On first launch it seeds the plant list and opens an initial watering and
 feeding event for each plant. That happens once -- after that your own
 edits in the app are the source of truth.
 
-Data lives in `%APPDATA%\com.ameya.balcony-widget\` as `plants.json`,
+Data lives in `%APPDATA%\com.ameya.plant-health-tracker\` as `plants.json`,
 `care-log.json`, `spaces.json` and `settings.json`.
 
 ### UI preview without the desktop shell

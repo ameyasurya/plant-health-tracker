@@ -1,7 +1,7 @@
 [package]
-name = "balcony-widget"
+name = "plant-health-tracker"
 version = "0.1.0"
-description = "Balcony plant care reminder widget"
+description = "Desktop widget for tracking plant watering and feeding"
 edition = "2021"
 rust-version = "1.77"
 
@@ -25,9 +25,9 @@ thiserror = "1"
 tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
 
 [[bin]]
-name = "balcony-widget"
+name = "plant-health-tracker"
 path = "src/main.rs"
 
 [lib]
-name = "balcony_widget_lib"
+name = "plant_health_tracker_lib"
 path = "src/lib.rs"

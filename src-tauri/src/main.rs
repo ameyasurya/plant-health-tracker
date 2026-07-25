@@ -2,5 +2,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    balcony_widget_lib::run();
+    plant_health_tracker_lib::run();
 }

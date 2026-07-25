@@ -12,16 +12,16 @@
 
 use chrono::{Datelike, Duration, NaiveDate};
 
-use balcony_widget_lib::models::{EventStatus, TaskType};
-use balcony_widget_lib::schedule::{
+use plant_health_tracker_lib::models::{EventStatus, TaskType};
+use plant_health_tracker_lib::schedule::{
     next_due, next_fertilize_due, next_water_due, season_for_month, skip_recheck_due,
     water_interval_days,
 };
-use balcony_widget_lib::seed::seed_plants;
-use balcony_widget_lib::store::{new_pending_event, Store};
+use plant_health_tracker_lib::seed::seed_plants;
+use plant_health_tracker_lib::store::{new_pending_event, Store};
 
 fn temp_store() -> Store {
-    let dir = std::env::temp_dir().join(format!("balcony-widget-test-{}", uuid::Uuid::new_v4()));
+    let dir = std::env::temp_dir().join(format!("plant-health-tracker-test-{}", uuid::Uuid::new_v4()));
     Store::new(dir).expect("create temp store")
 }
 
@@ -33,7 +33,7 @@ fn date(y: i32, m: u32, d: u32) -> NaiveDate {
 
 #[test]
 fn season_boundaries_are_correct() {
-    use balcony_widget_lib::models::Season::*;
+    use plant_health_tracker_lib::models::Season::*;
     assert_eq!(season_for_month(2), Mild); // Feb 28/29 -> Mar 1
     assert_eq!(season_for_month(3), HotDry);
     assert_eq!(season_for_month(5), HotDry); // May 31 -> Jun 1
@@ -77,7 +77,7 @@ fn every_plant_has_a_positive_water_interval_in_every_season() {
 fn hanging_plants_get_shorter_or_equal_interval_than_potted_equivalent() {
     // Hanging plants dry faster, so for the same moisture class the
     // hanging interval should never exceed the potted one.
-    use balcony_widget_lib::models::{MoistureClass, Season};
+    use plant_health_tracker_lib::models::{MoistureClass, Season};
     for &season in &[Season::HotDry, Season::Monsoon, Season::Mild] {
         for &moisture in &[
             MoistureClass::ConsistentlyMoist,

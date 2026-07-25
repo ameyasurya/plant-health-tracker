@@ -88,7 +88,7 @@ pub fn run() {
             Ok(())
         })
         .run(tauri::generate_context!())
-        .expect("error while running the balcony widget");
+        .expect("error while running the plant health tracker");
 }
 
 fn setup_tray(app: &tauri::App) -> tauri::Result<()> {

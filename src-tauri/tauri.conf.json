@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Balcony",
+  "productName": "Plant Health Tracker",
   "version": "0.1.0",
-  "identifier": "com.ameya.balcony-widget",
+  "identifier": "com.ameya.plant-health-tracker",
   "build": {
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build",
@@ -13,7 +13,7 @@
     "windows": [
       {
         "label": "main",
-        "title": "Balcony",
+        "title": "Plant Health Tracker",
         "width": 380,
         "height": 560,
         "minWidth": 340,
