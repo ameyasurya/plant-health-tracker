@@ -124,6 +124,46 @@ pub enum DensityMode {
     Expanded,
 }
 
+/// Where the user's plants live. Drives both the local calendar day and
+/// the weather lookup.
+///
+/// The IANA `timezone` replaces what used to be a hardcoded IST offset,
+/// and `latitude` decides the hemisphere so seasons are not assumed to be
+/// northern (or, as before, specifically Bengaluru's).
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Location {
+    /// Human label for the UI, e.g. "Bengaluru, India".
+    pub label: String,
+    pub latitude: f64,
+    pub longitude: f64,
+    /// IANA name, e.g. "Asia/Kolkata".
+    pub timezone: String,
+    #[serde(default)]
+    pub country_code: String,
+}
+
+/// One day of observed/forecast weather, cached from Open-Meteo.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct DailyWeather {
+    pub date: NaiveDate,
+    pub precipitation_mm: f64,
+    pub temp_max_c: f64,
+    pub temp_min_c: f64,
+}
+
+/// Cached forecast. Kept on disk so the schedule still works offline --
+/// a plant widget must never become useless because the network is down.
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct WeatherCache {
+    /// When this was last successfully fetched (UTC, RFC3339).
+    pub fetched_at: Option<String>,
+    /// Location the data was fetched for, so a moved user refetches.
+    pub latitude: Option<f64>,
+    pub longitude: Option<f64>,
+    #[serde(default)]
+    pub days: Vec<DailyWeather>,
+}
+
 /// Every field defaults so a settings.json from an older build keeps
 /// loading as new settings are introduced (same reasoning as PlantProfile).
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -140,6 +180,12 @@ pub struct Settings {
     /// Which space the widget is currently showing. `None` means "all
     /// spaces", which is also what an older settings.json deserializes to.
     pub active_space_id: Option<String>,
+    /// `None` until the user completes location setup. Everything still
+    /// works without it -- the schedule just falls back to month-based
+    /// seasons and no weather adjustment.
+    pub location: Option<Location>,
+    /// Opt-in: when false the app makes no network requests at all.
+    pub weather_enabled: bool,
 }
 
 impl Default for Settings {
@@ -151,6 +197,8 @@ impl Default for Settings {
             pinned_on_top: false,
             last_digest_sent_on: None,
             active_space_id: None,
+            location: None,
+            weather_enabled: true,
         }
     }
 }

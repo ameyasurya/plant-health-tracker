@@ -854,6 +854,48 @@ textarea {
   border-radius: 6px;
 }
 
+/* ---- Destructive actions ------------------------------------------- */
+.danger-zone {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 0.5px solid var(--border);
+}
+.danger-link {
+  padding: 5px 0;
+  border-color: transparent;
+  font-size: 11.5px;
+  color: var(--text-danger);
+}
+.danger-link:hover {
+  border-color: transparent;
+  text-decoration: underline;
+}
+.danger-text {
+  display: block;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+.danger-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+.danger-actions button {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+.btn-danger {
+  background: var(--border-danger);
+  border-color: var(--border-danger);
+  color: #fff;
+  font-weight: 500;
+}
+.btn-danger:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
 /* ---- Spaces panel -------------------------------------------------- */
 .space-list {
   list-style: none;

@@ -16,7 +16,7 @@ use thiserror::Error;
 use uuid::Uuid;
 
 use crate::models::{
-    CareEvent, EventStatus, PlantProfile, Settings, Space, TaskType, DEFAULT_SPACE_ID,
+    CareEvent, EventStatus, PlantProfile, Settings, Space, TaskType, WeatherCache, DEFAULT_SPACE_ID,
 };
 
 #[derive(Debug, Error)]
@@ -110,6 +110,17 @@ impl Store {
 
     pub fn save_spaces(&self, spaces: &[Space]) -> StoreResult<()> {
         self.write_atomic("spaces.json", &spaces)
+    }
+
+    /// Cached forecast. Persisted rather than held in memory so the
+    /// schedule still reflects recent rain after a restart with no
+    /// network -- offline behaviour is the point of caching it at all.
+    pub fn load_weather(&self) -> StoreResult<WeatherCache> {
+        Ok(self.read("weather.json")?.unwrap_or_default())
+    }
+
+    pub fn save_weather(&self, cache: &WeatherCache) -> StoreResult<()> {
+        self.write_atomic("weather.json", cache)
     }
 
     /// First-run initialisation.

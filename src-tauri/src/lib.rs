@@ -5,6 +5,7 @@ pub mod reminder;
 pub mod schedule;
 pub mod store;
 pub mod time;
+pub mod weather;
 
 use std::sync::Mutex;
 
@@ -55,6 +56,10 @@ pub fn run() {
             commands::add_space,
             commands::rename_space,
             commands::delete_space,
+            commands::search_places,
+            commands::detect_location,
+            commands::refresh_weather,
+            commands::get_weather,
             commands::get_settings,
             commands::update_settings,
         ])

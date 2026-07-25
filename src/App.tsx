@@ -8,6 +8,7 @@ import { ActionableRow, AllPlantsListRow } from "./components/PlantRow";
 import { Mascot, mascotStateForCounts } from "./components/Mascot";
 import { EmptyState } from "./components/EmptyState";
 import { AddPlantForm } from "./components/AddPlantForm";
+import { EditPlantForm } from "./components/EditPlantForm";
 import { PlantDetails } from "./components/PlantDetails";
 import { SpacesPanel } from "./components/SpacesPanel";
 import type { AllPlantsRow, EventView, NewPlant, PlantProfile, Settings, Space, Tab } from "./types";
@@ -26,7 +27,8 @@ type Overlay =
   | { kind: "none" }
   | { kind: "add-plant" }
   | { kind: "spaces" }
-  | { kind: "details"; plant: PlantProfile };
+  | { kind: "details"; plant: PlantProfile }
+  | { kind: "edit"; plant: PlantProfile };
 
 export default function App() {
   const [tab, setTab] = useState<Tab>("today");
@@ -216,7 +218,29 @@ export default function App() {
           />
         )}
         {overlay.kind === "details" && (
-          <PlantDetails plant={overlay.plant} spaces={spaces} onClose={() => setOverlay({ kind: "none" })} />
+          <PlantDetails
+            plant={overlay.plant}
+            spaces={spaces}
+            onClose={() => setOverlay({ kind: "none" })}
+            onEdit={() => setOverlay({ kind: "edit", plant: overlay.plant })}
+          />
+        )}
+        {overlay.kind === "edit" && (
+          <EditPlantForm
+            plant={overlay.plant}
+            spaces={spaces}
+            onCancel={() => setOverlay({ kind: "details", plant: overlay.plant })}
+            onSave={async (updated) => {
+              await api.updatePlant(updated);
+              setOverlay({ kind: "none" });
+              await refresh();
+            }}
+            onDelete={async (plantId) => {
+              await api.deletePlant(plantId);
+              setOverlay({ kind: "none" });
+              await refresh();
+            }}
+          />
         )}
         {overlay.kind === "spaces" && (
           <SpacesPanel

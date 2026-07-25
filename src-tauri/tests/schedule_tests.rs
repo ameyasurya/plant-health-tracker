@@ -249,3 +249,105 @@ fn atomic_write_round_trips_and_ignores_stray_tmp_files() {
     assert_eq!(reloaded.len(), 3, "stray .tmp file must not shadow the real file");
     assert_eq!(reloaded[0].id, plants[0].id);
 }
+
+// ---- Hemisphere awareness ----
+
+#[test]
+fn southern_hemisphere_seasons_are_six_months_out_of_phase() {
+    use plant_health_tracker_lib::models::Season;
+    use plant_health_tracker_lib::schedule::ScheduleContext;
+
+    let december = date(2026, 12, 15);
+    let north = ScheduleContext { latitude: Some(51.5), weather: &[] }; // London
+    let south = ScheduleContext { latitude: Some(-33.9), weather: &[] }; // Sydney
+
+    assert_eq!(north.season(december), Season::Mild);
+    assert_eq!(
+        south.season(december),
+        Season::Monsoon,
+        "December below the equator must not be treated as northern winter"
+    );
+    // With no latitude configured the behaviour is the original month-only model.
+    assert_eq!(ScheduleContext::EMPTY.season(december), Season::Mild);
+}
+
+// ---- Weather adjustment ----
+
+fn weather_day(d: NaiveDate, rain: f64, tmax: f64) -> plant_health_tracker_lib::models::DailyWeather {
+    plant_health_tracker_lib::models::DailyWeather {
+        date: d,
+        precipitation_mm: rain,
+        temp_max_c: tmax,
+        temp_min_c: tmax - 8.0,
+    }
+}
+
+#[test]
+fn recent_rain_pushes_watering_out_and_heat_pulls_it_in() {
+    use plant_health_tracker_lib::schedule::{weather_adjustment, ScheduleContext, WEATHER_LOOKBACK_DAYS};
+
+    let today = date(2026, 4, 20);
+    let plants: Vec<_> = catalog::all().iter().map(|e| e.to_profile()).collect();
+    let plant = plants.iter().find(|p| p.id == "curry-leaf").unwrap();
+
+    let dry = [weather_day(today, 0.0, 26.0), weather_day(today - Duration::days(1), 0.0, 25.0)];
+    let soaked = [weather_day(today, 9.0, 24.0), weather_day(today - Duration::days(1), 6.0, 24.0)];
+    let baking = [weather_day(today, 0.0, 39.0), weather_day(today - Duration::days(1), 0.0, 38.0)];
+
+    assert_eq!(weather_adjustment(today, &dry, WEATHER_LOOKBACK_DAYS).extra_days, 0);
+    assert_eq!(weather_adjustment(today, &soaked, WEATHER_LOOKBACK_DAYS).extra_days, 2);
+    assert_eq!(weather_adjustment(today, &baking, WEATHER_LOOKBACK_DAYS).extra_days, -1);
+
+    let base = next_water_due(today, plant);
+    let after_rain = plant_health_tracker_lib::schedule::next_water_due_ctx(
+        today,
+        plant,
+        ScheduleContext { latitude: Some(12.97), weather: &soaked },
+    );
+    let after_heat = plant_health_tracker_lib::schedule::next_water_due_ctx(
+        today,
+        plant,
+        ScheduleContext { latitude: Some(12.97), weather: &baking },
+    );
+    assert!(after_rain > base, "rain should delay the next watering");
+    assert!(after_heat < base, "a hot spell should bring it forward");
+}
+
+#[test]
+fn weather_older_than_the_lookback_window_is_ignored() {
+    use plant_health_tracker_lib::schedule::{weather_adjustment, WEATHER_LOOKBACK_DAYS};
+    let today = date(2026, 4, 20);
+    // A downpour a fortnight ago says nothing about today's soil.
+    let ancient = [weather_day(today - Duration::days(14), 40.0, 25.0)];
+    assert_eq!(weather_adjustment(today, &ancient, WEATHER_LOOKBACK_DAYS).extra_days, 0);
+}
+
+#[test]
+fn watering_interval_never_collapses_below_one_day() {
+    use plant_health_tracker_lib::schedule::{next_water_due_ctx, ScheduleContext};
+    let today = date(2026, 4, 20);
+    let plants: Vec<_> = catalog::all().iter().map(|e| e.to_profile()).collect();
+    // Thirstiest class, hanging, in a heatwave -- the one case that could
+    // otherwise land on "due again today" and immediately re-fire.
+    let thirsty = plants
+        .iter()
+        .find(|p| p.is_hanging && matches!(p.moisture_class, plant_health_tracker_lib::models::MoistureClass::ConsistentlyMoist))
+        .expect("catalog should contain a thirsty hanging plant");
+    let baking = [weather_day(today, 0.0, 41.0)];
+    let due = next_water_due_ctx(today, thirsty, ScheduleContext { latitude: Some(12.97), weather: &baking });
+    assert!(due > today, "next watering must always be at least tomorrow");
+}
+
+#[test]
+fn offline_with_no_weather_matches_the_original_month_only_schedule() {
+    use plant_health_tracker_lib::schedule::{next_water_due_ctx, ScheduleContext};
+    let today = date(2026, 8, 10);
+    let plants: Vec<_> = catalog::all().iter().map(|e| e.to_profile()).collect();
+    for plant in plants.iter().take(10) {
+        assert_eq!(
+            next_water_due_ctx(today, plant, ScheduleContext::EMPTY),
+            next_water_due(today, plant),
+            "empty context must behave exactly like the offline fallback"
+        );
+    }
+}

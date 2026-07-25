@@ -15,10 +15,12 @@ export function PlantDetails({
   plant,
   spaces,
   onClose,
+  onEdit,
 }: {
   plant: PlantProfile;
   spaces: Space[];
   onClose: () => void;
+  onEdit: () => void;
 }) {
   const spaceName = spaces.find((s) => s.id === plant.space_id)?.name;
 
@@ -71,6 +73,10 @@ export function PlantDetails({
           Some care details for this plant were inferred -- worth confirming.
         </div>
       )}
+
+      <div className="panel-actions">
+        <button onClick={onEdit}>Edit plant</button>
+      </div>
     </Panel>
   );
 }

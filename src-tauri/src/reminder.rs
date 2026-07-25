@@ -18,7 +18,7 @@ use tauri_plugin_notification::NotificationExt;
 
 use crate::commands::AppState;
 use crate::models::EventStatus;
-use crate::time::{now_ist_time, parse_hhmm, today_ist};
+use crate::time::{now_local_time, parse_hhmm, today_local};
 
 const POLL_INTERVAL: Duration = Duration::from_secs(60);
 
@@ -37,7 +37,9 @@ fn tick(app: &AppHandle) -> Result<(), String> {
     let state = app.state::<AppState>();
     let store = state.store.lock().map_err(|e| e.to_string())?;
     let mut settings = store.load_settings().map_err(|e| e.to_string())?;
-    let today = today_ist();
+    // Digest timing follows the user's own location, not a fixed zone.
+    let location = settings.location.clone();
+    let today = today_local(location.as_ref());
 
     if settings.last_digest_sent_on == Some(today) {
         return Ok(()); // already sent today
@@ -45,7 +47,7 @@ fn tick(app: &AppHandle) -> Result<(), String> {
     let Some(target_time) = parse_hhmm(&settings.notification_time) else {
         return Ok(());
     };
-    if now_ist_time() < target_time {
+    if now_local_time(location.as_ref()) < target_time {
         return Ok(()); // not time yet
     }
 

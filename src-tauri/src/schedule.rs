@@ -1,14 +1,17 @@
-//! Season-adjusted schedule logic for Bengaluru balcony conditions.
+//! Season- and weather-adjusted schedule logic.
 //!
-//! Everything here is a pure function of (today, plant profile) so it is
-//! trivial to unit test across all 19 plants and all 3 seasons without
-//! touching the filesystem or the clock. All dates are calendar dates in
-//! Asia/Kolkata -- see time::today_ist() for the one place "now" enters
-//! the picture.
+//! Everything here is a pure function of its inputs -- (today, plant, and
+//! optionally recent weather) -- so it can be unit tested across every
+//! catalog species and season without touching the filesystem, the
+//! network or the clock.
+//!
+//! Weather is optional throughout. With no location configured or the
+//! network down, intervals fall back to the month-based season model, so
+//! the widget keeps working offline.
 
 use chrono::{Datelike, Duration, NaiveDate};
 
-use crate::models::{FertilizeGroup, MoistureClass, PlantProfile, Season, TaskType};
+use crate::models::{DailyWeather, FertilizeGroup, MoistureClass, PlantProfile, Season, TaskType};
 
 pub fn season_for_month(month: u32) -> Season {
     match month {
@@ -16,6 +19,59 @@ pub fn season_for_month(month: u32) -> Season {
         6..=10 => Season::Monsoon,
         _ => Season::Mild, // 11, 12, 1, 2
     }
+}
+
+/// How recent rain and heat bend the base watering interval.
+///
+/// Deliberately conservative: this nudges an interval, it does not invent
+/// a schedule. Soil in a pot on a covered balcony does not necessarily see
+/// the rain the forecast reports, so the adjustment is capped and the
+/// user's own "skip, soil still wet" action remains the real authority.
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct WeatherAdjustment {
+    pub extra_days: i64,
+    pub reason: Option<&'static str>,
+}
+
+impl WeatherAdjustment {
+    pub const NONE: Self = Self { extra_days: 0, reason: None };
+}
+
+/// Rain over this many mm in the recent window counts as a real soaking.
+const SOAKING_MM: f64 = 10.0;
+/// Lighter rain still buys a little time.
+const DAMP_MM: f64 = 3.0;
+/// Above this the plant is losing water fast enough to pull watering in.
+const HEATWAVE_C: f64 = 34.0;
+
+/// Looks at the days immediately before and including `today`.
+pub fn weather_adjustment(today: NaiveDate, days: &[DailyWeather], lookback: i64) -> WeatherAdjustment {
+    if days.is_empty() {
+        return WeatherAdjustment::NONE;
+    }
+    let from = today - Duration::days(lookback);
+    let recent: Vec<&DailyWeather> = days.iter().filter(|d| d.date > from && d.date <= today).collect();
+    if recent.is_empty() {
+        return WeatherAdjustment::NONE;
+    }
+
+    let rain: f64 = recent.iter().map(|d| d.precipitation_mm).sum();
+    let hottest = recent
+        .iter()
+        .map(|d| d.temp_max_c)
+        .filter(|t| !t.is_nan())
+        .fold(f64::NEG_INFINITY, f64::max);
+
+    if rain >= SOAKING_MM {
+        return WeatherAdjustment { extra_days: 2, reason: Some("recent rain") };
+    }
+    if rain >= DAMP_MM {
+        return WeatherAdjustment { extra_days: 1, reason: Some("recent rain") };
+    }
+    if hottest.is_finite() && hottest >= HEATWAVE_C {
+        return WeatherAdjustment { extra_days: -1, reason: Some("hot spell") };
+    }
+    WeatherAdjustment::NONE
 }
 
 /// (shorter interval for hanging plants, longer interval for potted/non-hanging).
@@ -93,7 +149,69 @@ pub fn fertilize_instruction(group: FertilizeGroup) -> String {
     format!("{} · soil moist only", fertilize_plan(group).fertilizer_type)
 }
 
-fn first_day_of_next_active_month(from: NaiveDate, active_months: &[u32]) -> NaiveDate {
+/// How many days back the rain/heat check looks.
+pub const WEATHER_LOOKBACK_DAYS: i64 = 3;
+
+/// Everything the schedule needs beyond the plant itself: where the user
+/// is (for hemisphere) and what the weather has been doing.
+///
+/// `EMPTY` is the offline/unconfigured case and behaves exactly like the
+/// original month-only logic, which is what keeps this safe to fall back
+/// to when there is no location or no network.
+#[derive(Debug, Clone, Copy)]
+pub struct ScheduleContext<'a> {
+    pub latitude: Option<f64>,
+    pub weather: &'a [DailyWeather],
+}
+
+impl ScheduleContext<'_> {
+    pub const EMPTY: ScheduleContext<'static> = ScheduleContext { latitude: None, weather: &[] };
+
+    /// Season at the user's latitude -- below the equator the month is
+    /// shifted six months so summer isn't treated as winter.
+    pub fn season(&self, today: NaiveDate) -> Season {
+        season_for_month(crate::time::season_month_for(self.latitude, today.month()))
+    }
+
+    fn effective_month(&self, date: NaiveDate) -> u32 {
+        crate::time::season_month_for(self.latitude, date.month())
+    }
+}
+
+pub fn next_water_due(today: NaiveDate, plant: &PlantProfile) -> NaiveDate {
+    next_water_due_ctx(today, plant, ScheduleContext::EMPTY)
+}
+
+pub fn next_water_due_ctx(today: NaiveDate, plant: &PlantProfile, ctx: ScheduleContext) -> NaiveDate {
+    let season = ctx.season(today);
+    let base = water_interval_days(plant.moisture_class, season, plant.is_hanging);
+    let adj = weather_adjustment(today, ctx.weather, WEATHER_LOOKBACK_DAYS);
+    // Never below 1: even in a heatwave "water again today" would just
+    // re-fire the reminder that was completed moments ago.
+    let interval = (base + adj.extra_days).max(1);
+    today + Duration::days(interval)
+}
+
+pub fn next_fertilize_due(today: NaiveDate, plant: &PlantProfile) -> NaiveDate {
+    next_fertilize_due_ctx(today, plant, ScheduleContext::EMPTY)
+}
+
+pub fn next_fertilize_due_ctx(today: NaiveDate, plant: &PlantProfile, ctx: ScheduleContext) -> NaiveDate {
+    let plan = fertilize_plan(plant.fertilize_group);
+    if !plan.active_months.contains(&ctx.effective_month(today)) {
+        return next_active_month_start(today, plan.active_months, ctx);
+    }
+    let candidate = today + Duration::days(plan.cadence_days);
+    if plan.active_months.contains(&ctx.effective_month(candidate)) {
+        candidate
+    } else {
+        next_active_month_start(candidate, plan.active_months, ctx)
+    }
+}
+
+/// Walks forward to the first calendar month whose *effective* (hemisphere
+/// adjusted) month is in the feeding window.
+fn next_active_month_start(from: NaiveDate, active_months: &[u32], ctx: ScheduleContext) -> NaiveDate {
     let mut year = from.year();
     let mut month = from.month();
     for _ in 0..13 {
@@ -102,37 +220,27 @@ fn first_day_of_next_active_month(from: NaiveDate, active_months: &[u32]) -> Nai
             month = 1;
             year += 1;
         }
-        if active_months.contains(&month) {
-            return NaiveDate::from_ymd_opt(year, month, 1).expect("valid calendar date");
+        let candidate = NaiveDate::from_ymd_opt(year, month, 1).expect("valid calendar date");
+        if active_months.contains(&ctx.effective_month(candidate)) {
+            return candidate;
         }
     }
-    // Unreachable given active_months is always non-empty, but keep a safe fallback.
     from
 }
 
-pub fn next_water_due(today: NaiveDate, plant: &PlantProfile) -> NaiveDate {
-    let season = season_for_month(today.month());
-    let interval = water_interval_days(plant.moisture_class, season, plant.is_hanging);
-    today + Duration::days(interval)
-}
-
-pub fn next_fertilize_due(today: NaiveDate, plant: &PlantProfile) -> NaiveDate {
-    let plan = fertilize_plan(plant.fertilize_group);
-    if !plan.active_months.contains(&today.month()) {
-        return first_day_of_next_active_month(today, plan.active_months);
-    }
-    let candidate = today + Duration::days(plan.cadence_days);
-    if plan.active_months.contains(&candidate.month()) {
-        candidate
-    } else {
-        first_day_of_next_active_month(candidate, plan.active_months)
-    }
-}
-
 pub fn next_due(today: NaiveDate, plant: &PlantProfile, task_type: TaskType) -> NaiveDate {
+    next_due_ctx(today, plant, task_type, ScheduleContext::EMPTY)
+}
+
+pub fn next_due_ctx(
+    today: NaiveDate,
+    plant: &PlantProfile,
+    task_type: TaskType,
+    ctx: ScheduleContext,
+) -> NaiveDate {
     match task_type {
-        TaskType::Water => next_water_due(today, plant),
-        TaskType::Fertilize => next_fertilize_due(today, plant),
+        TaskType::Water => next_water_due_ctx(today, plant, ctx),
+        TaskType::Fertilize => next_fertilize_due_ctx(today, plant, ctx),
     }
 }
 
@@ -140,7 +248,11 @@ pub fn next_due(today: NaiveDate, plant: &PlantProfile, task_type: TaskType) -> 
 /// soil is visibly still wet -- not a full new cycle, just "look again
 /// soon", capped so it never exceeds the plant's normal interval.
 pub fn skip_recheck_due(today: NaiveDate, plant: &PlantProfile) -> NaiveDate {
-    let season = season_for_month(today.month());
+    skip_recheck_due_ctx(today, plant, ScheduleContext::EMPTY)
+}
+
+pub fn skip_recheck_due_ctx(today: NaiveDate, plant: &PlantProfile, ctx: ScheduleContext) -> NaiveDate {
+    let season = ctx.season(today);
     let full_interval = water_interval_days(plant.moisture_class, season, plant.is_hanging);
     let recheck = std::cmp::max(1, full_interval / 2);
     today + Duration::days(recheck)

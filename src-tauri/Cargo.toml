@@ -16,6 +16,13 @@ tauri-plugin-single-instance = "2"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 chrono = { version = "0.4", features = ["serde"] }
+# Resolves the user's IANA timezone (from location setup) to a real local
+# date, replacing the previously hardcoded IST offset.
+chrono-tz = "0.10"
+# Weather/geocoding calls live in Rust rather than the webview so the
+# background reminder loop can use them with the UI closed. rustls avoids
+# depending on the system OpenSSL.
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
 tokio = { version = "1", features = ["rt-multi-thread", "time", "macros", "sync"] }
 uuid = { version = "1", features = ["v4", "serde"] }
 thiserror = "1"

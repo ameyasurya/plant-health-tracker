@@ -6,12 +6,45 @@ use crate::models::{
     CareEvent, EventStatus, FertilizeGroup, Light, MoistureClass, PlantProfile, Settings, Space,
     TaskType, DEFAULT_SPACE_ID,
 };
-use crate::schedule;
+use crate::schedule::{self, ScheduleContext};
 use crate::store::{new_pending_event, new_plant_id, new_space_id, Store};
-use crate::time::today_ist;
+use crate::time::today_local;
 
 pub struct AppState {
     pub store: Mutex<Store>,
+}
+
+/// The ambient inputs every scheduling decision needs: the user's local
+/// calendar date, their hemisphere, and the cached weather.
+///
+/// Bundled together because they must be consistent with one another --
+/// deriving "today" from one timezone while judging rain from another
+/// location would produce subtly wrong due dates.
+struct Env {
+    today: chrono::NaiveDate,
+    latitude: Option<f64>,
+    weather: Vec<crate::models::DailyWeather>,
+}
+
+impl Env {
+    fn load(store: &Store) -> Result<Self, String> {
+        let settings = store.load_settings().map_err(|e| e.to_string())?;
+        let location = settings.location;
+        let weather = if settings.weather_enabled {
+            store.load_weather().map_err(|e| e.to_string())?.days
+        } else {
+            Vec::new()
+        };
+        Ok(Self {
+            today: today_local(location.as_ref()),
+            latitude: location.as_ref().map(|l| l.latitude),
+            weather,
+        })
+    }
+
+    fn ctx(&self) -> ScheduleContext<'_> {
+        ScheduleContext { latitude: self.latitude, weather: &self.weather }
+    }
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -141,7 +174,8 @@ fn due_and_upcoming(state: &AppState) -> Result<(Vec<EventView>, Vec<EventView>)
     let plants = store.load_plants().map_err(|e| e.to_string())?;
     let events = store.load_events().map_err(|e| e.to_string())?;
     let active = store.load_settings().map_err(|e| e.to_string())?.active_space_id;
-    let today = today_ist();
+    let env = Env::load(&store)?;
+    let today = env.today;
 
     let mut due = Vec::new();
     let mut soon = Vec::new();
@@ -180,7 +214,8 @@ pub fn list_all_plants(state: tauri::State<AppState>) -> Result<Vec<AllPlantsRow
     let plants = store.load_plants().map_err(|e| e.to_string())?;
     let events = store.load_events().map_err(|e| e.to_string())?;
     let active = store.load_settings().map_err(|e| e.to_string())?.active_space_id;
-    let today = today_ist();
+    let env = Env::load(&store)?;
+    let today = env.today;
 
     let mut rows = Vec::with_capacity(plants.len());
     for plant in plants.iter().filter(|p| in_active_space(p, &active)) {
@@ -221,7 +256,8 @@ pub fn mark_done(state: tauri::State<AppState>, event_id: String) -> Result<(), 
     let store = state.store.lock().map_err(|e| e.to_string())?;
     let plants = store.load_plants().map_err(|e| e.to_string())?;
     let mut events = store.load_events().map_err(|e| e.to_string())?;
-    let today = today_ist();
+    let env = Env::load(&store)?;
+    let today = env.today;
 
     let idx = events
         .iter()
@@ -234,7 +270,7 @@ pub fn mark_done(state: tauri::State<AppState>, event_id: String) -> Result<(), 
         .clone();
 
     let task_type = events[idx].task_type;
-    let next = schedule::next_due(today, &plant, task_type);
+    let next = schedule::next_due_ctx(today, &plant, task_type, env.ctx());
 
     events[idx].status = EventStatus::Done;
     events[idx].completed_at = Some(today);
@@ -248,7 +284,8 @@ pub fn mark_done(state: tauri::State<AppState>, event_id: String) -> Result<(), 
 pub fn snooze(state: tauri::State<AppState>, event_id: String, days: i64) -> Result<(), String> {
     let store = state.store.lock().map_err(|e| e.to_string())?;
     let mut events = store.load_events().map_err(|e| e.to_string())?;
-    let today = today_ist();
+    let env = Env::load(&store)?;
+    let today = env.today;
     let idx = events
         .iter()
         .position(|e| e.id == event_id)
@@ -264,7 +301,8 @@ pub fn skip_soil_wet(state: tauri::State<AppState>, event_id: String) -> Result<
     let store = state.store.lock().map_err(|e| e.to_string())?;
     let plants = store.load_plants().map_err(|e| e.to_string())?;
     let mut events = store.load_events().map_err(|e| e.to_string())?;
-    let today = today_ist();
+    let env = Env::load(&store)?;
+    let today = env.today;
     let idx = events
         .iter()
         .position(|e| e.id == event_id)
@@ -275,7 +313,7 @@ pub fn skip_soil_wet(state: tauri::State<AppState>, event_id: String) -> Result<
         .ok_or_else(|| "plant not found".to_string())?
         .clone();
 
-    let next = schedule::skip_recheck_due(today, &plant);
+    let next = schedule::skip_recheck_due_ctx(today, &plant, env.ctx());
     let task_type = events[idx].task_type;
     let plant_id = events[idx].plant_id.clone();
 
@@ -356,9 +394,10 @@ pub fn add_plant(state: tauri::State<AppState>, plant: NewPlant) -> Result<Plant
         fun_fact: known.map(|k| k.fun_fact.clone()).unwrap_or_default(),
     };
 
-    let today = today_ist();
+    let env = Env::load(&store)?;
+    let today = env.today;
     events.push(new_pending_event(profile.id.clone(), TaskType::Water, today));
-    let fert_due = schedule::next_fertilize_due(today, &profile);
+    let fert_due = schedule::next_fertilize_due_ctx(today, &profile, env.ctx());
     events.push(new_pending_event(profile.id.clone(), TaskType::Fertilize, fert_due));
 
     plants.push(profile.clone());
@@ -467,6 +506,126 @@ pub fn delete_space(state: tauri::State<AppState>, space_id: String) -> Result<(
     store.save_plants(&plants).map_err(|e| e.to_string())?;
     store.save_spaces(&spaces).map_err(|e| e.to_string())?;
     Ok(())
+}
+
+// ---- Location & weather ---------------------------------------------
+
+/// City search. Network call, so it's async and never blocks the UI.
+#[tauri::command]
+pub async fn search_places(query: String) -> Result<Vec<crate::models::Location>, String> {
+    crate::weather::search_places(&query).await
+}
+
+/// Approximate location from the caller's IP.
+///
+/// Only ever invoked from an explicit "Detect" button -- see the note in
+/// weather::detect_location about not phoning home silently.
+#[tauri::command]
+pub async fn detect_location() -> Result<crate::models::Location, String> {
+    crate::weather::detect_location().await
+}
+
+/// Fetches the forecast for the saved location and caches it.
+///
+/// Returns `Ok(false)` rather than an error when there's nothing to do
+/// (weather disabled, or no location yet) so the UI can call this freely
+/// on startup without special-casing.
+#[tauri::command]
+pub async fn refresh_weather(state: tauri::State<'_, AppState>, force: bool) -> Result<bool, String> {
+    // Read what we need, then drop the lock before awaiting -- holding a
+    // std::sync::Mutex across an await point would block every other
+    // command for the duration of a network round trip.
+    let (location, enabled, cached) = {
+        let store = state.store.lock().map_err(|e| e.to_string())?;
+        let settings = store.load_settings().map_err(|e| e.to_string())?;
+        let cache = store.load_weather().map_err(|e| e.to_string())?;
+        (settings.location, settings.weather_enabled, cache)
+    };
+
+    let Some(location) = location else { return Ok(false) };
+    if !enabled {
+        return Ok(false);
+    }
+    if !force && !cache_is_stale(&cached, &location) {
+        return Ok(false);
+    }
+
+    let days = crate::weather::fetch_forecast(location.latitude, location.longitude).await?;
+
+    let store = state.store.lock().map_err(|e| e.to_string())?;
+    store
+        .save_weather(&crate::models::WeatherCache {
+            fetched_at: Some(chrono::Utc::now().to_rfc3339()),
+            latitude: Some(location.latitude),
+            longitude: Some(location.longitude),
+            days,
+        })
+        .map_err(|e| e.to_string())?;
+    Ok(true)
+}
+
+/// Refetch when the data is older than a few hours, or when the user has
+/// moved far enough that the old forecast is for somewhere else.
+fn cache_is_stale(cache: &crate::models::WeatherCache, location: &crate::models::Location) -> bool {
+    const MAX_AGE_HOURS: i64 = 6;
+    const MOVED_DEGREES: f64 = 0.5;
+
+    let moved = match (cache.latitude, cache.longitude) {
+        (Some(la), Some(lo)) => {
+            (la - location.latitude).abs() > MOVED_DEGREES
+                || (lo - location.longitude).abs() > MOVED_DEGREES
+        }
+        _ => true,
+    };
+    if moved || cache.days.is_empty() {
+        return true;
+    }
+    match cache.fetched_at.as_deref().and_then(|s| chrono::DateTime::parse_from_rfc3339(s).ok()) {
+        Some(t) => chrono::Utc::now().signed_duration_since(t).num_hours() >= MAX_AGE_HOURS,
+        None => true,
+    }
+}
+
+/// Weather strip for the UI. `None` when weather is off or unconfigured.
+#[tauri::command]
+pub fn get_weather(state: tauri::State<AppState>) -> Result<Option<crate::weather::WeatherSummary>, String> {
+    let store = state.store.lock().map_err(|e| e.to_string())?;
+    let settings = store.load_settings().map_err(|e| e.to_string())?;
+    let Some(location) = settings.location.as_ref() else { return Ok(None) };
+    if !settings.weather_enabled {
+        return Ok(None);
+    }
+    let cache = store.load_weather().map_err(|e| e.to_string())?;
+    if cache.days.is_empty() {
+        return Ok(None);
+    }
+
+    let today = today_local(Some(location));
+    let today_row = cache.days.iter().find(|d| d.date == today);
+    let adj = schedule::weather_adjustment(today, &cache.days, schedule::WEATHER_LOOKBACK_DAYS);
+    let recent_rain: f64 = cache
+        .days
+        .iter()
+        .filter(|d| d.date > today - chrono::Duration::days(schedule::WEATHER_LOOKBACK_DAYS) && d.date <= today)
+        .map(|d| d.precipitation_mm)
+        .sum();
+
+    let stale = cache
+        .fetched_at
+        .as_deref()
+        .and_then(|s| chrono::DateTime::parse_from_rfc3339(s).ok())
+        .map(|t| chrono::Utc::now().signed_duration_since(t).num_hours() >= 12)
+        .unwrap_or(true);
+
+    Ok(Some(crate::weather::WeatherSummary {
+        location_label: location.label.clone(),
+        today_max_c: today_row.map(|d| d.temp_max_c).filter(|v| !v.is_nan()),
+        today_min_c: today_row.map(|d| d.temp_min_c).filter(|v| !v.is_nan()),
+        recent_rain_mm: (recent_rain * 10.0).round() / 10.0,
+        rained_recently: adj.reason == Some("recent rain"),
+        fetched_at: cache.fetched_at.clone(),
+        stale,
+    }))
 }
 
 #[tauri::command]
