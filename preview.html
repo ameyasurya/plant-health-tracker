@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Balcony (preview)</title>
+    <style>
+      /* Preview-only chrome: emulate the desktop wallpaper + the fixed
+         window box (see tauri.conf.json: width 380 min 340, height 560
+         min 320) so the transparent/frameless widget's actual footprint
+         is visible against something other than a plain white page. */
+      html, body {
+        margin: 0;
+        height: 100%;
+        background: repeating-conic-gradient(#dcd9cf 0% 25%, #cfccc1 0% 50%) 50% / 24px 24px;
+      }
+      #window-frame {
+        width: 380px;
+        height: 560px;
+        min-width: 340px;
+        /* Mirrors tauri.conf.json minHeight so the preview can't be dragged
+           to a size the real window would refuse. */
+        min-height: 275px;
+        margin: 24px;
+        resize: both;
+        overflow: auto;
+        outline: 1px dashed rgba(0, 0, 0, 0.25);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="window-frame">
+      <div id="root"></div>
+    </div>
+    <script type="module" src="/src/preview.tsx"></script>
+  </body>
+</html>

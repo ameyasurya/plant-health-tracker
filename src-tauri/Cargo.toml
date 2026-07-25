@@ -1,0 +1,33 @@
+[package]
+name = "balcony-widget"
+version = "0.1.0"
+description = "Balcony plant care reminder widget"
+edition = "2021"
+rust-version = "1.77"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["tray-icon"] }
+tauri-plugin-notification = "2"
+tauri-plugin-autostart = "2"
+tauri-plugin-single-instance = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+chrono = { version = "0.4", features = ["serde"] }
+tokio = { version = "1", features = ["rt-multi-thread", "time", "macros", "sync"] }
+uuid = { version = "1", features = ["v4", "serde"] }
+thiserror = "1"
+
+[dev-dependencies]
+# used only by src-tauri/tests/schedule_tests.rs
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
+
+[[bin]]
+name = "balcony-widget"
+path = "src/main.rs"
+
+[lib]
+name = "balcony_widget_lib"
+path = "src/lib.rs"
