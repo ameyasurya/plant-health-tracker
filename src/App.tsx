@@ -11,6 +11,7 @@ import { AddPlantForm } from "./components/AddPlantForm";
 import { EditPlantForm } from "./components/EditPlantForm";
 import { PlantDetails } from "./components/PlantDetails";
 import { SpacesPanel } from "./components/SpacesPanel";
+import { ResizeGrip } from "./components/ResizeGrip";
 import type { AllPlantsRow, EventView, NewPlant, PlantProfile, Settings, Space, Tab } from "./types";
 
 const appWindow = getCurrentWindow();
@@ -66,6 +67,9 @@ export default function App() {
     };
   }, []);
 
+  // Startup pin state is applied in Rust (see lib.rs setup) so it doesn't
+  // depend on the webview having loaded. This component only handles
+  // runtime toggling.
   const refresh = useCallback(async () => {
     const [dueRes, soonRes, allRes, spacesRes, settingsRes] = await Promise.all([
       api.listDueToday(),
@@ -260,6 +264,9 @@ export default function App() {
             }}
           />
         )}
+
+        {/* Last child of .card so it paints over any open overlay panel. */}
+        <ResizeGrip />
       </div>
     </div>
   );

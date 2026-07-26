@@ -76,6 +76,18 @@ pub fn run() {
 
             let launched_hidden = std::env::args().any(|arg| arg == "--hidden");
             if let Some(window) = app.get_webview_window("main") {
+                // Apply the saved pin state here rather than from the
+                // frontend: the webview loading is not a precondition for
+                // the window being where the user left it, and doing it in
+                // JS meant a visible period where an unpinned-by-accident
+                // widget could already be buried behind another window.
+                let pinned = {
+                    let state = app.state::<AppState>();
+                    let store = state.store.lock().expect("store lock");
+                    store.load_settings().map(|s| s.pinned_on_top).unwrap_or(true)
+                };
+                let _ = window.set_always_on_top(pinned);
+
                 if launched_hidden {
                     window.hide()?;
                 }
@@ -113,7 +125,12 @@ fn setup_tray(app: &tauri::App) -> tauri::Result<()> {
             let window = app.get_webview_window("main");
             match event.id().as_ref() {
                 "show" => {
+                    // This is the recovery path when an unpinned widget has
+                    // been buried by another window, so it must raise as
+                    // well as unhide -- show() alone leaves it where it is
+                    // in the z-order.
                     if let Some(w) = &window {
+                        let _ = w.unminimize();
                         let _ = w.show();
                         let _ = w.set_focus();
                     }

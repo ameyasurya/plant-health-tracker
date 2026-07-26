@@ -108,7 +108,11 @@ export function TitleBar({
         </button>
         <button
           aria-label={pinned ? "Unpin from top" : "Pin on top"}
-          title={pinned ? "Unpin — let other windows cover this" : "Pin on top — keep above other windows"}
+          title={
+            pinned
+              ? "Unpin — other windows can cover this; reopen from the tray icon if it gets buried"
+              : "Pin on top — keep the widget above other windows"
+          }
           onClick={onTogglePin}
           className={pinned ? "icon-btn active" : "icon-btn"}
         >

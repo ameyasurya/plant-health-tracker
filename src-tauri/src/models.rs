@@ -194,7 +194,11 @@ impl Default for Settings {
             notification_time: "08:00".to_string(),
             launch_at_startup: true,
             density_mode: DensityMode::Compact,
-            pinned_on_top: false,
+            // Pinned by default: the window has no taskbar button
+            // (skipTaskbar), so an unpinned widget that loses focus gets
+            // buried under whatever Windows activates next with no obvious
+            // way back. A glanceable widget should stay glanceable.
+            pinned_on_top: true,
             last_digest_sent_on: None,
             active_space_id: None,
             location: None,
