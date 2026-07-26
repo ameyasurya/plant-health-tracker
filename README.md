@@ -85,94 +85,15 @@ Data lives in `%APPDATA%\com.ameya.plant-health-tracker\` as `plants.json`,
 
 ## Building from source
 
-Prerequisites:
-
-1. **Rust**, via [rustup.rs](https://rustup.rs). Restart your terminal after.
-2. **Node.js** 18+.
-3. **Microsoft C++ Build Tools** with the *Desktop development with C++*
-   workload, which provides the MSVC linker Tauri needs. See
-   [Tauri prerequisites](https://v2.tauri.app/start/prerequisites/).
+You need Rust, Node 18+ and the Microsoft C++ Build Tools:
 
 ```powershell
 npm install
 npm run tauri dev
 ```
 
-To produce the installer under `src-tauri/target/release/bundle/nsis/`:
-
-```powershell
-npm run tauri build
-```
-
-Use that rather than a bare `cargo build --release`. Plain cargo omits the
-`custom-protocol` feature, so the binary looks fine but still expects the
-Vite dev server: launched on its own it shows "localhost refused to
-connect" instead of the widget.
-
-### Icons
-
-`app-icon.svg` is the source artwork: the mascot's winking flower head,
-using the same shapes as the in-app character so the two can't drift
-apart. The pot is left out because it turns to mush at tray size. To
-regenerate the PNG and ICO set after editing it:
-
-```powershell
-npx tauri icon app-icon.svg
-```
-
-It also emits iOS, Android, macOS and Windows Store variants. Only the four
-files listed in `tauri.conf.json`'s `bundle.icon` are needed, so the rest can
-be deleted.
-
-The icon is embedded into a Windows resource by `build.rs`, and `tauri-build`
-only declares `rerun-if-changed` for `tauri.conf.json` and the capabilities
-directory. Left alone, that means editing an icon does not rebuild the
-resource and the binary keeps shipping the previous one, which is especially
-easy to miss in CI where `target/` is restored from cache. `build.rs`
-therefore watches `icons/` itself, so a regenerated icon rebuilds normally.
-
-### UI preview without the desktop shell
-
-`preview.html` runs the real React UI in an ordinary browser tab, with the
-Tauri IPC layer replaced by mocks:
-
-```powershell
-npm run dev
-```
-
-then open the `/preview.html` path on the URL Vite prints, by default
-<http://localhost:1420/preview.html>. That port is pinned in
-`vite.config.ts` with `strictPort`, because `tauri.conf.json` points
-`devUrl` at it; Vite fails rather than quietly moving to another port.
-
-The native window hot-reloads frontend edits too, so this isn't about
-iteration speed. It's useful because it:
-
-- **needs no Rust toolchain.** `npm run dev` is plain Vite, so UI work
-  doesn't require MSVC build tools or a compiled backend;
-- **can't touch your real data**, since every command is mocked, which
-  makes it safe to try destructive paths like deleting plants;
-- **fakes states that are awkward to reach for real**, such as overdue
-  plants or an empty list;
-- gives you normal browser devtools and a resizable frame for checking
-  layout at the window's minimum size.
-
-It is dev-only: Vite builds `index.html` alone, so neither `preview.html`
-nor its mock code is in the shipped bundle.
-
-### Tests
-
-```powershell
-cd src-tauri
-cargo test
-```
-
-Covers schedule generation across every catalog species and season,
-month-boundary transitions, the feeding dormancy window, hemisphere
-inversion, weather adjustment (including that stale weather is ignored and
-intervals never collapse below a day), the offline fallback matching the
-month-only schedule exactly, done/snooze/skip recomputation, multi-day
-catch-up, and atomic writes surviving a stray temp file.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for building the installer, running the
+tests, regenerating icons and cutting a release.
 
 ## Known gaps
 
