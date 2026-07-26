@@ -65,6 +65,14 @@ let settings: Settings = {
   pinned_on_top: false,
   last_digest_sent_on: null,
   active_space_id: null,
+  location: {
+    label: "Bengaluru, Karnataka, India",
+    latitude: 12.97,
+    longitude: 77.59,
+    timezone: "Asia/Kolkata",
+    country_code: "IN",
+  },
+  weather_enabled: true,
 };
 
 let spaces: Space[] = [
@@ -247,6 +255,39 @@ mockIPC((cmd, payload) => {
     }
     case "delete_plant":
       return undefined;
+    case "get_weather":
+      return settings.weather_enabled && settings.location
+        ? {
+            location_label: settings.location.label,
+            today_max_c: 28.9,
+            today_min_c: 21.4,
+            recent_rain_mm: 16.3,
+            rained_recently: true,
+            fetched_at: new Date().toISOString(),
+            stale: false,
+          }
+        : null;
+    case "refresh_weather":
+      return false;
+    case "is_autostart_enabled":
+      return settings.launch_at_startup;
+    case "detect_location":
+      return {
+        label: "Bengaluru, Karnataka, India",
+        latitude: 12.9716,
+        longitude: 77.5946,
+        timezone: "Asia/Kolkata",
+        country_code: "IN",
+      };
+    case "search_places": {
+      const q = ((args.query as string) ?? "").toLowerCase();
+      const places = [
+        { label: "Bengaluru, Karnataka, India", latitude: 12.97, longitude: 77.59, timezone: "Asia/Kolkata", country_code: "IN" },
+        { label: "London, England, United Kingdom", latitude: 51.51, longitude: -0.13, timezone: "Europe/London", country_code: "GB" },
+        { label: "Sydney, New South Wales, Australia", latitude: -33.87, longitude: 151.21, timezone: "Australia/Sydney", country_code: "AU" },
+      ];
+      return places.filter((p) => p.label.toLowerCase().includes(q));
+    }
     case "search_catalog": {
       // Small stand-in for the Rust-side bundled catalog.
       const q = ((args.query as string) ?? "").trim().toLowerCase();

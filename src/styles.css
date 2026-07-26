@@ -854,6 +854,94 @@ textarea {
   border-radius: 6px;
 }
 
+/* ---- Weather strip ------------------------------------------------- */
+.weather-strip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding: 5px 12px 7px;
+  font-size: 10.5px;
+  color: var(--text-muted);
+  border-bottom: 0.5px solid var(--border);
+}
+.weather-place {
+  min-width: 0;
+  flex-shrink: 1;
+}
+.weather-temp {
+  flex-shrink: 0;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+.weather-rain {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+  color: var(--water-fg);
+}
+.weather-rain-quiet {
+  flex-shrink: 0;
+}
+.weather-stale {
+  flex-shrink: 0;
+  margin-left: auto;
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: var(--border);
+  font-size: 9.5px;
+}
+
+/* ---- Settings panel ------------------------------------------------ */
+.settings-group {
+  margin-bottom: 18px;
+}
+.settings-group h4 {
+  margin: 0 0 6px;
+  font-size: 9.5px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+.settings-note {
+  margin: 6px 0 0;
+  font-size: 10.5px;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+.settings-saved {
+  margin-top: 10px;
+  padding: 6px 9px;
+  font-size: 11.5px;
+  color: var(--fert-fg);
+  background: var(--fert-bg);
+  border-radius: 6px;
+}
+.location-current {
+  padding: 8px 9px;
+  margin-bottom: 8px;
+  background: var(--fact-bg);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+}
+.location-label {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.location-meta {
+  margin-top: 2px;
+  font-size: 10.5px;
+  color: var(--text-muted);
+}
+.location-empty {
+  margin-bottom: 8px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
 /* ---- Resize grip --------------------------------------------------- */
 .resize-grip {
   position: absolute;

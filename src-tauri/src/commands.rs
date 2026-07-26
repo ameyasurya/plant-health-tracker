@@ -635,7 +635,37 @@ pub fn get_settings(state: tauri::State<AppState>) -> Result<Settings, String> {
 }
 
 #[tauri::command]
-pub fn update_settings(state: tauri::State<AppState>, settings: Settings) -> Result<(), String> {
+pub fn update_settings(
+    app: tauri::AppHandle,
+    state: tauri::State<AppState>,
+    settings: Settings,
+) -> Result<(), String> {
     let store = state.store.lock().map_err(|e| e.to_string())?;
-    store.save_settings(&settings).map_err(|e| e.to_string())
+    let previous_autostart = store.load_settings().ok().map(|s| s.launch_at_startup);
+    store.save_settings(&settings).map_err(|e| e.to_string())?;
+
+    // The setting used to be stored and then ignored, so toggling it did
+    // nothing at the OS level. Register/unregister for real, but only on
+    // an actual change -- rewriting the registry entry on every settings
+    // save would be pointless churn.
+    if previous_autostart != Some(settings.launch_at_startup) {
+        apply_autostart(&app, settings.launch_at_startup)?;
+    }
+    Ok(())
+}
+
+fn apply_autostart(app: &tauri::AppHandle, enabled: bool) -> Result<(), String> {
+    use tauri_plugin_autostart::ManagerExt;
+    let manager = app.autolaunch();
+    let result = if enabled { manager.enable() } else { manager.disable() };
+    result.map_err(|e| format!("couldn't change the startup setting: {e}"))
+}
+
+/// The registry is the source of truth for whether Windows will actually
+/// launch the app, so the settings UI reads it rather than trusting our
+/// own stored copy.
+#[tauri::command]
+pub fn is_autostart_enabled(app: tauri::AppHandle) -> Result<bool, String> {
+    use tauri_plugin_autostart::ManagerExt;
+    app.autolaunch().is_enabled().map_err(|e| e.to_string())
 }

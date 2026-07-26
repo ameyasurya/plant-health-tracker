@@ -11,8 +11,19 @@ import { AddPlantForm } from "./components/AddPlantForm";
 import { EditPlantForm } from "./components/EditPlantForm";
 import { PlantDetails } from "./components/PlantDetails";
 import { SpacesPanel } from "./components/SpacesPanel";
+import { SettingsPanel } from "./components/SettingsPanel";
 import { ResizeGrip } from "./components/ResizeGrip";
-import type { AllPlantsRow, EventView, NewPlant, PlantProfile, Settings, Space, Tab } from "./types";
+import { WeatherStrip } from "./components/WeatherStrip";
+import type {
+  AllPlantsRow,
+  EventView,
+  NewPlant,
+  PlantProfile,
+  Settings,
+  Space,
+  Tab,
+  WeatherSummary,
+} from "./types";
 
 const appWindow = getCurrentWindow();
 
@@ -28,6 +39,7 @@ type Overlay =
   | { kind: "none" }
   | { kind: "add-plant" }
   | { kind: "spaces" }
+  | { kind: "settings" }
   | { kind: "details"; plant: PlantProfile }
   | { kind: "edit"; plant: PlantProfile };
 
@@ -38,6 +50,7 @@ export default function App() {
   const [all, setAll] = useState<AllPlantsRow[]>([]);
   const [spaces, setSpaces] = useState<Space[]>([]);
   const [settings, setSettings] = useState<Settings | null>(null);
+  const [weather, setWeather] = useState<WeatherSummary | null>(null);
   const [pending, setPending] = useState<Record<string, PendingAction>>({});
   const [overlay, setOverlay] = useState<Overlay>({ kind: "none" });
   const pendingRef = useRef(pending);
@@ -71,27 +84,38 @@ export default function App() {
   // depend on the webview having loaded. This component only handles
   // runtime toggling.
   const refresh = useCallback(async () => {
-    const [dueRes, soonRes, allRes, spacesRes, settingsRes] = await Promise.all([
+    const [dueRes, soonRes, allRes, spacesRes, settingsRes, weatherRes] = await Promise.all([
       api.listDueToday(),
       api.listSoon(),
       api.listAllPlants(),
       api.listSpaces(),
       api.getSettings(),
+      // Never let a missing/failed weather read break the whole refresh --
+      // the plant list is the point, weather is decoration on top.
+      api.getWeather().catch(() => null),
     ]);
     setDue(dueRes);
     setSoon(soonRes);
     setAll(allRes);
     setSpaces(spacesRes);
     setSettings(settingsRes);
+    setWeather(weatherRes);
   }, []);
 
   useEffect(() => {
     refresh();
+    // Refresh the forecast in the background on launch. It no-ops when
+    // weather is off, unconfigured, or the cache is still fresh, and a
+    // failure here must never surface as an error to the user.
+    api
+      .refreshWeather(false)
+      .then((updated) => {
+        if (updated) refresh();
+      })
+      .catch(() => {});
+
     const unlistenMarkAll = listen("mark-all-viewed", () => refresh());
-    const unlistenSettings = listen("open-settings", () => {
-      // A dedicated settings panel is a natural next addition; for now
-      // bring the window forward so the tray action feels responsive.
-    });
+    const unlistenSettings = listen("open-settings", () => setOverlay({ kind: "settings" }));
     return () => {
       unlistenMarkAll.then((f) => f());
       unlistenSettings.then((f) => f());
@@ -195,11 +219,13 @@ export default function App() {
           activeSpaceId={activeSpaceId}
           onSelectSpace={handleSelectSpace}
           onManageSpaces={() => setOverlay({ kind: "spaces" })}
+          onOpenSettings={() => setOverlay({ kind: "settings" })}
           onAddPlant={() => setOverlay({ kind: "add-plant" })}
           onTogglePin={handleTogglePin}
           onMinimize={handleMinimize}
         />
         <Tabs active={tab} dueCount={due.length} soonCount={soon.length} onChange={setTab} />
+        <WeatherStrip weather={weather} />
         <div className="rows">
           {tab === "today" && renderRows(due, "All done for today.")}
           {tab === "soon" && renderRows(soon, "Nothing coming up in the next few days.")}
@@ -260,6 +286,21 @@ export default function App() {
             }}
             onDelete={async (id) => {
               await api.deleteSpace(id);
+              await refresh();
+            }}
+          />
+        )}
+
+        {overlay.kind === "settings" && settings && (
+          <SettingsPanel
+            settings={settings}
+            onClose={() => setOverlay({ kind: "none" })}
+            onSave={async (next) => {
+              await api.updateSettings(next);
+              setSettings(next);
+              // A changed location invalidates the cached forecast, so
+              // force a refetch rather than waiting for the 6h window.
+              await api.refreshWeather(true).catch(() => {});
               await refresh();
             }}
           />

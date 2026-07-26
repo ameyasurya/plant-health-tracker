@@ -62,6 +62,7 @@ pub fn run() {
             commands::get_weather,
             commands::get_settings,
             commands::update_settings,
+            commands::is_autostart_enabled,
         ])
         .setup(|app| {
             let app_data_dir = app.path().app_data_dir()?;
@@ -73,6 +74,23 @@ pub fn run() {
             });
 
             setup_tray(app)?;
+
+            // Reconcile autostart with the stored preference. Earlier
+            // builds saved launch_at_startup but never told the OS, so an
+            // existing install can have the setting on while Windows knows
+            // nothing about it. Cheap to check, and it self-heals.
+            {
+                use tauri_plugin_autostart::ManagerExt;
+                let wanted = {
+                    let state = app.state::<AppState>();
+                    let store = state.store.lock().expect("store lock");
+                    store.load_settings().map(|s| s.launch_at_startup).unwrap_or(false)
+                };
+                let manager = app.autolaunch();
+                if manager.is_enabled().unwrap_or(false) != wanted {
+                    let _ = if wanted { manager.enable() } else { manager.disable() };
+                }
+            }
 
             let launched_hidden = std::env::args().any(|arg| arg == "--hidden");
             if let Some(window) = app.get_webview_window("main") {

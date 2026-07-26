@@ -3,10 +3,12 @@ import type {
   AllPlantsRow,
   CatalogEntry,
   EventView,
+  Location,
   NewPlant,
   PlantProfile,
   Settings,
   Space,
+  WeatherSummary,
 } from "./types";
 
 export const api = {
@@ -28,4 +30,9 @@ export const api = {
   deleteSpace: (spaceId: string) => invoke<void>("delete_space", { spaceId }),
   getSettings: () => invoke<Settings>("get_settings"),
   updateSettings: (settings: Settings) => invoke<void>("update_settings", { settings }),
+  searchPlaces: (query: string) => invoke<Location[]>("search_places", { query }),
+  detectLocation: () => invoke<Location>("detect_location"),
+  refreshWeather: (force = false) => invoke<boolean>("refresh_weather", { force }),
+  getWeather: () => invoke<WeatherSummary | null>("get_weather"),
+  isAutostartEnabled: () => invoke<boolean>("is_autostart_enabled"),
 };

@@ -34,6 +34,25 @@ export interface Space {
   name: string;
 }
 
+export interface Location {
+  label: string;
+  latitude: number;
+  longitude: number;
+  /** IANA name, e.g. "Asia/Kolkata". */
+  timezone: string;
+  country_code: string;
+}
+
+export interface WeatherSummary {
+  location_label: string;
+  today_max_c: number | null;
+  today_min_c: number | null;
+  recent_rain_mm: number;
+  rained_recently: boolean;
+  fetched_at: string | null;
+  stale: boolean;
+}
+
 export interface PlantProfile {
   id: string;
   common_name: string;
@@ -111,6 +130,9 @@ export interface Settings {
   last_digest_sent_on: string | null;
   /** null means "show every space". */
   active_space_id: string | null;
+  /** null until location setup is completed. */
+  location: Location | null;
+  weather_enabled: boolean;
 }
 
 export type Tab = "today" | "soon" | "all";

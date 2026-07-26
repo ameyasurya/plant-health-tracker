@@ -7,6 +7,7 @@ interface Props {
   activeSpaceId: string | null;
   onSelectSpace: (spaceId: string | null) => void;
   onManageSpaces: () => void;
+  onOpenSettings: () => void;
   onAddPlant: () => void;
   onTogglePin: () => void;
   onMinimize: () => void;
@@ -18,6 +19,7 @@ export function TitleBar({
   activeSpaceId,
   onSelectSpace,
   onManageSpaces,
+  onOpenSettings,
   onAddPlant,
   onTogglePin,
   onMinimize,
@@ -97,6 +99,14 @@ export function TitleBar({
               }}
             >
               Manage spaces...
+            </button>
+            <button
+              onClick={() => {
+                setMenuOpen(false);
+                onOpenSettings();
+              }}
+            >
+              Settings...
             </button>
           </div>
         )}
