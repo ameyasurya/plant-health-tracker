@@ -103,6 +103,28 @@ To produce installers (MSI + NSIS) under `src-tauri/target/release/bundle/`:
 npm run tauri build
 ```
 
+### Icons
+
+`app-icon.svg` is the source artwork: the mascot's winking flower head,
+using the same shapes as the in-app character so the two can't drift
+apart. The pot is left out because it turns to mush at tray size. To
+regenerate the PNG and ICO set after editing it:
+
+```powershell
+npx tauri icon app-icon.svg
+```
+
+It also emits iOS, Android, macOS and Windows Store variants. Only the four
+files listed in `tauri.conf.json`'s `bundle.icon` are needed for the MSI and
+NSIS targets, so the rest can be deleted.
+
+The icon is embedded into a Windows resource by `build.rs`, and `tauri-build`
+only declares `rerun-if-changed` for `tauri.conf.json` and the capabilities
+directory. Left alone, that means editing an icon does not rebuild the
+resource and the binary keeps shipping the previous one, which is especially
+easy to miss in CI where `target/` is restored from cache. `build.rs`
+therefore watches `icons/` itself, so a regenerated icon rebuilds normally.
+
 ### UI preview without the desktop shell
 
 `preview.html` runs the real React UI in an ordinary browser tab, with the
@@ -148,9 +170,6 @@ catch-up, and atomic writes surviving a stray temp file.
 
 ## Known gaps
 
-- **The app icon is a placeholder:** a plain green ring rather than
-  anything plant-shaped. Cosmetic only; it appears in the Start menu,
-  taskbar and system tray.
 - **Windows only.** Nothing is deliberately platform-locked apart from the
   bundle targets and the autostart path, but it has only been built and run
   on Windows.
