@@ -63,6 +63,8 @@ pub fn run() {
             commands::get_settings,
             commands::update_settings,
             commands::is_autostart_enabled,
+            commands::set_pinned_on_top,
+            commands::set_active_space,
         ])
         .setup(|app| {
             let app_data_dir = app.path().app_data_dir()?;

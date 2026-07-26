@@ -641,7 +641,28 @@ pub fn update_settings(
     settings: Settings,
 ) -> Result<(), String> {
     let store = state.store.lock().map_err(|e| e.to_string())?;
-    let previous_autostart = store.load_settings().ok().map(|s| s.launch_at_startup);
+    let current = store.load_settings().map_err(|e| e.to_string())?;
+    let previous_autostart = Some(current.launch_at_startup);
+
+    // Only the fields the settings panel actually owns are taken from the
+    // client. Everything else is preserved from disk.
+    //
+    // This used to write the caller's whole Settings object, which meant a
+    // client holding a stale snapshot silently reverted unrelated fields --
+    // pinned_on_top could flip back to false on an unrelated save, leaving
+    // the widget unpinned and liable to get buried behind other windows.
+    let settings = Settings {
+        notification_time: settings.notification_time,
+        launch_at_startup: settings.launch_at_startup,
+        weather_enabled: settings.weather_enabled,
+        location: settings.location,
+        density_mode: settings.density_mode,
+        // Owned by the pin button and space switcher respectively, and by
+        // the reminder loop for the digest date.
+        pinned_on_top: current.pinned_on_top,
+        active_space_id: current.active_space_id,
+        last_digest_sent_on: current.last_digest_sent_on,
+    };
     store.save_settings(&settings).map_err(|e| e.to_string())?;
 
     // The setting used to be stored and then ignored, so toggling it did
@@ -659,6 +680,27 @@ fn apply_autostart(app: &tauri::AppHandle, enabled: bool) -> Result<(), String> 
     let manager = app.autolaunch();
     let result = if enabled { manager.enable() } else { manager.disable() };
     result.map_err(|e| format!("couldn't change the startup setting: {e}"))
+}
+
+/// Single-field writes for the two settings that are toggled from the
+/// widget chrome rather than the settings panel.
+///
+/// These exist so a click on the pin or a space change can't carry a whole
+/// stale Settings object with it and revert something else.
+#[tauri::command]
+pub fn set_pinned_on_top(state: tauri::State<AppState>, pinned: bool) -> Result<(), String> {
+    let store = state.store.lock().map_err(|e| e.to_string())?;
+    let mut settings = store.load_settings().map_err(|e| e.to_string())?;
+    settings.pinned_on_top = pinned;
+    store.save_settings(&settings).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn set_active_space(state: tauri::State<AppState>, space_id: Option<String>) -> Result<(), String> {
+    let store = state.store.lock().map_err(|e| e.to_string())?;
+    let mut settings = store.load_settings().map_err(|e| e.to_string())?;
+    settings.active_space_id = space_id;
+    store.save_settings(&settings).map_err(|e| e.to_string())
 }
 
 /// The registry is the source of truth for whether Windows will actually

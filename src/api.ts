@@ -35,4 +35,6 @@ export const api = {
   refreshWeather: (force = false) => invoke<boolean>("refresh_weather", { force }),
   getWeather: () => invoke<WeatherSummary | null>("get_weather"),
   isAutostartEnabled: () => invoke<boolean>("is_autostart_enabled"),
+  setPinnedOnTop: (pinned: boolean) => invoke<void>("set_pinned_on_top", { pinned }),
+  setActiveSpace: (spaceId: string | null) => invoke<void>("set_active_space", { spaceId }),
 };

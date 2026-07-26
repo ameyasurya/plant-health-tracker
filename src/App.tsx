@@ -168,20 +168,23 @@ export default function App() {
     await refresh();
   }
 
+  // Both of these write a single field rather than the whole Settings
+  // object. Sending the full object from here meant a stale snapshot could
+  // silently revert unrelated settings -- most visibly turning pin back
+  // off, which then let the widget get buried behind other windows.
   async function handleSelectSpace(spaceId: string | null) {
     if (!settings) return;
-    const next = { ...settings, active_space_id: spaceId };
-    setSettings(next);
-    await api.updateSettings(next);
+    setSettings({ ...settings, active_space_id: spaceId });
+    await api.setActiveSpace(spaceId);
     await refresh();
   }
 
   async function handleTogglePin() {
     if (!settings) return;
-    const next = { ...settings, pinned_on_top: !settings.pinned_on_top };
-    await appWindow.setAlwaysOnTop(next.pinned_on_top);
-    await api.updateSettings(next);
-    setSettings(next);
+    const pinned = !settings.pinned_on_top;
+    await appWindow.setAlwaysOnTop(pinned);
+    await api.setPinnedOnTop(pinned);
+    setSettings({ ...settings, pinned_on_top: pinned });
   }
 
   async function handleMinimize() {

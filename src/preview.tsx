@@ -269,6 +269,12 @@ mockIPC((cmd, payload) => {
         : null;
     case "refresh_weather":
       return false;
+    case "set_pinned_on_top":
+      settings = { ...settings, pinned_on_top: args.pinned as boolean };
+      return undefined;
+    case "set_active_space":
+      settings = { ...settings, active_space_id: (args.spaceId as string | null) ?? null };
+      return undefined;
     case "is_autostart_enabled":
       return settings.launch_at_startup;
     case "detect_location":
