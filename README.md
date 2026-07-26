@@ -114,7 +114,10 @@ Tauri IPC layer replaced by mocks:
 npm run dev
 ```
 
-then open `http://localhost:1420/preview.html`.
+then open the `/preview.html` path on the URL Vite prints — by default
+<http://localhost:1420/preview.html>. That port is pinned in
+`vite.config.ts` with `strictPort`, because `tauri.conf.json` points
+`devUrl` at it; Vite fails rather than quietly moving to another port.
 
 The native window hot-reloads frontend edits too, so this isn't about
 iteration speed. It's useful because it:
