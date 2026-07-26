@@ -103,6 +103,11 @@ To produce installers (MSI + NSIS) under `src-tauri/target/release/bundle/`:
 npm run tauri build
 ```
 
+Use that rather than a bare `cargo build --release`. Plain cargo omits the
+`custom-protocol` feature, so the binary looks fine but still expects the
+Vite dev server: launched on its own it shows "localhost refused to
+connect" instead of the widget.
+
 ### Icons
 
 `app-icon.svg` is the source artwork: the mascot's winking flower head,
