@@ -27,6 +27,14 @@ tokio = { version = "1", features = ["rt-multi-thread", "time", "macros", "sync"
 uuid = { version = "1", features = ["v4", "serde"] }
 thiserror = "1"
 
+# The widget is a transparent, undecorated window. macOS ignores that
+# silently unless Tauri's private-API path is compiled in, so the window
+# would render with an opaque system background instead of the rounded
+# card. The macOSPrivateApi flag in tauri.macos.conf.json is the other
+# half of the switch. Target-gated, so Windows builds pull in nothing new.
+[target.'cfg(target_os = "macos")'.dependencies]
+tauri = { version = "2", features = ["macos-private-api"] }
+
 [dev-dependencies]
 # used only by src-tauri/tests/schedule_tests.rs
 tokio = { version = "1", features = ["rt-multi-thread", "macros"] }

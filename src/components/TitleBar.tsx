@@ -5,6 +5,11 @@ import type { Space } from "../types";
 /** Anything that should behave as a click rather than a drag handle. */
 const INTERACTIVE = "button, input, select, textarea, a, [role='button']";
 
+/** Unpinning sends the widget behind other windows, and the way back is a
+ *  taskbar button on Windows but a Dock one on macOS. Naming the wrong one
+ *  in the tooltip would send people looking in the wrong place. */
+const RESTORE_TARGET = navigator.userAgent.includes("Mac") ? "Dock" : "taskbar";
+
 /**
  * Drags the window from the title bar.
  *
@@ -146,7 +151,7 @@ export function TitleBar({
           aria-label={pinned ? "Unpin from top" : "Pin on top"}
           title={
             pinned
-              ? "Unpin so other windows can cover this. Click its taskbar button to bring it back"
+              ? `Unpin so other windows can cover this. Click its ${RESTORE_TARGET} button to bring it back`
               : "Pin on top, keeping the widget above other windows"
           }
           onClick={onTogglePin}
