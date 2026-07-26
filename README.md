@@ -97,7 +97,7 @@ npm install
 npm run tauri dev
 ```
 
-To produce installers (MSI + NSIS) under `src-tauri/target/release/bundle/`:
+To produce the installer under `src-tauri/target/release/bundle/nsis/`:
 
 ```powershell
 npm run tauri build
@@ -120,8 +120,8 @@ npx tauri icon app-icon.svg
 ```
 
 It also emits iOS, Android, macOS and Windows Store variants. Only the four
-files listed in `tauri.conf.json`'s `bundle.icon` are needed for the MSI and
-NSIS targets, so the rest can be deleted.
+files listed in `tauri.conf.json`'s `bundle.icon` are needed, so the rest can
+be deleted.
 
 The icon is embedded into a Windows resource by `build.rs`, and `tauri-build`
 only declares `rerun-if-changed` for `tauri.conf.json` and the capabilities
