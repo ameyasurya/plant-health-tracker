@@ -194,8 +194,19 @@ export default function App() {
   const activeSpaceId = settings?.active_space_id ?? null;
   const defaultSpaceId = activeSpaceId ?? spaces[0]?.id ?? "balcony";
 
+  // "All done for today" is only true if there was something to do. With no
+  // plants in view -- a brand new install, or an empty space -- it claims
+  // credit for work that doesn't exist and gives the user nothing to act
+  // on, so say what's actually going on and point at the + button.
+  const noPlantsHere = all.length === 0;
+  const nothingHereText = activeSpaceId
+    ? "No plants in this space yet — press + to add one."
+    : "No plants yet — press + to add your first.";
+
   function renderRows(events: EventView[], emptyText: string) {
-    if (events.length === 0) return <EmptyState text={emptyText} plants={all} />;
+    if (events.length === 0) {
+      return <EmptyState text={noPlantsHere ? nothingHereText : emptyText} plants={all} />;
+    }
     return events.map((e) => (
       <ActionableRow
         key={e.id}
@@ -234,7 +245,7 @@ export default function App() {
           {tab === "soon" && renderRows(soon, "Nothing coming up in the next few days.")}
           {tab === "all" &&
             (all.length === 0 ? (
-              <EmptyState text="No plants in this space yet." plants={all} />
+              <EmptyState text={nothingHereText} plants={all} />
             ) : (
               all.map((r) => (
                 <AllPlantsListRow key={r.plant_id} row={r} onEdit={() => handleShowDetails(r.plant_id)} />

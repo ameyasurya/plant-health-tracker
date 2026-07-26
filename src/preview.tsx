@@ -129,13 +129,25 @@ function isLive(e: MockEvent) {
   return e.status === "pending" || e.status === "snoozed";
 }
 
+/**
+ * Mirrors the Rust `in_active_space` filter. Without this the preview
+ * showed every plant regardless of the selected space, which meant it
+ * couldn't reproduce an empty space at all -- and a mock that behaves
+ * differently from the real backend is worse than no mock.
+ */
+function inActiveSpace(plant: MockPlant): boolean {
+  const active = settings.active_space_id;
+  if (!active) return true;
+  return (plant.spaceId ?? "balcony") === active;
+}
+
 function listDueAndSoon(): { due: EventView[]; soon: EventView[] } {
   const due: EventView[] = [];
   const soon: EventView[] = [];
   for (const event of events) {
     if (!isLive(event)) continue;
     const plant = PLANTS.find((p) => p.id === event.plantId);
-    if (!plant) continue;
+    if (!plant || !inActiveSpace(plant)) continue;
     const view = buildEventView(event, plant);
     if (view.bucket === "overdue" || view.bucket === "today") due.push(view);
     else if (event.dueOffset <= 5) soon.push(view);
@@ -146,7 +158,7 @@ function listDueAndSoon(): { due: EventView[]; soon: EventView[] } {
 }
 
 function listAllPlants(): AllPlantsRow[] {
-  const rows = PLANTS.map((plant) => {
+  const rows = PLANTS.filter(inActiveSpace).map((plant) => {
     const waterEvents = events.filter((e) => e.plantId === plant.id && e.taskType === "water" && isLive(e));
     const fertEvents = events.filter((e) => e.plantId === plant.id && e.taskType === "fertilize" && isLive(e));
     const water = waterEvents.length ? Math.min(...waterEvents.map((e) => e.dueOffset)) : 0;
