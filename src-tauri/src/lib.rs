@@ -77,10 +77,18 @@ pub fn run() {
 
             setup_tray(app)?;
 
-            // Reconcile autostart with the stored preference. Earlier
-            // builds saved launch_at_startup but never told the OS, so an
-            // existing install can have the setting on while Windows knows
-            // nothing about it. Cheap to check, and it self-heals.
+            // Reconcile autostart with the stored preference. Earlier builds
+            // saved launch_at_startup but never told the OS, so an existing
+            // install can have the setting on while Windows knows nothing
+            // about it.
+            //
+            // When it should be on we re-register unconditionally rather
+            // than skipping if `is_enabled()` is already true: that only
+            // reports whether *an* entry exists, not whether it points at
+            // this executable. A registration made from a different path
+            // (a dev build, or an older install location) would otherwise
+            // survive forever and silently stop working once that path went
+            // away. Re-registering is idempotent and rewrites the path.
             {
                 use tauri_plugin_autostart::ManagerExt;
                 let wanted = {
@@ -89,9 +97,13 @@ pub fn run() {
                     store.load_settings().map(|s| s.launch_at_startup).unwrap_or(false)
                 };
                 let manager = app.autolaunch();
-                if manager.is_enabled().unwrap_or(false) != wanted {
-                    let _ = if wanted { manager.enable() } else { manager.disable() };
-                }
+                let _ = if wanted {
+                    manager.enable()
+                } else if manager.is_enabled().unwrap_or(false) {
+                    manager.disable()
+                } else {
+                    Ok(())
+                };
             }
 
             let launched_hidden = std::env::args().any(|arg| arg == "--hidden");
