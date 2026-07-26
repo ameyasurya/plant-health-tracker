@@ -107,16 +107,29 @@ npm run tauri build
 
 ### UI preview without the desktop shell
 
-`preview.html` runs the real React UI in a browser tab against a mocked
-Tauri IPC layer, which is much faster for styling work than relaunching the
-native window:
+`preview.html` runs the real React UI in an ordinary browser tab, with the
+Tauri IPC layer replaced by mocks:
 
 ```powershell
 npm run dev
 ```
 
-then open `http://localhost:1420/preview.html`. Dev-only; not part of the
-production build.
+then open `http://localhost:1420/preview.html`.
+
+The native window hot-reloads frontend edits too, so this isn't about
+iteration speed. It's useful because it:
+
+- **needs no Rust toolchain** — `npm run dev` is plain Vite, so UI work
+  doesn't require MSVC build tools or a compiled backend;
+- **can't touch your real data**, since every command is mocked, which
+  makes it safe to try destructive paths like deleting plants;
+- **fakes states that are awkward to reach for real**, such as overdue
+  plants or an empty list;
+- gives you normal browser devtools and a resizable frame for checking
+  layout at the window's minimum size.
+
+It is dev-only: Vite builds `index.html` alone, so neither `preview.html`
+nor its mock code is in the shipped bundle.
 
 ### Tests
 
