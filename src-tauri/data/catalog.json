@@ -14,7 +14,7 @@
     "fertilize_group": "foliage",
     "typically_hanging": true,
     "uses": "Hardy trailing vine for hanging pots and shelves; tolerates low light well.",
-    "significance": "Among the most forgiving houseplants there is -- often the first plant a new grower keeps alive.",
+    "significance": "Among the most forgiving houseplants there is; often the first plant a new grower keeps alive.",
     "fun_fact": "In the wild it climbs trees and its leaves grow enormous; indoors they stay small because it never gets to climb."
   },
   {
@@ -49,7 +49,7 @@
     "typically_hanging": false,
     "uses": "Statement foliage plant for a bright corner; grows large given room.",
     "significance": "The defining houseplant of the last decade, though it has been a conservatory favourite since Victorian times.",
-    "fun_fact": "Its ripe fruit is genuinely edible and tastes like a fruit salad -- unripe, it burns the mouth badly."
+    "fun_fact": "Its ripe fruit is genuinely edible and tastes like a fruit salad; unripe, it burns the mouth badly."
   },
   {
     "id": "monstera-adansonii",
@@ -98,7 +98,7 @@
     "typically_hanging": false,
     "uses": "Shade-tolerant foliage with white flower spathes; good for rooms with little direct sun.",
     "significance": "The white spathe reads as a flag of truce, which is where the name comes from; commonly given as a sympathy plant in the West.",
-    "fun_fact": "It wilts dramatically when thirsty and recovers within hours of watering -- effectively a built-in moisture gauge."
+    "fun_fact": "It wilts dramatically when thirsty and recovers within hours of watering, effectively a built-in moisture gauge."
   },
   {
     "id": "spider-plant",
@@ -115,7 +115,7 @@
     "typically_hanging": true,
     "uses": "Fast, forgiving trailer for hanging baskets; endlessly propagatable.",
     "significance": "A staple of 1970s interiors that never really went away.",
-    "fun_fact": "The dangling plantlets are clones ready to root -- one plant can furnish a whole house for free."
+    "fun_fact": "The dangling plantlets are clones ready to root, so one plant can furnish a whole house for free."
   },
   {
     "id": "rubber-plant",
@@ -147,7 +147,7 @@
     "typically_hanging": false,
     "uses": "Sculptural indoor tree with large violin-shaped leaves.",
     "significance": "The interiors-magazine plant of the 2010s, and notoriously fussier than it looks.",
-    "fun_fact": "It hates being moved -- rotating or relocating it often triggers a round of leaf drop."
+    "fun_fact": "It hates being moved: rotating or relocating it often triggers a round of leaf drop."
   },
   {
     "id": "heartleaf-philodendron",
@@ -246,7 +246,7 @@
     "typically_hanging": false,
     "uses": "Dramatic large-leaved foliage that anchors a bright corner.",
     "significance": "Named after Queen Charlotte of Mecklenburg-Strelitz; native to South Africa.",
-    "fun_fact": "Those huge leaves split along the veins on purpose -- it is wind adaptation, not damage."
+    "fun_fact": "Those huge leaves split along the veins on purpose. It is wind adaptation, not damage."
   },
   {
     "id": "umbrella-tree",
@@ -263,7 +263,7 @@
     "typically_hanging": false,
     "uses": "Structural evergreen foliage; takes pruning well and keeps a compact shape.",
     "significance": "One of the most widely grown foliage plants worldwide, valued for tolerating low light and irregular care.",
-    "fun_fact": "Its leaflets radiate from a single point like the spokes of an umbrella -- hence the name."
+    "fun_fact": "Its leaflets radiate from a single point like the spokes of an umbrella, hence the name."
   },
   {
     "id": "english-ivy",
@@ -279,7 +279,7 @@
     "typically_hanging": true,
     "uses": "Trailing or climbing evergreen for hanging pots and screening.",
     "significance": "An old European symbol of fidelity and eternal life, wound into wreaths and crowns.",
-    "fun_fact": "Ivy leads two lives -- a lobed climbing form, and a mature shrubby form with plain leaves that finally flowers."
+    "fun_fact": "Ivy leads two lives: a lobed climbing form, and a mature shrubby form with plain leaves that finally flowers."
   },
   {
     "id": "turtle-vine",
@@ -296,7 +296,7 @@
     "typically_hanging": true,
     "uses": "Fast-spreading trailing groundcover, ideal for hanging baskets.",
     "significance": "A popular low-maintenance 'spiller' for the edges of mixed container plantings.",
-    "fun_fact": "The tiny overlapping leaves are said to resemble a turtle's shell -- hence the name."
+    "fun_fact": "The tiny overlapping leaves are said to resemble a turtle's shell, hence the name."
   },
   {
     "id": "peperomia",
@@ -330,7 +330,7 @@
     "typically_hanging": false,
     "uses": "Boldly patterned foliage for humid, shaded spots.",
     "significance": "Leaves of some species are still used across South America to wrap food.",
-    "fun_fact": "It folds its leaves upward at night and lowers them at dawn -- you can hear the rustle in a quiet room."
+    "fun_fact": "It folds its leaves upward at night and lowers them at dawn; you can hear the rustle in a quiet room."
   },
   {
     "id": "croton",
@@ -347,7 +347,7 @@
     "typically_hanging": false,
     "uses": "Vivid multicoloured foliage for a very bright spot.",
     "significance": "Widely planted as ornamental hedging across the tropics.",
-    "fun_fact": "The colours only develop in strong light -- in shade it quietly reverts to plain green."
+    "fun_fact": "The colours only develop in strong light; in shade it quietly reverts to plain green."
   },
   {
     "id": "dracaena-marginata",
@@ -415,7 +415,7 @@
     "typically_hanging": false,
     "uses": "Compact rosette succulent for sunny sills and shallow pots.",
     "significance": "Named after Atanasio Echeverria, an 18th-century Mexican botanical illustrator.",
-    "fun_fact": "The chalky bloom on the leaves is a natural sunscreen -- rubbing it off does not grow back."
+    "fun_fact": "The chalky bloom on the leaves is a natural sunscreen, and rubbing it off does not grow back."
   },
   {
     "id": "christmas-cactus",
@@ -481,7 +481,7 @@
     "typically_hanging": false,
     "uses": "Culinary herb for Mediterranean and Southeast Asian cooking; pick often to keep it bushy.",
     "significance": "Carried from India to the Mediterranean along ancient spice routes.",
-    "fun_fact": "Pinching out the flower buds keeps the leaves sweet -- once it blooms, the flavour turns bitter."
+    "fun_fact": "Pinching out the flower buds keeps the leaves sweet; once it blooms, the flavour turns bitter."
   },
   {
     "id": "tulsi",
@@ -515,7 +515,7 @@
     "typically_hanging": false,
     "uses": "Culinary herb for chutneys, drinks and salads; thrives with frequent cutting.",
     "significance": "One of the oldest cultivated herbs, recorded in Greek, Roman and Ayurvedic texts.",
-    "fun_fact": "Always keep it in its own pot -- its runners will colonise and smother anything sharing the container."
+    "fun_fact": "Always keep it in its own pot: its runners will colonise and smother anything sharing the container."
   },
   {
     "id": "curry-leaf",
@@ -533,7 +533,7 @@
     "typically_hanging": false,
     "uses": "Aromatic leaves used as a staple tempering ingredient in South Indian cooking.",
     "significance": "A near-essential kitchen-garden plant in Indian homes, picked fresh straight off the plant.",
-    "fun_fact": "It belongs to the citrus family -- crush a leaf and you can catch a faint citrus note beneath the spice."
+    "fun_fact": "It belongs to the citrus family, so crush a leaf and you can catch a faint citrus note beneath the spice."
   },
   {
     "id": "rosemary",
@@ -549,7 +549,7 @@
     "typically_hanging": false,
     "uses": "Woody culinary herb for roasting and breads; prefers to dry out between waterings.",
     "significance": "A long-standing emblem of remembrance, traditionally carried at funerals and weddings alike.",
-    "fun_fact": "Its name comes from Latin for 'dew of the sea' -- it grows wild on Mediterranean coastal cliffs."
+    "fun_fact": "Its name comes from Latin for 'dew of the sea', after the Mediterranean coastal cliffs it grows wild on."
   },
   {
     "id": "thyme",
@@ -633,7 +633,7 @@
     "typically_hanging": false,
     "uses": "Culinary herb and garnish; cut outer stems first and it keeps producing.",
     "significance": "Used by the Greeks to crown athletes long before it was considered food.",
-    "fun_fact": "It is biennial -- it makes leaves the first year, then bolts to seed and dies in the second."
+    "fun_fact": "It is biennial: it makes leaves the first year, then bolts to seed and dies in the second."
   },
   {
     "id": "coriander",
@@ -666,7 +666,7 @@
     "fertilize_group": "herb_succulent",
     "typically_hanging": false,
     "uses": "Aromatic leaves used to scent sugars, syrups and soaps; grown for fragrance over flowers.",
-    "significance": "Victorian gardeners collected dozens of scents -- rose, lemon, mint, nutmeg -- as parlour plants.",
+    "significance": "Victorian gardeners collected dozens of scents (rose, lemon, mint, nutmeg) as parlour plants.",
     "fun_fact": "The fragrance is in the leaves, not the flowers, and only releases when you brush or rub them."
   },
   {
@@ -683,7 +683,7 @@
     "typically_hanging": false,
     "uses": "Ornamental screening along railings and walls; thrives on heat and neglect once established.",
     "significance": "Named after the French navigator Louis Antoine de Bougainville, whose 1760s voyage first recorded it in Brazil.",
-    "fun_fact": "The papery pink 'petals' are bracts -- the real flowers are the tiny white tubes inside them."
+    "fun_fact": "The papery pink 'petals' are bracts; the real flowers are the tiny white tubes inside them."
   },
   {
     "id": "hibiscus",
@@ -755,7 +755,7 @@
     "typically_hanging": false,
     "uses": "Flowers steeped into a vivid blue tea, and used as a natural food colouring.",
     "significance": "Offered in worship in India and long grown as a soil-enriching cover crop.",
-    "fun_fact": "Its blue tea turns pink the instant you add lemon -- the pigment is a natural pH indicator."
+    "fun_fact": "Its blue tea turns pink the instant you add lemon, because the pigment is a natural pH indicator."
   },
   {
     "id": "marigold",
@@ -789,7 +789,7 @@
     "typically_hanging": false,
     "uses": "Ornamental blooms; petals used in rose water, gulkand and perfumery.",
     "significance": "Cultivated for well over 5,000 years and among the most symbolically loaded flowers anywhere.",
-    "fun_fact": "Rose 'thorns' are technically prickles -- outgrowths of the skin, not modified stems."
+    "fun_fact": "Rose 'thorns' are technically prickles: outgrowths of the skin, not modified stems."
   },
   {
     "id": "orchid-phalaenopsis",
@@ -806,7 +806,7 @@
     "typically_hanging": false,
     "uses": "Long-lasting elegant blooms for a bright indoor spot.",
     "significance": "Once a symbol of wealth, now mass-produced by tissue culture and sold in supermarkets.",
-    "fun_fact": "It is an epiphyte -- its roots want air, not soil, which is why it is potted in bark chips."
+    "fun_fact": "It is an epiphyte, so its roots want air rather than soil, which is why it is potted in bark chips."
   },
   {
     "id": "anthurium",
@@ -857,7 +857,7 @@
     "typically_hanging": false,
     "uses": "Fruit for the kitchen, plus fragrant blossom and evergreen aromatic leaves.",
     "significance": "Hung at doorways and used in rituals across India; citrus travelled west along ancient trade routes.",
-    "fun_fact": "Nearly all familiar citrus are hybrids of just a few wild ancestors -- citron, pomelo and mandarin."
+    "fun_fact": "Nearly all familiar citrus are hybrids of just a few wild ancestors: citron, pomelo and mandarin."
   },
   {
     "id": "orange",
@@ -892,7 +892,7 @@
     "typically_hanging": false,
     "uses": "Productive container crop; a single plant can supply a kitchen for months.",
     "significance": "Native to the Americas and absent from Indian cooking until Portuguese traders arrived in the 1500s.",
-    "fun_fact": "Birds feel no heat from capsaicin, which is exactly the point -- they spread the seeds, mammals do not."
+    "fun_fact": "Birds feel no heat from capsaicin, which is exactly the point: they spread the seeds, mammals do not."
   },
   {
     "id": "tomato",
@@ -908,7 +908,7 @@
     "typically_hanging": false,
     "uses": "Heavy-cropping container vegetable; needs steady water to avoid split fruit.",
     "significance": "Long shunned in Europe as poisonous because of its nightshade family relatives.",
-    "fun_fact": "Uneven watering causes blossom end rot -- it is a calcium transport failure, not a disease."
+    "fun_fact": "Uneven watering causes blossom end rot, which is a calcium transport failure rather than a disease."
   },
   {
     "id": "strawberry",
@@ -924,7 +924,7 @@
     "typically_hanging": true,
     "uses": "Compact fruiting plant, well suited to hanging baskets and balcony rails.",
     "significance": "The garden strawberry is an 18th-century French hybrid of a North American and a Chilean species.",
-    "fun_fact": "It is not botanically a berry -- the red flesh is swollen stem tissue and the 'seeds' outside are the true fruits."
+    "fun_fact": "It is not botanically a berry: the red flesh is swollen stem tissue and the 'seeds' outside are the true fruits."
   },
   {
     "id": "desert-rose",
@@ -957,7 +957,7 @@
     "typically_hanging": false,
     "uses": "Braided-trunk indoor tree, tolerant of average indoor light.",
     "significance": "Popular in feng shui practice as a prosperity plant, usually sold with three or five braided stems.",
-    "fun_fact": "The braid is done by growers while the stems are young and green -- it does not grow that way."
+    "fun_fact": "The braid is done by growers while the stems are young and green; it does not grow that way."
   },
   {
     "id": "ficus-benjamina",
@@ -973,7 +973,7 @@
     "typically_hanging": false,
     "uses": "Fine-leaved indoor tree for a bright position.",
     "significance": "The official tree of Bangkok, and a fixture of shopping centres worldwide.",
-    "fun_fact": "It drops a flush of leaves whenever conditions change -- moving it across the room can be enough."
+    "fun_fact": "It drops a flush of leaves whenever conditions change; moving it across the room can be enough."
   },
   {
     "id": "purple-aster",

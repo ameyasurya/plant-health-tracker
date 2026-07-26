@@ -30,7 +30,7 @@ export function SpacesPanel({ spaces, onClose, onAdd, onRename, onDelete }: Prop
 
   return (
     <Panel title="Spaces" onClose={onClose}>
-      <p className="panel-hint">Group plants by where they live -- balcony, kitchen, bedroom.</p>
+      <p className="panel-hint">Group plants by where they live: balcony, kitchen, bedroom.</p>
 
       <ul className="space-list">
         {spaces.map((s) => (
@@ -83,7 +83,7 @@ export function SpacesPanel({ spaces, onClose, onAdd, onRename, onDelete }: Prop
                   title={
                     spaces.length <= 1
                       ? "You need at least one space"
-                      : `Delete "${s.name}" — its plants move to another space, nothing is lost`
+                      : `Delete "${s.name}". Its plants move to another space, nothing is lost`
                   }
                   onClick={() => run(() => onDelete(s.id))}
                 >

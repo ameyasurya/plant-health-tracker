@@ -135,7 +135,7 @@ export function AddPlantForm({ spaces, defaultSpaceId, onCancel, onSave }: Props
           ))}
           {results.length === 0 && query.trim() && (
             <li className="catalog-empty">
-              Nothing matches that -- use <strong>Add manually</strong> to enter it yourself.
+              Nothing matches that. Use <strong>Add manually</strong> to enter it yourself.
             </li>
           )}
         </ul>
@@ -151,7 +151,7 @@ export function AddPlantForm({ spaces, defaultSpaceId, onCancel, onSave }: Props
     <Panel title="Add a plant" onClose={onCancel}>
       {catalogId && (
         <div className="catalog-badge">
-          Care details filled in from the catalog -- adjust anything that doesn't match your plant.
+          Care details filled in from the catalog. Adjust anything that doesn't match your plant.
         </div>
       )}
 

@@ -59,7 +59,7 @@ export function TitleBar({
       <div className="space-switcher" ref={menuRef}>
         <button
           className="space-btn"
-          title={`Showing: ${activeName ?? "All spaces"} — click to switch`}
+          title={`Showing: ${activeName ?? "All spaces"}. Click to switch`}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((v) => !v)}
         >
@@ -120,8 +120,8 @@ export function TitleBar({
           aria-label={pinned ? "Unpin from top" : "Pin on top"}
           title={
             pinned
-              ? "Unpin — other windows can cover this; reopen from the tray icon if it gets buried"
-              : "Pin on top — keep the widget above other windows"
+              ? "Unpin so other windows can cover this. Reopen from the tray icon if it gets buried"
+              : "Pin on top, keeping the widget above other windows"
           }
           onClick={onTogglePin}
           className={pinned ? "icon-btn active" : "icon-btn"}
@@ -130,7 +130,7 @@ export function TitleBar({
         </button>
         <button
           aria-label="Minimize to tray"
-          title="Hide to tray — reopen from the tray icon"
+          title="Hide to tray. Reopen from the tray icon"
           onClick={onMinimize}
           className="icon-btn"
         >

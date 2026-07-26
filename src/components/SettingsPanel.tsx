@@ -90,7 +90,7 @@ export function SettingsPanel({ settings, onClose, onSave }: Props) {
         <h4>Location</h4>
         <p className="panel-hint">
           Used for your local day and to adjust watering to real rainfall and heat. Everything works
-          without it -- the schedule just falls back to month-based seasons.
+          without it; the schedule just falls back to month-based seasons.
         </p>
 
         {location ? (
@@ -181,7 +181,7 @@ export function SettingsPanel({ settings, onClose, onSave }: Props) {
         </label>
         {osAutostart !== null && osAutostart !== settings.launch_at_startup && (
           <div className="settings-note">
-            Windows currently has this {osAutostart ? "enabled" : "disabled"} -- saving will apply
+            Windows currently has this {osAutostart ? "enabled" : "disabled"}. Saving will apply
             your choice.
           </div>
         )}

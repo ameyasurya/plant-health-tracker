@@ -2,11 +2,9 @@
 
 A small, frameless Windows desktop widget that keeps your plants alive. It
 tracks watering and feeding, and adjusts the schedule to the season and to
-your local weather — so a week of rain doesn't have it nagging you to water.
+your local weather, so a week of rain doesn't have it nagging you to water.
 
-<!-- Screenshot goes here. Save it as docs/screenshot.png and uncomment:
-![The widget on the desktop](docs/screenshot.png)
--->
+![Three widgets on a desktop: one listing overdue plants with a cross mascot, one all-clear with a smiling mascot, and one showing an undo confirmation](docs/screenshot.png)
 
 
 ## Why
@@ -14,14 +12,14 @@ your local weather — so a week of rain doesn't have it nagging you to water.
 Plant care apps are phone apps, and a phone app is easy to ignore. This
 lives on the desktop as a small always-on card: if something needs water
 today, it's already on screen. The mascot's mood mirrors the worst state in
-the list — happy when nothing's due, wilting when something's overdue — so
+the list: happy when nothing's due, wilting when something's overdue, so
 it's glanceable without reading a single row.
 
 ## Install
 
 1. Download the latest `.exe` installer from
    [Releases](../../releases) and run it.
-2. **Windows will warn you the app is unsigned** — "Windows protected your
+2. **Windows will warn you the app is unsigned**, showing "Windows protected your
    PC". That's expected: a code-signing certificate costs money and this is
    a free hobby project. Click **More info** → **Run anyway**.
 3. On first launch your plant list is empty. Press **+** to add plants, and
@@ -34,7 +32,7 @@ described below.
 
 - **Add plants from a built-in catalog** of ~60 common houseplants, herbs,
   succulents and flowering plants. Search by common name, scientific name,
-  or local name — "kadi patta", "money plant", "mother in law's tongue" all
+  or local name. "kadi patta", "money plant", "mother in law's tongue" all
   work. Picking one fills in its light, watering and feeding needs, so you
   don't have to know what a "moisture class" is. Anything not in the
   catalog can be added manually.
@@ -48,8 +46,8 @@ described below.
   per plant, not a pile of stacked missed cycles. Marking something done
   reschedules from *when you actually did it*, so being late never drags
   the schedule permanently behind.
-- **Spaces.** Group plants by where they live — balcony, kitchen, bedroom —
-  and filter to one at a time.
+- **Spaces.** Group plants by where they live (balcony, kitchen,
+  bedroom) and filter to one at a time.
 - **Undo on every action.** Done / snooze / skip hold for a few seconds
   before they're committed, so a mis-click costs nothing.
 - **Plant details** with uses, cultural background and a fun fact.
@@ -73,7 +71,7 @@ or account:
 | City search | [Open-Meteo geocoding](https://open-meteo.com/en/docs/geocoding-api) | Only while you type in the location search |
 | IP location | [ipwho.is](https://ipwho.is/) | **Only** when you press "Detect" |
 
-IP detection is never automatic — it sends your IP address to a third
+IP detection is never automatic, because it sends your IP address to a third
 party, so it sits behind a button you have to press.
 
 Turning off *"Use weather to adjust watering"* in Settings stops the app
@@ -88,10 +86,10 @@ Data lives in `%APPDATA%\com.ameya.plant-health-tracker\` as `plants.json`,
 
 Prerequisites:
 
-1. **Rust** — via [rustup.rs](https://rustup.rs). Restart your terminal after.
+1. **Rust**, via [rustup.rs](https://rustup.rs). Restart your terminal after.
 2. **Node.js** 18+.
 3. **Microsoft C++ Build Tools** with the *Desktop development with C++*
-   workload — Tauri needs the MSVC linker. See
+   workload, which provides the MSVC linker Tauri needs. See
    [Tauri prerequisites](https://v2.tauri.app/start/prerequisites/).
 
 ```powershell
@@ -114,7 +112,7 @@ Tauri IPC layer replaced by mocks:
 npm run dev
 ```
 
-then open the `/preview.html` path on the URL Vite prints — by default
+then open the `/preview.html` path on the URL Vite prints, by default
 <http://localhost:1420/preview.html>. That port is pinned in
 `vite.config.ts` with `strictPort`, because `tauri.conf.json` points
 `devUrl` at it; Vite fails rather than quietly moving to another port.
@@ -122,7 +120,7 @@ then open the `/preview.html` path on the URL Vite prints — by default
 The native window hot-reloads frontend edits too, so this isn't about
 iteration speed. It's useful because it:
 
-- **needs no Rust toolchain** — `npm run dev` is plain Vite, so UI work
+- **needs no Rust toolchain.** `npm run dev` is plain Vite, so UI work
   doesn't require MSVC build tools or a compiled backend;
 - **can't touch your real data**, since every command is mocked, which
   makes it safe to try destructive paths like deleting plants;
@@ -150,7 +148,7 @@ catch-up, and atomic writes surviving a stray temp file.
 
 ## Known gaps
 
-- **The app icon is a placeholder** — a plain green ring rather than
+- **The app icon is a placeholder:** a plain green ring rather than
   anything plant-shaped. Cosmetic only; it appears in the Start menu,
   taskbar and system tray.
 - **Windows only.** Nothing is deliberately platform-locked apart from the
@@ -164,4 +162,4 @@ catch-up, and atomic writes surviving a stray temp file.
 
 ## Licence
 
-MIT — see [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).

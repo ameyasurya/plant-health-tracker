@@ -70,7 +70,7 @@ export function PlantDetails({
 
       {plant.inferred && (
         <div className="detail-inferred">
-          Some care details for this plant were inferred -- worth confirming.
+          Some care details for this plant were inferred, so they are worth confirming.
         </div>
       )}
 

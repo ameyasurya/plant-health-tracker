@@ -154,7 +154,7 @@ export default function App() {
     scheduleAction(id, `Snoozed "${plantName}" 1 day`, () => api.snooze(id, 1));
   }
   function handleSkip(id: string, plantName: string) {
-    scheduleAction(id, `Skipped "${plantName}" -- soil still wet`, () => api.skipSoilWet(id));
+    scheduleAction(id, `Skipped "${plantName}", soil still wet`, () => api.skipSoilWet(id));
   }
 
   async function handleShowDetails(plantId: string) {
@@ -200,8 +200,8 @@ export default function App() {
   // on, so say what's actually going on and point at the + button.
   const noPlantsHere = all.length === 0;
   const nothingHereText = activeSpaceId
-    ? "No plants in this space yet — press + to add one."
-    : "No plants yet — press + to add your first.";
+    ? "No plants in this space yet. Press + to add one."
+    : "No plants yet. Press + to add your first.";
 
   function renderRows(events: EventView[], emptyText: string) {
     if (events.length === 0) {

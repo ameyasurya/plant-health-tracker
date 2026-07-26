@@ -139,7 +139,7 @@ export function AllPlantsListRow({ row, onEdit }: { row: AllPlantsRow; onEdit: (
         <div className="row-title ellipsis">
           {row.plant_name}
           {row.inferred && (
-            <span className="inferred-dot" title="Some care details were inferred -- worth confirming">
+            <span className="inferred-dot" title="Some care details were inferred, so they are worth confirming">
               *
             </span>
           )}
