@@ -124,6 +124,28 @@ pub enum DensityMode {
     Expanded,
 }
 
+/// A free-form checklist item.
+///
+/// Deliberately not tied to a plant or a space. The to-do list is the
+/// widget's general-purpose surface, and scoping it to a space would make
+/// it less useful without making it clearer.
+///
+/// Items are never auto-cleared. An unfinished item from an earlier day
+/// stays in the list and is marked as carried over, because silently
+/// deleting something the user typed is worse than a slightly untidy list.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Todo {
+    pub id: String,
+    pub text: String,
+    #[serde(default)]
+    pub done: bool,
+    /// Day the item was added, in the user's local calendar. Drives the
+    /// carried-over marker.
+    pub created_on: NaiveDate,
+    #[serde(default)]
+    pub completed_on: Option<NaiveDate>,
+}
+
 /// Where the user's plants live. Drives both the local calendar day and
 /// the weather lookup.
 ///
@@ -194,10 +216,11 @@ impl Default for Settings {
             notification_time: "08:00".to_string(),
             launch_at_startup: true,
             density_mode: DensityMode::Compact,
-            // Pinned by default: the window has no taskbar button
-            // (skipTaskbar), so an unpinned widget that loses focus gets
-            // buried under whatever Windows activates next with no obvious
-            // way back. A glanceable widget should stay glanceable.
+            // Pinned by default: an unpinned widget that loses focus gets
+            // buried under whatever Windows activates next, and a
+            // glanceable widget should stay glanceable. There is a taskbar
+            // button to get it back now, but that is a recovery path
+            // rather than a reason to default to hidden.
             pinned_on_top: true,
             last_digest_sent_on: None,
             active_space_id: None,

@@ -351,3 +351,94 @@ fn offline_with_no_weather_matches_the_original_month_only_schedule() {
         );
     }
 }
+
+/// The add-plant anchoring rule (see commands::add_plant).
+///
+/// A newly added plant used to have its first watering due the same day and
+/// its first feed a full cycle away, which quietly assumed it had just been
+/// fed and never watered. Given a stated last-care date the schedule is
+/// anchored to that instead, clamped so it can never open an event in the
+/// past.
+#[test]
+fn stated_care_history_anchors_the_first_due_date() {
+    let today = date(2026, 8, 10);
+    let plant = catalog::all()
+        .iter()
+        .map(|e| e.to_profile())
+        .find(|p| !p.is_hanging && matches!(p.moisture_class, plant_health_tracker_lib::models::MoistureClass::Drier))
+        .expect("catalog should contain a drought-tolerant potted plant");
+
+    let interval = water_interval_days(plant.moisture_class, season_for_month(today.month()), plant.is_hanging);
+    assert!(interval >= 2, "this test needs a plant whose interval leaves room to be partway through");
+
+    // Watered yesterday: due later than a plant with no history, which is
+    // due immediately.
+    let watered_yesterday = today - Duration::days(1);
+    let anchored = next_water_due(watered_yesterday, &plant).max(today);
+    assert!(anchored > today, "a plant watered yesterday should not be due today");
+    assert_eq!(anchored, watered_yesterday + Duration::days(interval));
+
+    // Watered long enough ago that the next watering already fell due: the
+    // clamp pulls it to today rather than backdating an overdue event.
+    let long_ago = today - Duration::days(interval + 30);
+    assert_eq!(next_water_due(long_ago, &plant).max(today), today);
+}
+
+/// "Not sure" must leave the original behaviour untouched, so the added
+/// question costs nothing for anyone who skips it.
+#[test]
+fn unknown_care_history_keeps_the_original_first_feed_schedule() {
+    let today = date(2026, 8, 10);
+    for plant in catalog::all().iter().map(|e| e.to_profile()).take(10) {
+        assert_eq!(
+            next_fertilize_due(today, &plant),
+            next_due(today, &plant, TaskType::Fertilize),
+            "no stated history must fall through to the unchanged schedule"
+        );
+    }
+}
+
+/// The off-schedule logging rule (see commands::log_care).
+///
+/// Only reminders due within five days are listed, so `mark_done` covers
+/// watering (intervals of one to seven days) but leaves most of a feeding
+/// cycle unreachable, since those cadences run 21 to 49 days. Logging a feed
+/// must reschedule from when it happened, not from today, or the correction
+/// would itself be wrong by however many days late the user was.
+#[test]
+fn logging_care_reschedules_from_when_it_happened() {
+    let today = date(2026, 8, 10);
+    let plant = catalog::all()
+        .iter()
+        .map(|e| e.to_profile())
+        .find(|p| matches!(p.fertilize_group, plant_health_tracker_lib::models::FertilizeGroup::Foliage))
+        .expect("catalog should contain a foliage plant");
+
+    let fed_three_days_ago = today - Duration::days(3);
+    let from_actual = next_fertilize_due(fed_three_days_ago, &plant).max(today);
+    let from_today = next_fertilize_due(today, &plant);
+
+    assert!(
+        from_actual < from_today,
+        "feeding logged three days late must come due sooner than one logged today"
+    );
+    assert_eq!(
+        (from_today - from_actual).num_days(),
+        3,
+        "the next feed should shift by exactly the reported delay"
+    );
+}
+
+/// Logging something very overdue must not open an event in the past, which
+/// would immediately read as overdue again the moment it was recorded.
+#[test]
+fn logging_long_overdue_care_never_schedules_into_the_past() {
+    let today = date(2026, 8, 10);
+    for plant in catalog::all().iter().map(|e| e.to_profile()).take(20) {
+        for task in [TaskType::Water, TaskType::Fertilize] {
+            let ages_ago = today - Duration::days(400);
+            let next = next_due(ages_ago, &plant, task).max(today);
+            assert!(next >= today, "{} {:?} scheduled into the past", plant.id, task);
+        }
+    }
+}

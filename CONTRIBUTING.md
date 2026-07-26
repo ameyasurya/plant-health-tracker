@@ -37,9 +37,13 @@ the widget.
 - `src-tauri/data/catalog.json` — the bundled species catalog, compiled into
   the binary.
 
-There is no database. Three JSON files are written atomically (temp file plus
+There is no database. Each JSON file is written atomically (temp file plus
 rename), which is plenty for a single-user widget and keeps everything
 readable in a text editor.
+
+Anything added to a stored struct needs a serde default. Without one, an
+older file on disk fails to parse as a whole, which would silently discard
+the user's care history rather than erroring loudly.
 
 ## Tests
 
@@ -52,8 +56,14 @@ Covers schedule generation across every catalog species and season,
 month-boundary transitions, the feeding dormancy window, hemisphere inversion,
 weather adjustment (including that stale weather is ignored and intervals never
 collapse below a day), the offline fallback matching the month-only schedule
-exactly, done/snooze/skip recomputation, multi-day catch-up, and atomic writes
-surviving a stray temp file.
+exactly, done/snooze/skip recomputation, multi-day catch-up, anchoring a new
+plant's first due dates to its stated care history, and atomic writes surviving
+a stray temp file.
+
+The catalog has its own checks in `src/catalog.rs`: unique ids, no duplicate
+common or scientific names, and no empty copy fields. It is hand-authored, so
+the realistic mistake is adding a species that is already there under a
+slightly different name.
 
 ## UI preview without the desktop shell
 

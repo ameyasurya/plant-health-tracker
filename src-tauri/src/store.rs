@@ -1,5 +1,5 @@
 //! Local JSON persistence: plants.json, care-log.json, spaces.json,
-//! settings.json and weather.json.
+//! settings.json, weather.json and todos.json.
 //!
 //! Every write goes through `write_atomic`: serialize to a sibling `.tmp`
 //! file, flush, then rename over the real file. Rename is atomic on both
@@ -17,7 +17,8 @@ use thiserror::Error;
 use uuid::Uuid;
 
 use crate::models::{
-    CareEvent, EventStatus, PlantProfile, Settings, Space, TaskType, WeatherCache, DEFAULT_SPACE_ID,
+    CareEvent, EventStatus, PlantProfile, Settings, Space, TaskType, Todo, WeatherCache,
+    DEFAULT_SPACE_ID,
 };
 
 #[derive(Debug, Error)]
@@ -111,6 +112,16 @@ impl Store {
 
     pub fn save_spaces(&self, spaces: &[Space]) -> StoreResult<()> {
         self.write_atomic("spaces.json", &spaces)
+    }
+
+    /// Checklist items. A fresh install has no todos.json and simply
+    /// starts with an empty list; there is nothing sensible to seed.
+    pub fn load_todos(&self) -> StoreResult<Vec<Todo>> {
+        Ok(self.read("todos.json")?.unwrap_or_default())
+    }
+
+    pub fn save_todos(&self, todos: &[Todo]) -> StoreResult<()> {
+        self.write_atomic("todos.json", &todos)
     }
 
     /// Cached forecast. Persisted rather than held in memory so the
@@ -221,6 +232,16 @@ pub fn new_space_id(name: &str) -> String {
         format!("space-{short}")
     } else {
         format!("{slug}-{short}")
+    }
+}
+
+pub fn new_todo(text: String, created_on: chrono::NaiveDate) -> Todo {
+    Todo {
+        id: Uuid::new_v4().to_string(),
+        text,
+        done: false,
+        created_on,
+        completed_on: None,
     }
 }
 

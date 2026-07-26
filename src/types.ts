@@ -23,6 +23,22 @@ export interface AllPlantsRow {
   next_fertilize_label: string;
   inferred: boolean;
   fun_fact: string;
+  space_id: string;
+  space_name: string;
+  water_status: Bucket;
+  fertilize_status: Bucket;
+}
+
+/** A checklist item, with the carried-over judgement already made in Rust
+ *  against the user's configured timezone rather than the machine's. */
+export interface TodoView {
+  id: string;
+  text: string;
+  done: boolean;
+  created_on: string;
+  carried_over: boolean;
+  /** "" for today's items, else "from yesterday" / "from 3 days ago". */
+  age_label: string;
 }
 
 export type Light = "full_sun" | "bright_light" | "bright_indirect";
@@ -83,6 +99,11 @@ export interface NewPlant {
   /** Set when the species came from the bundled catalog; the backend uses
    *  it to attach the uses/significance/fun-fact copy. */
   catalog_id?: string | null;
+  /** Days since the plant was last watered / fed, or null for "not sure".
+   *  A day count rather than a date, because only the backend knows which
+   *  timezone "today" should be resolved in. */
+  last_watered_days_ago?: number | null;
+  last_fertilized_days_ago?: number | null;
 }
 
 /** A species in the bundled catalog (see src-tauri/data/catalog.json). */
@@ -135,6 +156,6 @@ export interface Settings {
   weather_enabled: boolean;
 }
 
-export type Tab = "today" | "soon" | "all";
+export type Tab = "today" | "soon" | "overview" | "todo";
 
 export type MascotState = "happy" | "content" | "worried" | "wilted";

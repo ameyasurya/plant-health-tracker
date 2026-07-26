@@ -134,12 +134,38 @@ mod tests {
     #[test]
     fn catalog_parses_and_has_unique_ids() {
         let entries = all();
-        assert!(entries.len() >= 40, "catalog unexpectedly small");
+        assert!(entries.len() >= 140, "catalog unexpectedly small");
         let mut ids: Vec<_> = entries.iter().map(|e| e.id.as_str()).collect();
         ids.sort_unstable();
         let before = ids.len();
         ids.dedup();
         assert_eq!(before, ids.len(), "duplicate catalog ids");
+    }
+
+    /// The catalog is hand-authored, and the realistic mistake at this size is
+    /// adding a species that is already present under a slightly different
+    /// name. Unique ids alone would not catch that, but it would show up to
+    /// the user as two near-identical search results.
+    #[test]
+    fn catalog_entries_are_distinct_species() {
+        for (label, mut values) in [
+            ("common name", all().iter().map(|e| e.common_name.to_lowercase()).collect::<Vec<_>>()),
+            ("scientific name", all().iter().map(|e| e.scientific_name.to_lowercase()).collect::<Vec<_>>()),
+        ] {
+            values.sort();
+            let before = values.len();
+            values.dedup();
+            assert_eq!(before, values.len(), "duplicate {label} in catalog");
+        }
+    }
+
+    #[test]
+    fn knowledge_copy_has_no_em_dashes() {
+        for e in all() {
+            for (field, text) in [("uses", &e.uses), ("significance", &e.significance), ("fun_fact", &e.fun_fact)] {
+                assert!(!text.contains('\u{2014}'), "{} has an em dash in {field}", e.id);
+            }
+        }
     }
 
     #[test]

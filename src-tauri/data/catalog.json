@@ -991,5 +991,1632 @@
     "uses": "Ornamental colour and a valuable late-season nectar source for bees and butterflies.",
     "significance": "'Aster' is simply Greek for star, after the radiating shape of the flower head.",
     "fun_fact": "What reads as one flower is really a composite head of dozens of tiny individual florets."
+  },
+  {
+    "id": "syngonium",
+    "common_name": "Arrowhead Vine",
+    "aliases": [
+      "syngonium",
+      "arrowhead plant",
+      "goosefoot"
+    ],
+    "scientific_name": "Syngonium podophyllum",
+    "category": "Tropical Vine",
+    "light": "bright_indirect",
+    "moisture_class": "moderate",
+    "fertilize_group": "foliage",
+    "typically_hanging": true,
+    "uses": "Fast trailing or climbing foliage for shelves and hanging pots; one of the easier aroids to keep.",
+    "significance": "Widely sold as a beginner plant because it recovers quickly from missed watering and roots readily in plain water.",
+    "fun_fact": "Its leaves change shape as it matures, starting as simple arrowheads and splitting into several lobes once it starts climbing."
+  },
+  {
+    "id": "philodendron-birkin",
+    "common_name": "Philodendron Birkin",
+    "aliases": [
+      "birkin",
+      "white wave philodendron"
+    ],
+    "scientific_name": "Philodendron 'Birkin'",
+    "category": "Foliage",
+    "light": "bright_indirect",
+    "moisture_class": "moderate",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Compact upright foliage plant for desks and side tables, grown for its cream pinstriped leaves.",
+    "significance": "A relatively recent cultivar that became popular through houseplant trading rather than traditional nurseries.",
+    "fun_fact": "It arose as a spontaneous mutation of a different philodendron, and individual plants can revert, throwing out plain green or heavily white leaves."
+  },
+  {
+    "id": "philodendron-xanadu",
+    "common_name": "Philodendron Xanadu",
+    "aliases": [
+      "xanadu",
+      "winterbourn"
+    ],
+    "scientific_name": "Thaumatophyllum xanadu",
+    "category": "Foliage",
+    "light": "bright_indirect",
+    "moisture_class": "moderate",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Broad clumping foliage plant for floor pots and shaded balcony corners.",
+    "significance": "Common in landscaping across warm climates, and often used indoors where a large leafy shape is wanted without a climbing habit.",
+    "fun_fact": "Unlike most philodendrons it stays self-supporting and spreads outward instead of hunting for something to climb."
+  },
+  {
+    "id": "scindapsus-pictus",
+    "common_name": "Satin Pothos",
+    "aliases": [
+      "scindapsus",
+      "silver pothos",
+      "silver vine"
+    ],
+    "scientific_name": "Scindapsus pictus",
+    "category": "Tropical Vine",
+    "light": "bright_indirect",
+    "moisture_class": "moderate",
+    "fertilize_group": "foliage",
+    "typically_hanging": true,
+    "uses": "Trailing vine with matte silver-spotted leaves; good for hanging pots and low shelves.",
+    "significance": "Often mistaken for a pothos in shops, though it belongs to a separate genus and grows more slowly.",
+    "fun_fact": "The silver markings are air pockets under the leaf surface rather than pigment, which is why they catch the light the way they do."
+  },
+  {
+    "id": "alocasia-polly",
+    "common_name": "African Mask Plant",
+    "aliases": [
+      "alocasia polly",
+      "alocasia amazonica",
+      "elephant ear"
+    ],
+    "scientific_name": "Alocasia x amazonica",
+    "category": "Tropical",
+    "light": "bright_indirect",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Statement foliage plant grown for its dark arrow-shaped leaves with pale veins.",
+    "significance": "Popular but genuinely demanding; it wants humidity and steady moisture, and sulks quickly in dry indoor air.",
+    "fun_fact": "It often drops all its leaves and goes dormant in cool months, which owners regularly mistake for death before it resprouts from the corm."
+  },
+  {
+    "id": "dieffenbachia",
+    "common_name": "Dumb Cane",
+    "aliases": [
+      "dieffenbachia",
+      "leopard lily"
+    ],
+    "scientific_name": "Dieffenbachia seguine",
+    "category": "Foliage",
+    "light": "bright_indirect",
+    "moisture_class": "moderate",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Upright foliage plant with broad cream-splashed leaves; tolerates ordinary indoor light well.",
+    "significance": "A long-standing office and hallway plant, valued for filling space at eye level without much attention.",
+    "fun_fact": "Its common name comes from the sap, which irritates the mouth and throat badly enough to make speech difficult, so keep it away from pets and small children."
+  },
+  {
+    "id": "caladium",
+    "common_name": "Caladium",
+    "aliases": [
+      "angel wings",
+      "heart of jesus"
+    ],
+    "scientific_name": "Caladium bicolor",
+    "category": "Tropical",
+    "light": "bright_indirect",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Grown purely for its paper-thin pink, white and green leaves during the warm months.",
+    "significance": "Common in monsoon-season balcony displays across South and Southeast Asia, where the humidity suits it.",
+    "fun_fact": "It dies back to a bare tuber every cool season by design; the tuber can be kept dry and replanted when warmth returns."
+  },
+  {
+    "id": "lucky-bamboo",
+    "common_name": "Lucky Bamboo",
+    "aliases": [
+      "dracaena sanderiana",
+      "ribbon plant",
+      "chinese water bamboo"
+    ],
+    "scientific_name": "Dracaena sanderiana",
+    "category": "Foliage",
+    "light": "bright_indirect",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Grown in water or lightly moist soil as a desk and entrance plant.",
+    "significance": "Strongly associated with feng shui, where the number of stalks in an arrangement is held to carry different meanings.",
+    "fun_fact": "It is not a bamboo at all but a dracaena, and it is sensitive to fluoride, so plants grown in tap water often develop brown leaf tips."
+  },
+  {
+    "id": "corn-plant",
+    "common_name": "Corn Plant",
+    "aliases": [
+      "dracaena fragrans",
+      "mass cane",
+      "happy plant"
+    ],
+    "scientific_name": "Dracaena fragrans",
+    "category": "Foliage",
+    "light": "bright_indirect",
+    "moisture_class": "moderate",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Tall cane-grown foliage plant for floor pots in living rooms and offices.",
+    "significance": "One of the most widely used interior landscaping plants worldwide, largely because it tolerates low light and neglect.",
+    "fun_fact": "Mature plants occasionally flower indoors, producing an intensely sweet night scent that is far stronger than the plain foliage suggests."
+  },
+  {
+    "id": "song-of-india",
+    "common_name": "Song of India",
+    "aliases": [
+      "dracaena reflexa",
+      "pleomele"
+    ],
+    "scientific_name": "Dracaena reflexa",
+    "category": "Foliage",
+    "light": "bright_light",
+    "moisture_class": "moderate",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Shrubby foliage plant with yellow-margined leaves, used indoors and as a hedge in warm climates.",
+    "significance": "Common in Indian and Sri Lankan gardens, where it is grown outdoors as an ornamental shrub rather than a houseplant.",
+    "fun_fact": "Its stems bend toward light and stay bent, so plants grown in one position develop a permanent lean that becomes part of their shape."
+  },
+  {
+    "id": "cast-iron-plant",
+    "common_name": "Cast Iron Plant",
+    "aliases": [
+      "aspidistra",
+      "bar room plant"
+    ],
+    "scientific_name": "Aspidistra elatior",
+    "category": "Foliage",
+    "light": "bright_indirect",
+    "moisture_class": "drier",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Dark green upright foliage for the dim corners where almost nothing else survives.",
+    "significance": "A Victorian parlour staple, named for surviving gas lighting, coal smoke and long neglect.",
+    "fun_fact": "Its flowers are small, dull purple and sit at soil level, so they are almost always missed entirely."
+  },
+  {
+    "id": "maidenhair-fern",
+    "common_name": "Maidenhair Fern",
+    "aliases": [
+      "adiantum",
+      "delta maidenhair"
+    ],
+    "scientific_name": "Adiantum raddianum",
+    "category": "Fern",
+    "light": "bright_indirect",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Fine-textured fern for bathrooms and other humid, bright but sunless spots.",
+    "significance": "Long grown as an indoor fern despite a reputation for being temperamental about dry air.",
+    "fun_fact": "Its fronds shed water completely, staying dry to the touch even under a running tap, which is where the genus name Adiantum, meaning unwetted, comes from."
+  },
+  {
+    "id": "birds-nest-fern",
+    "common_name": "Bird's Nest Fern",
+    "aliases": [
+      "asplenium",
+      "nest fern"
+    ],
+    "scientific_name": "Asplenium nidus",
+    "category": "Fern",
+    "light": "bright_indirect",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Broad-fronded fern that handles indoor conditions better than most, good for shaded balconies.",
+    "significance": "Grows naturally on tree trunks in tropical forests, which is why it copes with less root space than its size suggests.",
+    "fun_fact": "Water should go into the soil rather than the central rosette; the crown holds moisture and rots if it is repeatedly filled."
+  },
+  {
+    "id": "rabbits-foot-fern",
+    "common_name": "Rabbit's Foot Fern",
+    "aliases": [
+      "davallia",
+      "hare's foot fern"
+    ],
+    "scientific_name": "Davallia fejeensis",
+    "category": "Fern",
+    "light": "bright_indirect",
+    "moisture_class": "moderate",
+    "fertilize_group": "foliage",
+    "typically_hanging": true,
+    "uses": "Hanging basket fern with lacy fronds and visible creeping rhizomes.",
+    "significance": "Kept as much for the furry rhizomes that crawl over the pot rim as for the foliage itself.",
+    "fun_fact": "Those fuzzy 'feet' are surface rhizomes and should be left on top of the soil; burying them to tidy the pot is a common way to kill the plant."
+  },
+  {
+    "id": "asparagus-fern",
+    "common_name": "Asparagus Fern",
+    "aliases": [
+      "foxtail fern",
+      "asparagus densiflorus",
+      "lace fern"
+    ],
+    "scientific_name": "Asparagus densiflorus",
+    "category": "Foliage",
+    "light": "bright_light",
+    "moisture_class": "moderate",
+    "fertilize_group": "foliage",
+    "typically_hanging": true,
+    "uses": "Soft feathery filler for hanging pots and mixed containers.",
+    "significance": "Widely used by florists as greenery in bouquets, which is how most people first encounter it.",
+    "fun_fact": "It is not a fern but a relative of edible asparagus, and it grows from water-storing tubers that let it survive drying out."
+  },
+  {
+    "id": "kentia-palm",
+    "common_name": "Kentia Palm",
+    "aliases": [
+      "howea",
+      "sentry palm",
+      "thatch palm"
+    ],
+    "scientific_name": "Howea forsteriana",
+    "category": "Palm",
+    "light": "bright_indirect",
+    "moisture_class": "moderate",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Elegant indoor palm that tolerates lower light and dry air better than most.",
+    "significance": "The classic hotel lobby palm, popular since the Victorian era for surviving indoor conditions that kill other palms.",
+    "fun_fact": "Every kentia palm in the world traces back to Lord Howe Island off Australia, where seed collection has been a significant local industry for over a century."
+  },
+  {
+    "id": "majesty-palm",
+    "common_name": "Majesty Palm",
+    "aliases": [
+      "ravenea",
+      "majestic palm"
+    ],
+    "scientific_name": "Ravenea rivularis",
+    "category": "Palm",
+    "light": "bright_light",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Large feathery palm for bright floor space; needs more water and light than it is usually sold with.",
+    "significance": "Sold cheaply in large sizes, which makes it common indoors even though it is genuinely difficult to keep long term.",
+    "fun_fact": "In the wild it grows along riverbanks in Madagascar with permanently wet roots, which explains why it browns off so fast in a dry living room."
+  },
+  {
+    "id": "lady-palm",
+    "common_name": "Lady Palm",
+    "aliases": [
+      "rhapis",
+      "broadleaf lady palm",
+      "bamboo palm"
+    ],
+    "scientific_name": "Rhapis excelsa",
+    "category": "Palm",
+    "light": "bright_indirect",
+    "moisture_class": "moderate",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Slow-growing clumping palm with fan-shaped leaves; among the most shade-tolerant palms indoors.",
+    "significance": "Historically grown in Japanese and Chinese courtyards, with named cultivars traded at high prices for centuries.",
+    "fun_fact": "It grows slowly enough that a specimen plant may be decades old, and it is one of the few palms that genuinely does well away from a window."
+  },
+  {
+    "id": "ponytail-palm",
+    "common_name": "Ponytail Palm",
+    "aliases": [
+      "beaucarnea",
+      "elephant foot palm",
+      "nolina"
+    ],
+    "scientific_name": "Beaucarnea recurvata",
+    "category": "Semi-succulent",
+    "light": "bright_light",
+    "moisture_class": "drier",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": false,
+    "uses": "Sculptural plant with a swollen base and long curling leaves; thrives on being left alone.",
+    "significance": "Frequently sold as a palm, which leads to overwatering, since it actually stores water and wants succulent treatment.",
+    "fun_fact": "The bulbous trunk base is a water reservoir, and a healthy plant can go weeks without watering by drawing on it."
+  },
+  {
+    "id": "sago-palm",
+    "common_name": "Sago Palm",
+    "aliases": [
+      "cycas",
+      "king sago"
+    ],
+    "scientific_name": "Cycas revoluta",
+    "category": "Foliage",
+    "light": "bright_light",
+    "moisture_class": "drier",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Stiff symmetrical rosette of dark fronds, used as a feature plant in pots indoors and out.",
+    "significance": "Common in formal Indian and Mediterranean garden planting, and a traditional bonsai and container subject.",
+    "fun_fact": "It is a cycad rather than a palm, a lineage older than flowering plants, and every part of it is seriously toxic to dogs."
+  },
+  {
+    "id": "fittonia",
+    "common_name": "Nerve Plant",
+    "aliases": [
+      "fittonia",
+      "mosaic plant",
+      "net plant"
+    ],
+    "scientific_name": "Fittonia albivenis",
+    "category": "Foliage",
+    "light": "bright_indirect",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Low spreading foliage with bright vein patterns; suits terrariums and small humid spots.",
+    "significance": "One of the standard terrarium plants because it stays small and enjoys the enclosed humidity.",
+    "fun_fact": "It faints dramatically when thirsty, collapsing flat within hours, then stands back up almost completely once watered."
+  },
+  {
+    "id": "polka-dot-plant",
+    "common_name": "Polka Dot Plant",
+    "aliases": [
+      "hypoestes",
+      "freckle face"
+    ],
+    "scientific_name": "Hypoestes phyllostachya",
+    "category": "Foliage",
+    "light": "bright_indirect",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Small colourful foliage plant for desks, terrariums and mixed pots.",
+    "significance": "Grown almost entirely for its pink, white or red speckling rather than any habit or flower.",
+    "fun_fact": "It is short-lived by nature and gets leggy after flowering, so pinching off the flower spikes keeps it compact for far longer."
+  },
+  {
+    "id": "prayer-plant",
+    "common_name": "Prayer Plant",
+    "aliases": [
+      "maranta",
+      "rabbit tracks"
+    ],
+    "scientific_name": "Maranta leuconeura",
+    "category": "Tropical",
+    "light": "bright_indirect",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "foliage",
+    "typically_hanging": true,
+    "uses": "Low trailing foliage with strongly patterned leaves; good for shelves and hanging pots out of direct sun.",
+    "significance": "Closely related to calathea and kept for the same reason, though it is generally the more forgiving of the two.",
+    "fun_fact": "Its leaves fold upright at night and flatten again by morning, a daily movement you can watch happen over the course of an evening."
+  },
+  {
+    "id": "chinese-money-plant",
+    "common_name": "Chinese Money Plant",
+    "aliases": [
+      "pilea peperomioides",
+      "pancake plant",
+      "ufo plant"
+    ],
+    "scientific_name": "Pilea peperomioides",
+    "category": "Foliage",
+    "light": "bright_indirect",
+    "moisture_class": "moderate",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Compact plant with round coin-shaped leaves on upright stalks; suits desks and windowsills.",
+    "significance": "Spread across Europe for decades purely by cuttings passed between friends, long before it was formally identified by botanists.",
+    "fun_fact": "It throws out offsets from the soil around the base constantly, which is why it is almost always given away rather than bought."
+  },
+  {
+    "id": "aluminium-plant",
+    "common_name": "Aluminium Plant",
+    "aliases": [
+      "pilea cadierei",
+      "watermelon pilea"
+    ],
+    "scientific_name": "Pilea cadierei",
+    "category": "Foliage",
+    "light": "bright_indirect",
+    "moisture_class": "moderate",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Small bushy foliage plant with metallic silver patches on quilted leaves.",
+    "significance": "An old, easy houseplant that has stayed in cultivation because it roots from cuttings almost instantly.",
+    "fun_fact": "The silver patches are raised air pockets in the leaf, so the shine changes noticeably depending on the angle you view it from."
+  },
+  {
+    "id": "inch-plant",
+    "common_name": "Inch Plant",
+    "aliases": [
+      "tradescantia zebrina",
+      "wandering dude",
+      "spiderwort"
+    ],
+    "scientific_name": "Tradescantia zebrina",
+    "category": "Vine",
+    "light": "bright_light",
+    "moisture_class": "moderate",
+    "fertilize_group": "foliage",
+    "typically_hanging": true,
+    "uses": "Fast purple and silver trailing foliage for hanging pots; roots from any broken piece.",
+    "significance": "So vigorous that it is considered an invasive weed in several warm countries, while being a favourite indoor trailer elsewhere.",
+    "fun_fact": "The purple underside intensifies in brighter light and fades to plain green in shade, so its colour is a direct readout of how much light it is getting."
+  },
+  {
+    "id": "purple-heart",
+    "common_name": "Purple Heart",
+    "aliases": [
+      "tradescantia pallida",
+      "purple queen",
+      "setcreasea"
+    ],
+    "scientific_name": "Tradescantia pallida",
+    "category": "Semi-succulent",
+    "light": "full_sun",
+    "moisture_class": "drier",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": true,
+    "uses": "Deep purple sprawling foliage for sunny balconies, window boxes and hanging pots.",
+    "significance": "A common groundcover in Indian gardens and roadside planting, where full sun brings out the strongest colour.",
+    "fun_fact": "It needs direct sun to stay purple; grown indoors away from a window it turns a dull green and stretches badly."
+  },
+  {
+    "id": "coleus",
+    "common_name": "Coleus",
+    "aliases": [
+      "painted nettle",
+      "plectranthus scutellarioides",
+      "mayana"
+    ],
+    "scientific_name": "Coleus scutellarioides",
+    "category": "Foliage",
+    "light": "bright_light",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Grown for vividly patterned leaves in reds, greens and yellows; good for balcony pots and borders.",
+    "significance": "Enormously popular in Victorian bedding schemes, and still a staple of Indian nursery stock for its cheap, instant colour.",
+    "fun_fact": "It roots in a glass of water in under a week, which is why a single plant tends to become a whole balcony's worth."
+  },
+  {
+    "id": "swedish-ivy",
+    "common_name": "Swedish Ivy",
+    "aliases": [
+      "plectranthus",
+      "creeping charlie",
+      "swedish begonia"
+    ],
+    "scientific_name": "Plectranthus verticillatus",
+    "category": "Vine",
+    "light": "bright_indirect",
+    "moisture_class": "moderate",
+    "fertilize_group": "foliage",
+    "typically_hanging": true,
+    "uses": "Glossy scalloped trailing foliage for hanging baskets; tolerant of ordinary indoor conditions.",
+    "significance": "A reliable old hanging-basket plant, popular precisely because it asks for very little.",
+    "fun_fact": "It is neither Swedish nor an ivy; the name stuck because it became a fashionable hanging plant in Scandinavia."
+  },
+  {
+    "id": "creeping-fig",
+    "common_name": "Creeping Fig",
+    "aliases": [
+      "ficus pumila",
+      "climbing fig"
+    ],
+    "scientific_name": "Ficus pumila",
+    "category": "Vine",
+    "light": "bright_indirect",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "foliage",
+    "typically_hanging": true,
+    "uses": "Small-leaved climber for covering walls, moss poles and the sides of pots.",
+    "significance": "Used widely as a self-clinging green cover on walls and compound boundaries in warm climates.",
+    "fun_fact": "Its juvenile leaves are tiny and flat against the surface, but once it reaches the top of its support it produces much larger adult leaves on woody stems."
+  },
+  {
+    "id": "burros-tail",
+    "common_name": "Burro's Tail",
+    "aliases": [
+      "sedum morganianum",
+      "donkey tail",
+      "lamb's tail"
+    ],
+    "scientific_name": "Sedum morganianum",
+    "category": "Succulent",
+    "light": "bright_light",
+    "moisture_class": "drier",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": true,
+    "uses": "Trailing succulent with plump overlapping leaves, grown in hanging pots where the stems can fall freely.",
+    "significance": "A long-standing windowsill succulent, kept for stems that can reach a metre given enough years.",
+    "fun_fact": "The leaves detach at the lightest touch, so it is best hung somewhere it will never be brushed past; each fallen leaf will root into a new plant."
+  },
+  {
+    "id": "string-of-hearts",
+    "common_name": "String of Hearts",
+    "aliases": [
+      "ceropegia",
+      "rosary vine",
+      "chain of hearts"
+    ],
+    "scientific_name": "Ceropegia woodii",
+    "category": "Succulent",
+    "light": "bright_indirect",
+    "moisture_class": "drier",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": true,
+    "uses": "Fine trailing vine with marbled heart-shaped leaves, suited to high shelves and hanging pots.",
+    "significance": "Popular for producing very long trails from a small pot, making it practical where floor space is limited.",
+    "fun_fact": "It forms small round tubers along the stems, and simply laying one on soil will start an entirely new plant."
+  },
+  {
+    "id": "string-of-bananas",
+    "common_name": "String of Bananas",
+    "aliases": [
+      "senecio radicans",
+      "banana vine",
+      "fishhook senecio"
+    ],
+    "scientific_name": "Curio radicans",
+    "category": "Succulent",
+    "light": "bright_light",
+    "moisture_class": "drier",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": true,
+    "uses": "Fast-growing trailing succulent with curved banana-shaped leaves.",
+    "significance": "Generally easier and faster than the better-known string of pearls, and less prone to collapsing suddenly.",
+    "fun_fact": "Each leaf has a translucent stripe along its curve that lets light reach the inner tissue, an adaptation for photosynthesising while minimising water loss."
+  },
+  {
+    "id": "panda-plant",
+    "common_name": "Panda Plant",
+    "aliases": [
+      "kalanchoe tomentosa",
+      "pussy ears",
+      "chocolate soldier"
+    ],
+    "scientific_name": "Kalanchoe tomentosa",
+    "category": "Succulent",
+    "light": "bright_light",
+    "moisture_class": "drier",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": false,
+    "uses": "Upright succulent covered in soft silver fuzz with brown leaf tips.",
+    "significance": "Kept for texture rather than flower, and one of the more tactile succulents commonly sold.",
+    "fun_fact": "The felted hairs reduce water loss and scatter harsh sunlight, which is why the plant looks silver rather than green."
+  },
+  {
+    "id": "kalanchoe",
+    "common_name": "Kalanchoe",
+    "aliases": [
+      "flaming katy",
+      "kalanchoe blossfeldiana",
+      "widow's thrill"
+    ],
+    "scientific_name": "Kalanchoe blossfeldiana",
+    "category": "Succulent",
+    "light": "bright_light",
+    "moisture_class": "drier",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Compact succulent grown for dense clusters of long-lasting flowers in red, orange, pink or yellow.",
+    "significance": "One of the most widely sold flowering pot plants in the world, usually bought in bloom as a gift.",
+    "fun_fact": "It sets flower buds in response to long nights, so a plant kept under evening lamplight often stays green and refuses to rebloom."
+  },
+  {
+    "id": "bunny-ear-cactus",
+    "common_name": "Bunny Ear Cactus",
+    "aliases": [
+      "opuntia microdasys",
+      "polka dot cactus",
+      "angel wings cactus"
+    ],
+    "scientific_name": "Opuntia microdasys",
+    "category": "Cactus",
+    "light": "full_sun",
+    "moisture_class": "drier",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": false,
+    "uses": "Flat-padded cactus that branches into pairs, giving it its ear-like shape.",
+    "significance": "A common beginner cactus, though its spines make it a poor choice for households with children.",
+    "fun_fact": "It has no long spines but is covered in glochids, tiny barbed bristles that detach on contact and are considerably harder to remove than ordinary spines."
+  },
+  {
+    "id": "golden-barrel-cactus",
+    "common_name": "Golden Barrel Cactus",
+    "aliases": [
+      "echinocactus grusonii",
+      "mother in law's cushion"
+    ],
+    "scientific_name": "Echinocactus grusonii",
+    "category": "Cactus",
+    "light": "full_sun",
+    "moisture_class": "drier",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": false,
+    "uses": "Globe-shaped ribbed cactus with golden spines, used as a specimen plant in bright windows.",
+    "significance": "Extremely common in cultivation worldwide while being endangered in its native Mexican range.",
+    "fun_fact": "The deep ribs work like an accordion, letting the plant visibly swell after rain and shrink during drought without splitting its skin."
+  },
+  {
+    "id": "moon-cactus",
+    "common_name": "Moon Cactus",
+    "aliases": [
+      "gymnocalycium",
+      "ruby ball cactus",
+      "grafted cactus"
+    ],
+    "scientific_name": "Gymnocalycium mihanovichii",
+    "category": "Cactus",
+    "light": "bright_light",
+    "moisture_class": "drier",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": false,
+    "uses": "The bright red, pink or yellow ball cactus sold grafted onto a green stem.",
+    "significance": "Sold in vast numbers as a novelty plant, and often the first cactus someone owns.",
+    "fun_fact": "The coloured top has no chlorophyll and cannot feed itself, which is why it is grafted; it survives only as long as the green rootstock below it does."
+  },
+  {
+    "id": "african-milk-tree",
+    "common_name": "African Milk Tree",
+    "aliases": [
+      "euphorbia trigona",
+      "cathedral cactus",
+      "friendship cactus"
+    ],
+    "scientific_name": "Euphorbia trigona",
+    "category": "Succulent",
+    "light": "full_sun",
+    "moisture_class": "drier",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": false,
+    "uses": "Tall three-sided columnar succulent that branches upward, good as an architectural floor plant.",
+    "significance": "Often sold as a cactus, though it is a euphorbia and needs handling with more care than one.",
+    "fun_fact": "Cut or broken stems bleed a white latex that irritates skin and is genuinely dangerous in the eyes, so wear gloves when pruning it."
+  },
+  {
+    "id": "crown-of-thorns",
+    "common_name": "Crown of Thorns",
+    "aliases": [
+      "euphorbia milii",
+      "christ plant"
+    ],
+    "scientific_name": "Euphorbia milii",
+    "category": "Succulent",
+    "light": "full_sun",
+    "moisture_class": "drier",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Thorny succulent shrub that flowers almost continuously in good light.",
+    "significance": "Widely grown across India and Southeast Asia as a hardy, near-permanent source of colour in hot dry positions.",
+    "fun_fact": "What look like petals are actually coloured bracts; the true flowers are the tiny structures clustered at their centre."
+  },
+  {
+    "id": "pencil-cactus",
+    "common_name": "Pencil Cactus",
+    "aliases": [
+      "euphorbia tirucalli",
+      "firestick",
+      "milk bush"
+    ],
+    "scientific_name": "Euphorbia tirucalli",
+    "category": "Succulent",
+    "light": "full_sun",
+    "moisture_class": "drier",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": false,
+    "uses": "Upright mass of thin green stems with no real leaves; a striking plant for a hot bright spot.",
+    "significance": "Grown as a hedge and living fence in parts of Africa and India long before it became a container plant.",
+    "fun_fact": "Its sap is severely caustic and can cause temporary blindness on contact with the eyes, which makes it a poor choice anywhere near pets or children."
+  },
+  {
+    "id": "agave",
+    "common_name": "Agave",
+    "aliases": [
+      "century plant",
+      "agave americana",
+      "maguey"
+    ],
+    "scientific_name": "Agave americana",
+    "category": "Succulent",
+    "light": "full_sun",
+    "moisture_class": "drier",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": false,
+    "uses": "Large spiky rosette for full sun; a container or landscape feature rather than an indoor plant.",
+    "significance": "Central to Mexican agriculture for fibre and drink, and long naturalised across dry parts of India and the Mediterranean.",
+    "fun_fact": "It flowers once at the end of its life, sending up a stalk several metres tall, and then dies, leaving offsets behind."
+  },
+  {
+    "id": "living-stones",
+    "common_name": "Living Stones",
+    "aliases": [
+      "lithops",
+      "pebble plant",
+      "flowering stones"
+    ],
+    "scientific_name": "Lithops species",
+    "category": "Succulent",
+    "light": "full_sun",
+    "moisture_class": "drier",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": false,
+    "uses": "Tiny paired-leaf succulents that mimic pebbles; a collector's plant for a bright sill.",
+    "significance": "Famous among succulent growers for camouflage so effective that they are difficult to spot in the wild.",
+    "fun_fact": "They are killed far more often by kindness than neglect: they take no water at all while splitting to produce their new pair of leaves."
+  },
+  {
+    "id": "hens-and-chicks",
+    "common_name": "Hens and Chicks",
+    "aliases": [
+      "sempervivum",
+      "houseleek"
+    ],
+    "scientific_name": "Sempervivum tectorum",
+    "category": "Succulent",
+    "light": "full_sun",
+    "moisture_class": "drier",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": false,
+    "uses": "Small tight rosettes that multiply into clusters; suits shallow pots and rockeries.",
+    "significance": "Traditionally planted on European roofs, where a belief held that they warded off lightning strikes.",
+    "fun_fact": "Each rosette flowers only once and then dies, but by that point it is ringed by offsets, so the colony as a whole simply continues."
+  },
+  {
+    "id": "ghost-plant",
+    "common_name": "Ghost Plant",
+    "aliases": [
+      "graptopetalum",
+      "mother of pearl plant"
+    ],
+    "scientific_name": "Graptopetalum paraguayense",
+    "category": "Succulent",
+    "light": "full_sun",
+    "moisture_class": "drier",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": true,
+    "uses": "Sprawling rosettes with a pale powdery coating; spills nicely over the edge of a pot.",
+    "significance": "One of the toughest ornamental succulents, tolerating both heat and cold better than most.",
+    "fun_fact": "Its colour is a live report on its conditions, shifting from blue-grey in shade to pink and apricot under strong sun."
+  },
+  {
+    "id": "elephant-bush",
+    "common_name": "Elephant Bush",
+    "aliases": [
+      "portulacaria afra",
+      "dwarf jade",
+      "spekboom"
+    ],
+    "scientific_name": "Portulacaria afra",
+    "category": "Succulent",
+    "light": "full_sun",
+    "moisture_class": "drier",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": false,
+    "uses": "Woody succulent shrub with small round leaves; a popular and very forgiving bonsai subject.",
+    "significance": "Planted at scale in South Africa for land restoration, as it regrows readily from cuttings on degraded ground.",
+    "fun_fact": "Despite looking like a jade plant it is unrelated, and unlike jade its leaves are edible, with a sharp lemony taste."
+  },
+  {
+    "id": "african-violet",
+    "common_name": "African Violet",
+    "aliases": [
+      "saintpaulia",
+      "streptocarpus ionanthus"
+    ],
+    "scientific_name": "Streptocarpus ionanthus",
+    "category": "Flowering",
+    "light": "bright_indirect",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Small flowering plant that blooms repeatedly indoors without needing direct sun.",
+    "significance": "One of the few houseplants that reliably flowers year-round in ordinary room conditions, with a large following of specialist growers.",
+    "fun_fact": "Cold water on the leaves leaves permanent pale rings, which is why growers water it from below or use room-temperature water carefully."
+  },
+  {
+    "id": "rex-begonia",
+    "common_name": "Rex Begonia",
+    "aliases": [
+      "painted leaf begonia",
+      "king begonia"
+    ],
+    "scientific_name": "Begonia rex",
+    "category": "Foliage",
+    "light": "bright_indirect",
+    "moisture_class": "moderate",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Grown entirely for its spiralled leaves in silver, purple and deep red; flowers are incidental.",
+    "significance": "Collected seriously since the Victorian era, with named cultivars still traded among enthusiasts.",
+    "fun_fact": "A single leaf pinned flat on damp compost will sprout new plantlets from its cut veins, which is how most named varieties are propagated."
+  },
+  {
+    "id": "cyclamen",
+    "common_name": "Cyclamen",
+    "aliases": [
+      "persian violet",
+      "sowbread"
+    ],
+    "scientific_name": "Cyclamen persicum",
+    "category": "Flowering",
+    "light": "bright_indirect",
+    "moisture_class": "moderate",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Winter-flowering pot plant with upswept petals above marbled leaves.",
+    "significance": "A standard cool-season gift plant, at its best on a bright windowsill well away from heaters.",
+    "fun_fact": "It grows and flowers through winter and rests in summer, the reverse of most houseplants, so yellowing leaves in hot weather are normal rather than a problem."
+  },
+  {
+    "id": "poinsettia",
+    "common_name": "Poinsettia",
+    "aliases": [
+      "christmas star",
+      "euphorbia pulcherrima",
+      "lal patti"
+    ],
+    "scientific_name": "Euphorbia pulcherrima",
+    "category": "Flowering",
+    "light": "bright_light",
+    "moisture_class": "moderate",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Grown for scarlet or cream bracts through the cool season; a shrub outdoors in warm climates.",
+    "significance": "Tied to Christmas across much of the world, and grown as a large garden shrub in Indian hill stations.",
+    "fun_fact": "The red parts are modified leaves, not petals, and they only colour up after weeks of long uninterrupted nights."
+  },
+  {
+    "id": "amaryllis",
+    "common_name": "Amaryllis",
+    "aliases": [
+      "hippeastrum",
+      "knight's star lily"
+    ],
+    "scientific_name": "Hippeastrum hybrid",
+    "category": "Flowering",
+    "light": "bright_light",
+    "moisture_class": "moderate",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Large bulb producing dramatic trumpet flowers on a tall bare stalk.",
+    "significance": "Sold as a bulb to be forced indoors, and one of the few houseplants whose flowering can be timed deliberately.",
+    "fun_fact": "The flower stalk appears before the leaves do, and the bulb should be planted with its top third above the soil rather than buried."
+  },
+  {
+    "id": "bromeliad",
+    "common_name": "Bromeliad",
+    "aliases": [
+      "guzmania",
+      "scarlet star",
+      "vriesea"
+    ],
+    "scientific_name": "Guzmania lingulata",
+    "category": "Tropical",
+    "light": "bright_indirect",
+    "moisture_class": "moderate",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Rosette plant with a long-lasting coloured flower spike, tolerant of indoor light.",
+    "significance": "Grows on trees rather than in soil in the wild, so it is usually potted in very open bark-based mix.",
+    "fun_fact": "The parent plant dies slowly after flowering once, but produces pups around its base first, so what looks like decline is actually the handover."
+  },
+  {
+    "id": "chrysanthemum",
+    "common_name": "Chrysanthemum",
+    "aliases": [
+      "mum",
+      "guldaudi",
+      "shevanti"
+    ],
+    "scientific_name": "Chrysanthemum morifolium",
+    "category": "Flowering",
+    "light": "full_sun",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Dense autumn and winter flowers in a wide colour range; a mainstay of balcony pots.",
+    "significance": "Cultivated in China for over two thousand years, and central to flower shows and festival garlands across India.",
+    "fun_fact": "It flowers in response to shortening days, which is why greenhouse growers blackout-cover crops to bring blooms forward for a particular market date."
+  },
+  {
+    "id": "gerbera",
+    "common_name": "Gerbera Daisy",
+    "aliases": [
+      "barberton daisy",
+      "transvaal daisy"
+    ],
+    "scientific_name": "Gerbera jamesonii",
+    "category": "Flowering",
+    "light": "full_sun",
+    "moisture_class": "moderate",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Large single daisy flowers on bare stems; grown in pots and heavily as a cut flower.",
+    "significance": "Among the most traded cut flowers globally, and a common commercial polyhouse crop around Bengaluru and Pune.",
+    "fun_fact": "Water sitting in the crown rots it quickly, so it should be watered at the soil edge and the plant set slightly proud of the surrounding soil."
+  },
+  {
+    "id": "petunia",
+    "common_name": "Petunia",
+    "aliases": [
+      "grandiflora petunia",
+      "wave petunia"
+    ],
+    "scientific_name": "Petunia x atkinsiana",
+    "category": "Flowering",
+    "light": "full_sun",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": true,
+    "uses": "Prolific trumpet flowers for window boxes, railing planters and hanging baskets.",
+    "significance": "One of the most planted bedding flowers worldwide, valued for flowering continuously through the cool season.",
+    "fun_fact": "Pinching the plant back hard when it turns leggy feels drastic but produces a far denser, better-flowering plant within a few weeks."
+  },
+  {
+    "id": "periwinkle",
+    "common_name": "Madagascar Periwinkle",
+    "aliases": [
+      "sadabahar",
+      "vinca",
+      "nithyakalyani",
+      "catharanthus"
+    ],
+    "scientific_name": "Catharanthus roseus",
+    "category": "Flowering",
+    "light": "full_sun",
+    "moisture_class": "drier",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Continuously flowering hardy plant for hot sunny positions; thrives on poor soil and little care.",
+    "significance": "Grown in Indian homes and temple gardens as sadabahar, meaning evergreen, for its habit of flowering almost year-round.",
+    "fun_fact": "Two chemotherapy drugs, vincristine and vinblastine, are derived from this plant, and it remains a significant medicinal crop."
+  },
+  {
+    "id": "portulaca",
+    "common_name": "Moss Rose",
+    "aliases": [
+      "portulaca",
+      "table rose",
+      "nau bajiya",
+      "sun plant"
+    ],
+    "scientific_name": "Portulaca grandiflora",
+    "category": "Succulent",
+    "light": "full_sun",
+    "moisture_class": "drier",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": true,
+    "uses": "Low succulent with bright papery flowers; ideal for hot exposed balcony railings.",
+    "significance": "A standard Indian summer container plant, grown where heat and reflected glare would kill most flowering annuals.",
+    "fun_fact": "The flowers open in sunshine and close in shade or rain, which is why one of its Hindi names refers to the hour it reliably opens."
+  },
+  {
+    "id": "crossandra",
+    "common_name": "Firecracker Flower",
+    "aliases": [
+      "crossandra",
+      "kanakambaram",
+      "abboli",
+      "aboli"
+    ],
+    "scientific_name": "Crossandra infundibuliformis",
+    "category": "Flowering",
+    "light": "bright_light",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Compact shrub producing orange and salmon flowers over a long season in warm weather.",
+    "significance": "Grown commercially in South India for garlands and hair flowers, where it is sold by length rather than by stem.",
+    "fun_fact": "It flowers well in partial shade where many tropical flowering plants stop entirely, which makes it useful on balconies that only get morning sun."
+  },
+  {
+    "id": "hoya",
+    "common_name": "Wax Plant",
+    "aliases": [
+      "hoya carnosa",
+      "porcelain flower",
+      "honey plant"
+    ],
+    "scientific_name": "Hoya carnosa",
+    "category": "Tropical Vine",
+    "light": "bright_indirect",
+    "moisture_class": "drier",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": true,
+    "uses": "Thick-leaved climbing vine grown for clusters of waxy scented flowers.",
+    "significance": "A durable heirloom houseplant, often passed down as cuttings and capable of living for decades in the same pot.",
+    "fun_fact": "Flowers form on short woody spurs that bloom again year after year, so cutting off spent flower stalks removes next season's blooms."
+  },
+  {
+    "id": "dendrobium-orchid",
+    "common_name": "Dendrobium Orchid",
+    "aliases": [
+      "dendrobium",
+      "bamboo orchid",
+      "singapore orchid"
+    ],
+    "scientific_name": "Dendrobium nobile",
+    "category": "Flowering",
+    "light": "bright_indirect",
+    "moisture_class": "moderate",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Cane-forming orchid with flowers along the stem; grown in bark rather than ordinary potting soil.",
+    "significance": "Widely cultivated across Southeast Asia for the cut flower trade, and among the easier orchids in a warm climate.",
+    "fun_fact": "The bare canes left after flowering are not dead wood and should be kept; they store the reserves the plant uses for its next flush."
+  },
+  {
+    "id": "plumeria",
+    "common_name": "Frangipani",
+    "aliases": [
+      "plumeria",
+      "champa",
+      "temple tree",
+      "chafa"
+    ],
+    "scientific_name": "Plumeria rubra",
+    "category": "Fragrant",
+    "light": "full_sun",
+    "moisture_class": "drier",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Small tree or large container plant grown for intensely fragrant summer flowers.",
+    "significance": "Planted at temples across India and Southeast Asia, and the flower used in Hawaiian leis.",
+    "fun_fact": "The scent peaks at night to draw in hawk moths, and the flowers offer no nectar at all, so the moths pollinate them for nothing."
+  },
+  {
+    "id": "tuberose",
+    "common_name": "Tuberose",
+    "aliases": [
+      "rajnigandha",
+      "polianthes",
+      "nishigandha"
+    ],
+    "scientific_name": "Agave amica",
+    "category": "Fragrant",
+    "light": "full_sun",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Bulb producing tall spikes of white flowers with a powerful evening scent.",
+    "significance": "A major Indian cut flower and garland crop, and a long-standing source of perfumery absolute.",
+    "fun_fact": "Its Hindi name rajnigandha means fragrance of the night, and the cut flowers keep opening up the spike for over a week in a vase."
+  },
+  {
+    "id": "sage",
+    "common_name": "Sage",
+    "aliases": [
+      "salvia officinalis",
+      "common sage",
+      "garden sage"
+    ],
+    "scientific_name": "Salvia officinalis",
+    "category": "Herb",
+    "light": "full_sun",
+    "moisture_class": "drier",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": false,
+    "uses": "Soft grey culinary leaves for stuffings, butters and roasts; picks best before it flowers.",
+    "significance": "A Mediterranean kitchen staple whose Latin name shares a root with salvere, to be well, reflecting its long medicinal use.",
+    "fun_fact": "It resents wet feet more than drought, and far more sage is lost to heavy monsoon soil than to any amount of neglect."
+  },
+  {
+    "id": "dill",
+    "common_name": "Dill",
+    "aliases": [
+      "sowa",
+      "shepu",
+      "anethum"
+    ],
+    "scientific_name": "Anethum graveolens",
+    "category": "Herb",
+    "light": "full_sun",
+    "moisture_class": "moderate",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": false,
+    "uses": "Feathery leaves for fish, yoghurt and pickles; the seed is used as a spice in its own right.",
+    "significance": "Cooked as a leafy vegetable in western and southern India, where it is treated as a green rather than a garnish.",
+    "fun_fact": "It bolts to flower quickly in heat and the leaves turn sparse once it does, so successive small sowings beat trying to keep one plant going."
+  },
+  {
+    "id": "chives",
+    "common_name": "Chives",
+    "aliases": [
+      "allium schoenoprasum",
+      "onion chives"
+    ],
+    "scientific_name": "Allium schoenoprasum",
+    "category": "Herb",
+    "light": "full_sun",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": false,
+    "uses": "Fine onion-flavoured leaves snipped over eggs, salads and soups; regrows after every cut.",
+    "significance": "One of the most practical windowsill herbs, since a single clump can be harvested for years.",
+    "fun_fact": "The purple pompom flowers are edible too, with a sharper onion bite than the leaves, and they pull in pollinators."
+  },
+  {
+    "id": "fenugreek",
+    "common_name": "Fenugreek",
+    "aliases": [
+      "methi",
+      "menthya",
+      "vendhayam"
+    ],
+    "scientific_name": "Trigonella foenum-graecum",
+    "category": "Herb",
+    "light": "full_sun",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": false,
+    "uses": "Grown for methi leaves in curries and parathas; the seeds are a core Indian spice.",
+    "significance": "One of the easiest greens to raise in a shallow balcony tray, going from seed to first harvest in under a month.",
+    "fun_fact": "It fixes its own nitrogen through root nodules, so it needs far less feeding than most leafy crops and improves the soil it grows in."
+  },
+  {
+    "id": "lemon-balm",
+    "common_name": "Lemon Balm",
+    "aliases": [
+      "melissa",
+      "bee balm",
+      "sweet balm"
+    ],
+    "scientific_name": "Melissa officinalis",
+    "category": "Herb",
+    "light": "bright_light",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": false,
+    "uses": "Lemon-scented leaves for teas and infusions; tolerates more shade than most kitchen herbs.",
+    "significance": "Long grown near beehives, which is where the genus name Melissa, Greek for honeybee, comes from.",
+    "fun_fact": "It spreads aggressively by runners and seed, so it is best kept in its own pot rather than sharing one with slower herbs."
+  },
+  {
+    "id": "bay-laurel",
+    "common_name": "Bay Laurel",
+    "aliases": [
+      "bay leaf",
+      "sweet bay",
+      "laurus"
+    ],
+    "scientific_name": "Laurus nobilis",
+    "category": "Herb",
+    "light": "full_sun",
+    "moisture_class": "moderate",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": false,
+    "uses": "Evergreen shrub whose leaves are dried for stocks, curries and braises.",
+    "significance": "The laurel of classical wreaths, and slow enough growing that a container plant stays manageable for years.",
+    "fun_fact": "It is not the same plant as Indian tej patta, which comes from a cinnamon relative and tastes quite different despite both being sold as bay leaf."
+  },
+  {
+    "id": "ginger",
+    "common_name": "Ginger",
+    "aliases": [
+      "adrak",
+      "shunti",
+      "inji",
+      "zingiber"
+    ],
+    "scientific_name": "Zingiber officinale",
+    "category": "Herb",
+    "light": "bright_indirect",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Grown in deep pots for its rhizome; the leafy shoots are ornamental in their own right.",
+    "significance": "One of the oldest traded spices, and straightforward to grow at home from a supermarket rhizome.",
+    "fun_fact": "It wants shade rather than full sun, which surprises people, and the foliage dies back completely before the rhizome is ready to lift."
+  },
+  {
+    "id": "turmeric",
+    "common_name": "Turmeric",
+    "aliases": [
+      "haldi",
+      "manjal",
+      "arishina",
+      "curcuma"
+    ],
+    "scientific_name": "Curcuma longa",
+    "category": "Herb",
+    "light": "bright_light",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Broad-leaved plant grown for its orange rhizome; handsome enough to earn a spot as foliage alone.",
+    "significance": "Central to Indian cooking, medicine and ritual, and cultivated on the subcontinent for several thousand years.",
+    "fun_fact": "It takes roughly eight to ten months from planting to harvest, and the plant signals readiness by yellowing and collapsing entirely."
+  },
+  {
+    "id": "spring-onion",
+    "common_name": "Spring Onion",
+    "aliases": [
+      "scallion",
+      "green onion",
+      "hara pyaz"
+    ],
+    "scientific_name": "Allium fistulosum",
+    "category": "Herb",
+    "light": "full_sun",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": false,
+    "uses": "Hollow green stalks used raw and cooked; among the fastest edibles for a small balcony.",
+    "significance": "A practical starter crop, since supermarket bulbs with roots attached will regrow in water or soil.",
+    "fun_fact": "Cut it about three centimetres above the soil rather than pulling it, and the same plant will regrow several more harvests."
+  },
+  {
+    "id": "betel-leaf",
+    "common_name": "Betel Leaf",
+    "aliases": [
+      "paan",
+      "vetrilai",
+      "nagavalli",
+      "piper betle"
+    ],
+    "scientific_name": "Piper betle",
+    "category": "Vine",
+    "light": "bright_indirect",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Climbing vine grown for glossy heart-shaped leaves used in paan and in ritual offerings.",
+    "significance": "Deeply woven into South Asian hospitality and ceremony, where betel leaves are offered at weddings and pujas.",
+    "fun_fact": "It needs a support to climb and dappled shade rather than sun, which is why it is traditionally grown up the trunks of areca palms."
+  },
+  {
+    "id": "brahmi",
+    "common_name": "Brahmi",
+    "aliases": [
+      "bacopa",
+      "water hyssop",
+      "brahmi booti"
+    ],
+    "scientific_name": "Bacopa monnieri",
+    "category": "Herb",
+    "light": "bright_light",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": true,
+    "uses": "Low creeping herb used in Ayurvedic preparations; happy in permanently damp soil or shallow water.",
+    "significance": "A long-established Ayurvedic memory tonic, and one of the few culinary or medicinal herbs that tolerates waterlogging.",
+    "fun_fact": "It is a genuine marsh plant, so the usual advice about letting soil dry between waterings is exactly wrong here."
+  },
+  {
+    "id": "guava",
+    "common_name": "Guava",
+    "aliases": [
+      "amrood",
+      "peru",
+      "sibiya",
+      "psidium"
+    ],
+    "scientific_name": "Psidium guajava",
+    "category": "Fruit Tree",
+    "light": "full_sun",
+    "moisture_class": "moderate",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Compact fruit tree that crops well in large containers and takes hard pruning without complaint.",
+    "significance": "Among the most widely grown backyard fruit trees in India, reliable enough to fruit with little intervention.",
+    "fun_fact": "It fruits on new growth, so cutting it back after a harvest is what produces the next crop rather than costing you one."
+  },
+  {
+    "id": "pomegranate",
+    "common_name": "Pomegranate",
+    "aliases": [
+      "anar",
+      "dalimb",
+      "punica"
+    ],
+    "scientific_name": "Punica granatum",
+    "category": "Fruit Tree",
+    "light": "full_sun",
+    "moisture_class": "drier",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Drought-tolerant fruiting shrub with bright orange flowers; dwarf forms suit containers.",
+    "significance": "Cultivated across the Middle East and India for millennia, and a recurring symbol of abundance in several traditions.",
+    "fun_fact": "Irregular watering while fruit is swelling causes the skins to split, so a steady rhythm matters more than the total amount."
+  },
+  {
+    "id": "papaya",
+    "common_name": "Papaya",
+    "aliases": [
+      "papita",
+      "pappali",
+      "carica"
+    ],
+    "scientific_name": "Carica papaya",
+    "category": "Fruit Tree",
+    "light": "full_sun",
+    "moisture_class": "moderate",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Fast-growing single-stemmed fruit plant for a large tub or a sunny corner of the garden.",
+    "significance": "Grows from seed to fruit in under a year, faster than almost any other fruit tree available to a home grower.",
+    "fun_fact": "Most seedlings are male or female, and a lone male will never fruit, which is why growers plant several and remove the surplus later."
+  },
+  {
+    "id": "banana",
+    "common_name": "Dwarf Banana",
+    "aliases": [
+      "kela",
+      "bale hannu",
+      "musa",
+      "cavendish"
+    ],
+    "scientific_name": "Musa acuminata",
+    "category": "Fruiting",
+    "light": "full_sun",
+    "moisture_class": "consistently_moist",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Large tropical foliage plant that can fruit in a big container given heat, water and heavy feeding.",
+    "significance": "The leaves are used as plates and for cooking across South India, making the plant useful long before any fruit appears.",
+    "fun_fact": "It is a giant herb, not a tree: the apparent trunk is a tightly rolled column of leaf bases with no wood in it at all."
+  },
+  {
+    "id": "common-fig",
+    "common_name": "Common Fig",
+    "aliases": [
+      "anjeer",
+      "ficus carica",
+      "edible fig"
+    ],
+    "scientific_name": "Ficus carica",
+    "category": "Fruit Tree",
+    "light": "full_sun",
+    "moisture_class": "moderate",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Deciduous fruit tree that crops well in pots, where restricted roots actually encourage fruiting.",
+    "significance": "One of the earliest cultivated fruit plants, with archaeological evidence predating wheat and barley.",
+    "fun_fact": "A fig is not a fruit but an inverted flower cluster, with hundreds of tiny flowers blooming inside the sealed pod you eat."
+  },
+  {
+    "id": "key-lime",
+    "common_name": "Key Lime",
+    "aliases": [
+      "nimbu",
+      "kagzi lime",
+      "indian lime",
+      "citrus aurantiifolia"
+    ],
+    "scientific_name": "Citrus aurantiifolia",
+    "category": "Fruit Tree",
+    "light": "full_sun",
+    "moisture_class": "moderate",
+    "fertilize_group": "citrus",
+    "typically_hanging": false,
+    "uses": "Thorny small citrus that fruits heavily in containers and crops through much of the year in warm climates.",
+    "significance": "The everyday lime of Indian kitchens, used far more than lemons for dal, chaat and pickles.",
+    "fun_fact": "It flowers and carries ripe fruit at the same time, so a single plant will often show buds, green fruit and yellow fruit together."
+  },
+  {
+    "id": "mulberry",
+    "common_name": "Mulberry",
+    "aliases": [
+      "shahtoot",
+      "hippunerale",
+      "morus"
+    ],
+    "scientific_name": "Morus alba",
+    "category": "Fruit Tree",
+    "light": "full_sun",
+    "moisture_class": "moderate",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Vigorous fruit tree that takes hard pruning, so it can be kept to container size and still crop.",
+    "significance": "Grown across India for fruit and, historically at scale in Karnataka, as the sole food of silkworms.",
+    "fun_fact": "Cuttings root so readily that a pushed-in branch will often grow, which is why mulberries spread along field boundaries."
+  },
+  {
+    "id": "dragon-fruit",
+    "common_name": "Dragon Fruit",
+    "aliases": [
+      "pitaya",
+      "hylocereus",
+      "kamalam"
+    ],
+    "scientific_name": "Selenicereus undatus",
+    "category": "Fruiting",
+    "light": "full_sun",
+    "moisture_class": "drier",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Climbing cactus grown on a post or frame; needs strong support once it bulks up.",
+    "significance": "Now a significant commercial crop across India, having gone from novelty to mainstream orchard planting within about two decades.",
+    "fun_fact": "Its enormous white flowers open for a single night and are wilting by sunrise, so the entire crop depends on one night's pollination."
+  },
+  {
+    "id": "crape-jasmine",
+    "common_name": "Crape Jasmine",
+    "aliases": [
+      "chandni",
+      "tagar",
+      "nandiyavattai",
+      "tabernaemontana"
+    ],
+    "scientific_name": "Tabernaemontana divaricata",
+    "category": "Fragrant",
+    "light": "bright_light",
+    "moisture_class": "moderate",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Evergreen shrub with pinwheel white flowers; blooms through much of the year in warm climates.",
+    "significance": "Planted at temples and in home gardens across India, where the flowers are used for daily offerings.",
+    "fun_fact": "Despite the name it is not a jasmine, and the scent is faint by day but noticeably stronger after dark."
+  },
+  {
+    "id": "orange-jessamine",
+    "common_name": "Orange Jessamine",
+    "aliases": [
+      "kamini",
+      "murraya",
+      "mock orange",
+      "chinese box"
+    ],
+    "scientific_name": "Murraya paniculata",
+    "category": "Fragrant",
+    "light": "full_sun",
+    "moisture_class": "moderate",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Dense glossy shrub with intensely fragrant white flowers; widely used as a clipped hedge.",
+    "significance": "A standard boundary hedge across Indian gardens, valued for taking shearing while still flowering.",
+    "fun_fact": "It is a close relative of the curry leaf plant, which becomes obvious from the leaf shape and the scent of a crushed leaf."
+  },
+  {
+    "id": "night-blooming-jasmine",
+    "common_name": "Night Blooming Jasmine",
+    "aliases": [
+      "raat ki rani",
+      "cestrum",
+      "queen of the night",
+      "parijat vine"
+    ],
+    "scientific_name": "Cestrum nocturnum",
+    "category": "Fragrant",
+    "light": "full_sun",
+    "moisture_class": "moderate",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Loose shrub grown almost entirely for a night scent that carries a remarkable distance.",
+    "significance": "A fixture of Indian courtyards and terraces, usually planted near a window for the evening fragrance.",
+    "fun_fact": "The tiny green flowers are visually unremarkable and closed all day, releasing scent only after dark to attract night-flying moths."
+  },
+  {
+    "id": "parijat",
+    "common_name": "Parijat",
+    "aliases": [
+      "harsingar",
+      "night flowering jasmine",
+      "coral jasmine",
+      "shiuli"
+    ],
+    "scientific_name": "Nyctanthes arbor-tristis",
+    "category": "Fragrant",
+    "light": "full_sun",
+    "moisture_class": "moderate",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Small tree with white flowers on orange stalks, dropping a fragrant carpet each morning.",
+    "significance": "Sacred in several Indian traditions, and the flowers are traditionally gathered from the ground rather than picked from the tree.",
+    "fun_fact": "Its species name arbor-tristis means sad tree, because it sheds every flower it opened overnight by sunrise."
+  },
+  {
+    "id": "oleander",
+    "common_name": "Oleander",
+    "aliases": [
+      "kaner",
+      "nerium",
+      "kanagile",
+      "arali"
+    ],
+    "scientific_name": "Nerium oleander",
+    "category": "Flowering",
+    "light": "full_sun",
+    "moisture_class": "drier",
+    "fertilize_group": "flowering_fruiting",
+    "typically_hanging": false,
+    "uses": "Tough flowering shrub for hot exposed positions; flowers for months with almost no attention.",
+    "significance": "Planted along Indian highways and in temple gardens precisely because it survives heat, dust and drought.",
+    "fun_fact": "Every part of it is highly poisonous, including the smoke if it is burned, so it needs care around children and pets and should never go on a compost fire."
+  },
+  {
+    "id": "neem",
+    "common_name": "Neem",
+    "aliases": [
+      "azadirachta",
+      "indian lilac",
+      "bevu",
+      "vembu"
+    ],
+    "scientific_name": "Azadirachta indica",
+    "category": "Tree",
+    "light": "full_sun",
+    "moisture_class": "drier",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Fast-growing shade tree; leaves and seed oil are used as a household pest treatment.",
+    "significance": "Long central to Indian medicine and daily practice, and the source of azadirachtin, now a widely used organic pesticide.",
+    "fun_fact": "Neem oil works largely by disrupting insect moulting and feeding rather than killing on contact, which is why results take several days."
+  },
+  {
+    "id": "norfolk-island-pine",
+    "common_name": "Norfolk Island Pine",
+    "aliases": [
+      "araucaria",
+      "star pine",
+      "living christmas tree"
+    ],
+    "scientific_name": "Araucaria heterophylla",
+    "category": "Tree",
+    "light": "bright_light",
+    "moisture_class": "moderate",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Symmetrical tiered conifer grown indoors in pots, often decorated in December.",
+    "significance": "Sold widely as an indoor tree, though it genuinely wants bright light and cool humid air to keep its shape.",
+    "fun_fact": "It is not a pine and belongs to an ancient conifer family that dates to the age of the dinosaurs; lost lower branches never regrow."
+  },
+  {
+    "id": "yucca",
+    "common_name": "Yucca",
+    "aliases": [
+      "spineless yucca",
+      "stick yucca",
+      "yucca elephantipes"
+    ],
+    "scientific_name": "Yucca gigantea",
+    "category": "Semi-succulent",
+    "light": "bright_light",
+    "moisture_class": "drier",
+    "fertilize_group": "herb_succulent",
+    "typically_hanging": false,
+    "uses": "Cane-grown plant with stiff sword leaves; a durable floor plant for a bright room.",
+    "significance": "Common in offices and lobbies because it survives irregular watering and low humidity better than most large plants.",
+    "fun_fact": "It is far more often killed by overwatering than anything else, and the thick trunk stores enough water to carry it through weeks of drought."
+  },
+  {
+    "id": "olive-tree",
+    "common_name": "Olive Tree",
+    "aliases": [
+      "olea europaea",
+      "european olive"
+    ],
+    "scientific_name": "Olea europaea",
+    "category": "Tree",
+    "light": "full_sun",
+    "moisture_class": "drier",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Silver-leaved tree grown in containers for its shape; fruiting needs a genuine cool season.",
+    "significance": "Cultivated around the Mediterranean for thousands of years, and increasingly kept as an ornamental patio plant elsewhere.",
+    "fun_fact": "It needs a spell of winter cold to set fruit at all, so a potted olive in a warm climate will usually stay handsome and entirely fruitless."
+  },
+  {
+    "id": "ficus-audrey",
+    "common_name": "Ficus Audrey",
+    "aliases": [
+      "banyan fig",
+      "ficus benghalensis",
+      "bengal fig"
+    ],
+    "scientific_name": "Ficus benghalensis",
+    "category": "Tree",
+    "light": "bright_indirect",
+    "moisture_class": "moderate",
+    "fertilize_group": "foliage",
+    "typically_hanging": false,
+    "uses": "Upright tree with velvety leaves and pale veins; a more forgiving alternative to the fiddle leaf fig.",
+    "significance": "The national tree of India, kept indoors as a young container plant rather than at anything like its natural size.",
+    "fun_fact": "Left in the ground it drops aerial roots that thicken into new trunks, and the largest specimens cover several acres as a single plant."
   }
 ]

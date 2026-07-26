@@ -4,7 +4,9 @@ import { listen } from "@tauri-apps/api/event";
 import { api } from "./api";
 import { TitleBar } from "./components/TitleBar";
 import { Tabs } from "./components/Tabs";
-import { ActionableRow, AllPlantsListRow } from "./components/PlantRow";
+import { ActionableRow } from "./components/PlantRow";
+import { OverviewList } from "./components/OverviewList";
+import { TodoList } from "./components/TodoList";
 import { Mascot, mascotStateForCounts } from "./components/Mascot";
 import { EmptyState } from "./components/EmptyState";
 import { AddPlantForm } from "./components/AddPlantForm";
@@ -22,6 +24,7 @@ import type {
   Settings,
   Space,
   Tab,
+  TodoView,
   WeatherSummary,
 } from "./types";
 
@@ -49,6 +52,7 @@ export default function App() {
   const [soon, setSoon] = useState<EventView[]>([]);
   const [all, setAll] = useState<AllPlantsRow[]>([]);
   const [spaces, setSpaces] = useState<Space[]>([]);
+  const [todos, setTodos] = useState<TodoView[]>([]);
   const [settings, setSettings] = useState<Settings | null>(null);
   const [weather, setWeather] = useState<WeatherSummary | null>(null);
   const [pending, setPending] = useState<Record<string, PendingAction>>({});
@@ -83,8 +87,14 @@ export default function App() {
   // Startup pin state is applied in Rust (see lib.rs setup) so it doesn't
   // depend on the webview having loaded. This component only handles
   // runtime toggling.
+  // To-dos are refreshed on their own as well as with everything else:
+  // ticking a box shouldn't refetch the plant list and the forecast.
+  const refreshTodos = useCallback(async () => {
+    setTodos(await api.listTodos());
+  }, []);
+
   const refresh = useCallback(async () => {
-    const [dueRes, soonRes, allRes, spacesRes, settingsRes, weatherRes] = await Promise.all([
+    const [dueRes, soonRes, allRes, spacesRes, settingsRes, weatherRes, todosRes] = await Promise.all([
       api.listDueToday(),
       api.listSoon(),
       api.listAllPlants(),
@@ -93,6 +103,7 @@ export default function App() {
       // Never let a missing/failed weather read break the whole refresh --
       // the plant list is the point, weather is decoration on top.
       api.getWeather().catch(() => null),
+      api.listTodos(),
     ]);
     setDue(dueRes);
     setSoon(soonRes);
@@ -100,6 +111,7 @@ export default function App() {
     setSpaces(spacesRes);
     setSettings(settingsRes);
     setWeather(weatherRes);
+    setTodos(todosRes);
   }, []);
 
   useEffect(() => {
@@ -246,20 +258,46 @@ export default function App() {
           onTogglePin={handleTogglePin}
           onMinimize={handleMinimize}
         />
-        <Tabs active={tab} dueCount={due.length} soonCount={soon.length} onChange={setTab} />
-        <WeatherStrip weather={weather} />
+        <Tabs
+          active={tab}
+          dueCount={due.length}
+          soonCount={soon.length}
+          todoCount={todos.filter((t) => !t.done).length}
+          onChange={setTab}
+        />
         <div className="rows">
           {tab === "today" && renderRows(due, "All done for today.")}
           {tab === "soon" && renderRows(soon, "Nothing coming up in the next few days.")}
-          {tab === "all" &&
+          {tab === "overview" &&
             (all.length === 0 ? (
               <EmptyState text={nothingHereText} plants={all} />
             ) : (
-              all.map((r) => (
-                <AllPlantsListRow key={r.plant_id} row={r} onEdit={() => handleShowDetails(r.plant_id)} />
-              ))
+              <OverviewList rows={all} onSelect={handleShowDetails} />
             ))}
+          {tab === "todo" && (
+            <TodoList
+              todos={todos}
+              onAdd={async (text) => {
+                await api.addTodo(text);
+                await refreshTodos();
+              }}
+              onToggle={async (id) => {
+                await api.toggleTodo(id);
+                await refreshTodos();
+              }}
+              onDelete={async (id) => {
+                await api.deleteTodo(id);
+                await refreshTodos();
+              }}
+            />
+          )}
         </div>
+
+        {/* Footer, not a header: it explains the schedule rather than driving
+            it, so it sits out of the way under the list instead of pushing
+            the rows down. `.rows` is the only growing child, so this pins
+            itself to the bottom of the card. */}
+        <WeatherStrip weather={weather} />
 
         {overlay.kind === "add-plant" && (
           <AddPlantForm
@@ -275,6 +313,12 @@ export default function App() {
             spaces={spaces}
             onClose={() => setOverlay({ kind: "none" })}
             onEdit={() => setOverlay({ kind: "edit", plant: overlay.plant })}
+            onLogCare={async (taskType, daysAgo) => {
+              await api.logCare(overlay.plant.id, taskType, daysAgo);
+              // Refresh behind the open panel so the lists are already
+              // correct when the user closes it.
+              await refresh();
+            }}
           />
         )}
         {overlay.kind === "edit" && (

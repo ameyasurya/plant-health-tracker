@@ -8,6 +8,8 @@ import type {
   PlantProfile,
   Settings,
   Space,
+  TaskType,
+  TodoView,
   WeatherSummary,
 } from "./types";
 
@@ -37,4 +39,11 @@ export const api = {
   isAutostartEnabled: () => invoke<boolean>("is_autostart_enabled"),
   setPinnedOnTop: (pinned: boolean) => invoke<void>("set_pinned_on_top", { pinned }),
   setActiveSpace: (spaceId: string | null) => invoke<void>("set_active_space", { spaceId }),
+  /** Records care done outside the reminder window; `daysAgo` null means today. */
+  logCare: (plantId: string, taskType: TaskType, daysAgo: number | null) =>
+    invoke<void>("log_care", { plantId, taskType, daysAgo }),
+  listTodos: () => invoke<TodoView[]>("list_todos"),
+  addTodo: (text: string) => invoke<void>("add_todo", { text }),
+  toggleTodo: (todoId: string) => invoke<void>("toggle_todo", { todoId }),
+  deleteTodo: (todoId: string) => invoke<void>("delete_todo", { todoId }),
 };

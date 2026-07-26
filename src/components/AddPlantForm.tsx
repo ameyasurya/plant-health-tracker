@@ -20,6 +20,44 @@ interface Props {
   onSave: (plant: NewPlant) => Promise<void>;
 }
 
+/** Coarse on purpose: nobody remembers the exact day, and the schedule
+ *  works in whole days anyway. `null` means "not sure". */
+const WHEN_OPTIONS: { label: string; days: number | null }[] = [
+  { label: "Today", days: 0 },
+  { label: "Yesterday", days: 1 },
+  { label: "Few days", days: 3 },
+  { label: "Not sure", days: null },
+];
+
+function LastDone({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: number | null;
+  onChange: (days: number | null) => void;
+}) {
+  return (
+    <div className="lastdone-field">
+      <span className="field-label">{label}</span>
+      <div className="lastdone-opts" role="group" aria-label={label}>
+        {WHEN_OPTIONS.map((o) => (
+          <button
+            key={o.label}
+            type="button"
+            className={value === o.days ? "lastdone-opt lastdone-on" : "lastdone-opt"}
+            aria-pressed={value === o.days}
+            onClick={() => onChange(o.days)}
+          >
+            {o.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /**
  * Two-step add flow. Step one searches the bundled species catalog so the
  * care classes and knowledge copy come from real data rather than the user
@@ -42,6 +80,10 @@ export function AddPlantForm({ spaces, defaultSpaceId, onCancel, onSave }: Props
   const [isHanging, setIsHanging] = useState(false);
   const [notes, setNotes] = useState("");
   const [spaceId, setSpaceId] = useState(defaultSpaceId);
+  // Default to "not sure" so adding a plant stays a two-second job for
+  // anyone who doesn't care. Only a deliberate pick changes the schedule.
+  const [wateredAgo, setWateredAgo] = useState<number | null>(null);
+  const [fedAgo, setFedAgo] = useState<number | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -92,6 +134,8 @@ export function AddPlantForm({ spaces, defaultSpaceId, onCancel, onSave }: Props
         notes,
         space_id: spaceId,
         catalog_id: catalogId,
+        last_watered_days_ago: wateredAgo,
+        last_fertilized_days_ago: fedAgo,
       });
     } catch (e) {
       setError(String(e));
@@ -204,6 +248,12 @@ export function AddPlantForm({ spaces, defaultSpaceId, onCancel, onSave }: Props
         <input type="checkbox" checked={isHanging} onChange={(e) => setIsHanging(e.target.checked)} />
         <span>Hanging pot (dries out faster)</span>
       </label>
+
+      {/* Without these the app has to guess, and it guessed twice in
+          opposite directions: watering was due the moment you added the
+          plant, while feeding assumed you had just fed it. */}
+      <LastDone label="Last watered" value={wateredAgo} onChange={setWateredAgo} />
+      <LastDone label="Last fed" value={fedAgo} onChange={setFedAgo} />
       <Field label="Notes">
         <textarea rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} />
       </Field>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import type { AllPlantsRow, EventView } from "../types";
+import type { EventView } from "../types";
 
 /*
  * Row tooltips carry only the care instruction -- the one part of the row
@@ -124,40 +124,6 @@ export function ActionableRow({ event, pendingLabel, onDone, onSnooze, onSkip, o
   );
 }
 
-export function AllPlantsListRow({ row, onEdit }: { row: AllPlantsRow; onEdit: () => void }) {
-  return (
-    <div
-      className="row row-clickable"
-      onClick={onEdit}
-      role="button"
-      tabIndex={0}
-      // Only the scientific name is hidden here -- the common name is
-      // already rendered, so a tooltip repeating it would be noise.
-      title={row.scientific_name || undefined}
-    >
-      <div className="row-text">
-        <div className="row-title ellipsis">
-          {row.plant_name}
-          {row.inferred && (
-            <span className="inferred-dot" title="Some care details were inferred, so they are worth confirming">
-              *
-            </span>
-          )}
-        </div>
-        <div className="row-meta ellipsis">
-          <span className="row-stat" title={`Next water: ${row.next_water_label}`}>
-            <DropletIcon /> {row.next_water_label}
-          </span>
-          <span className="row-stat" title={`Next feed: ${row.next_fertilize_label}`}>
-            <FlaskIcon /> {row.next_fertilize_label}
-          </span>
-        </div>
-      </div>
-      <ChevronIcon />
-    </div>
-  );
-}
-
 /** Tinted badge: colour and glyph carry the water-vs-feed distinction, so
  *  the meta line doesn't have to compete for that job. */
 function TaskBadge({ type }: { type: EventView["task_type"] }) {
@@ -191,14 +157,6 @@ function FlaskIcon() {
   return (
     <svg {...iconProps}>
       <path d="M9 3h6M10 3v6l-5 9a1.5 1.5 0 0 0 1.3 2h11.4a1.5 1.5 0 0 0 1.3-2l-5-9V3" />
-    </svg>
-  );
-}
-
-function ChevronIcon() {
-  return (
-    <svg className="row-chevron" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M9 18l6-6-6-6" />
     </svg>
   );
 }

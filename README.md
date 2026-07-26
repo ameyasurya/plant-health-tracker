@@ -30,24 +30,38 @@ described below.
 
 ## Features
 
-- **Add plants from a built-in catalog** of ~60 common houseplants, herbs,
-  succulents and flowering plants. Search by common name, scientific name,
-  or local name. "kadi patta", "money plant", "mother in law's tongue" all
-  work. Picking one fills in its light, watering and feeding needs, so you
-  don't have to know what a "moisture class" is. Anything not in the
-  catalog can be added manually.
+- **Add plants from a built-in catalog** of ~150 common houseplants, herbs,
+  succulents, cacti, flowering and fruiting plants. Search by common name,
+  scientific name, or local name. "kadi patta", "money plant", "mother in
+  law's tongue" all work. Picking one fills in its light, watering and
+  feeding needs, so you don't have to know what a "moisture class" is.
+  Anything not in the catalog can be added manually.
+- **Tell it when you last watered and fed**, when you add a plant. Without
+  that the first reminder is a guess, and it can only guess wrong in one
+  direction or the other. "Not sure" is always an option.
 - **Weather-aware watering.** Recent rain pushes watering out, a hot spell
   pulls it forward. Seasons follow your hemisphere, and the day boundary
   follows your timezone.
 - **Feeding schedules** per plant group (flowering/fruiting, citrus,
   foliage, herb/succulent), with a dormancy window where feeding pauses
   over the cool months and resumes automatically.
+- **Log care you did off-schedule.** Fed a plant three weeks before it was
+  due? Open it and say so, and the next feed is worked out from when you
+  actually did it. Watering intervals are short enough that the reminder
+  usually catches them, but feeding cadences run three to seven weeks, so
+  without this the app would keep counting down to a date it had no way of
+  knowing was wrong.
 - **Catch-up rule.** Close the app for a week and you get one overdue item
   per plant, not a pile of stacked missed cycles. Marking something done
   reschedules from *when you actually did it*, so being late never drags
   the schedule permanently behind.
 - **Spaces.** Group plants by where they live (balcony, kitchen,
   bedroom) and filter to one at a time.
+- **Overview tab** listing every plant under its space, with its watering
+  and feeding state side by side, so nothing quietly falls behind.
+- **A to-do list**, because the widget is already sitting on your desktop.
+  Unfinished items carry over and are marked with their age rather than
+  being cleared overnight.
 - **Undo on every action.** Done / snooze / skip hold for a few seconds
   before they're committed, so a mis-click costs nothing.
 - **Plant details** with uses, cultural background and a fun fact.
@@ -81,7 +95,8 @@ month-based seasons. The city search and "Detect" button still reach out
 when you actively use them.
 
 Data lives in `%APPDATA%\com.ameya.plant-health-tracker\` as `plants.json`,
-`care-log.json`, `spaces.json`, `settings.json` and `weather.json`.
+`care-log.json`, `spaces.json`, `settings.json`, `weather.json` and
+`todos.json`.
 
 ## Building from source
 

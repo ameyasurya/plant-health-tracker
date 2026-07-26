@@ -7,7 +7,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { mockIPC, mockWindows } from "@tauri-apps/api/mocks";
-import type { AllPlantsRow, EventView, NewPlant, PlantProfile, Settings, Space } from "./types";
+import type { AllPlantsRow, Bucket, EventView, NewPlant, PlantProfile, Settings, Space, TodoView } from "./types";
 import "./styles.css";
 
 mockWindows("main");
@@ -95,7 +95,7 @@ function dayLabel(daysUntil: number): string {
   return `in ${daysUntil} days`;
 }
 
-function bucketFor(daysUntil: number): "overdue" | "today" | "soon" {
+function bucketFor(daysUntil: number): Bucket {
   if (daysUntil < 0) return "overdue";
   if (daysUntil === 0) return "today";
   return "soon";
@@ -163,6 +163,7 @@ function listAllPlants(): AllPlantsRow[] {
     const fertEvents = events.filter((e) => e.plantId === plant.id && e.taskType === "fertilize" && isLive(e));
     const water = waterEvents.length ? Math.min(...waterEvents.map((e) => e.dueOffset)) : 0;
     const fert = fertEvents.length ? Math.min(...fertEvents.map((e) => e.dueOffset)) : 0;
+    const spaceId = plant.spaceId ?? "balcony";
     return {
       plant_id: plant.id,
       plant_name: plant.name,
@@ -173,10 +174,26 @@ function listAllPlants(): AllPlantsRow[] {
       next_fertilize_label: dayLabel(fert),
       inferred: !!plant.inferred,
       fun_fact: FACTS[plant.id] ?? "",
+      space_id: spaceId,
+      space_name: spaces.find((s) => s.id === spaceId)?.name ?? "Unassigned",
+      water_status: bucketFor(water),
+      fertilize_status: bucketFor(fert),
     };
   });
   rows.sort((a, b) => a.plant_name.localeCompare(b.plant_name));
   return rows;
+}
+
+// Seeded with a carried-over item so the "from yesterday" state is
+// reachable in the preview without having to wait a day for it.
+let todos: TodoView[] = [
+  { id: "t1", text: "Repot the monstera", done: false, created_on: "", carried_over: true, age_label: "from yesterday" },
+  { id: "t2", text: "Buy neem oil", done: false, created_on: "", carried_over: false, age_label: "" },
+  { id: "t3", text: "Clear dead leaves", done: true, created_on: "", carried_over: false, age_label: "" },
+];
+
+function sortTodos(list: TodoView[]): TodoView[] {
+  return [...list].sort((a, b) => Number(a.done) - Number(b.done));
 }
 
 mockIPC((cmd, payload) => {
@@ -212,6 +229,44 @@ mockIPC((cmd, payload) => {
         const src = events[idx];
         events.push({ id: `${id}-recheck`, plantId: src.plantId, taskType: src.taskType, status: "pending", dueOffset: 2 });
       }
+      return undefined;
+    }
+    case "list_todos":
+      return sortTodos(todos);
+    case "add_todo":
+      todos = [...todos, {
+        id: `t-${Date.now()}`,
+        text: (args.text as string).trim(),
+        done: false,
+        created_on: "",
+        carried_over: false,
+        age_label: "",
+      }];
+      return undefined;
+    case "toggle_todo":
+      todos = todos.map((t) =>
+        t.id === args.todoId ? { ...t, done: !t.done, carried_over: t.done ? t.carried_over : false } : t
+      );
+      return undefined;
+    case "delete_todo":
+      todos = todos.filter((t) => t.id !== args.todoId);
+      return undefined;
+    case "log_care": {
+      const plantId = args.plantId as string;
+      const taskType = args.taskType as TaskType;
+      const daysAgo = (args.daysAgo as number) ?? 0;
+      const idx = events.findIndex((e) => e.plantId === plantId && e.taskType === taskType && isLive(e));
+      if (idx >= 0) events[idx] = { ...events[idx], status: "done" };
+      // Rough stand-in for the real cadences; the point here is only that
+      // the next date moves out from when the care actually happened.
+      const interval = taskType === "water" ? 4 : 30;
+      events.push({
+        id: `${plantId}-${taskType}-logged-${Date.now()}`,
+        plantId,
+        taskType,
+        status: "pending",
+        dueOffset: Math.max(0, interval - daysAgo),
+      });
       return undefined;
     }
     case "get_settings":

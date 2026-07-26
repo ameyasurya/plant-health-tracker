@@ -74,6 +74,31 @@ pub struct AllPlantsRow {
     /// Carried on the row so the all-clear empty state can show a fact
     /// about a plant the user actually owns, with no extra round trip.
     pub fun_fact: String,
+    /// Space the plant lives in. Carried here so the overview can group by
+    /// space without a second call and without matching ids in the webview.
+    pub space_id: String,
+    pub space_name: String,
+    /// "overdue" | "today" | "soon" for each task, using the same buckets
+    /// as the due/soon lists so the two views cannot disagree about how
+    /// urgent the same plant is.
+    pub water_status: String,
+    pub fertilize_status: String,
+}
+
+/// A checklist item as the UI needs it: the stored fields plus the
+/// carried-over judgement, which depends on the user's local "today" and
+/// so must be decided in Rust rather than in the webview.
+#[derive(Debug, Clone, Serialize)]
+pub struct TodoView {
+    pub id: String,
+    pub text: String,
+    pub done: bool,
+    pub created_on: chrono::NaiveDate,
+    /// Open item added before today. The UI marks these rather than hiding
+    /// them, so nothing the user typed disappears on its own.
+    pub carried_over: bool,
+    /// "" for today's items, otherwise "from yesterday" / "from 3 days ago".
+    pub age_label: String,
 }
 
 /// Everything the add-plant form collects. The id, space assignment and
@@ -95,6 +120,21 @@ pub struct NewPlant {
     /// by the client, so the details panel can't be fed arbitrary text.
     #[serde(default)]
     pub catalog_id: Option<String>,
+    /// How long before now the plant was last watered and fed, if the user
+    /// knows. `None` means "not sure" and keeps the original behaviour, so
+    /// adding a plant stays a two-second job.
+    ///
+    /// Without these, a new plant was assumed to have been watered never
+    /// (due immediately) and fed today (a full cycle away), which are two
+    /// different guesses pointing in opposite directions.
+    ///
+    /// Sent as a day count rather than a date on purpose: resolving it
+    /// against "today" has to happen here, where the user's configured
+    /// timezone is known. The webview only knows the machine's.
+    #[serde(default)]
+    pub last_watered_days_ago: Option<i64>,
+    #[serde(default)]
+    pub last_fertilized_days_ago: Option<i64>,
 }
 
 fn cue_label(task_type: TaskType, days_until: i64) -> String {
@@ -213,6 +253,7 @@ pub fn list_all_plants(state: tauri::State<AppState>) -> Result<Vec<AllPlantsRow
     let store = state.store.lock().map_err(|e| e.to_string())?;
     let plants = store.load_plants().map_err(|e| e.to_string())?;
     let events = store.load_events().map_err(|e| e.to_string())?;
+    let spaces = store.load_spaces().map_err(|e| e.to_string())?;
     let active = store.load_settings().map_err(|e| e.to_string())?.active_space_id;
     let env = Env::load(&store)?;
     let today = env.today;
@@ -241,10 +282,98 @@ pub fn list_all_plants(state: tauri::State<AppState>) -> Result<Vec<AllPlantsRow
             next_fertilize_label: day_label((fert - today).num_days()),
             inferred: plant.inferred,
             fun_fact: plant.fun_fact.clone(),
+            space_id: plant.space_id.clone(),
+            // A plant can outlive the space it referenced if that space was
+            // deleted, so fall back to a readable label rather than dropping
+            // the plant out of the grouped view entirely.
+            space_name: spaces
+                .iter()
+                .find(|s| s.id == plant.space_id)
+                .map(|s| s.name.clone())
+                .unwrap_or_else(|| "Unassigned".to_string()),
+            water_status: bucket_for((water - today).num_days()).to_string(),
+            fertilize_status: bucket_for((fert - today).num_days()).to_string(),
         });
     }
     rows.sort_by(|a, b| a.plant_name.cmp(&b.plant_name));
     Ok(rows)
+}
+
+/// Checklist items, ordered the way the list should read: still-open items
+/// first with the oldest carried-over ones at the top, then anything already
+/// ticked off. Completed items stay visible so ticking something gives
+/// visible feedback rather than making it vanish.
+#[tauri::command]
+pub fn list_todos(state: tauri::State<AppState>) -> Result<Vec<TodoView>, String> {
+    let store = state.store.lock().map_err(|e| e.to_string())?;
+    let todos = store.load_todos().map_err(|e| e.to_string())?;
+    let today = Env::load(&store)?.today;
+
+    let mut views: Vec<TodoView> = todos
+        .iter()
+        .map(|t| {
+            let age = (today - t.created_on).num_days();
+            let carried_over = !t.done && age > 0;
+            TodoView {
+                id: t.id.clone(),
+                text: t.text.clone(),
+                done: t.done,
+                created_on: t.created_on,
+                carried_over,
+                age_label: if !carried_over {
+                    String::new()
+                } else if age == 1 {
+                    "from yesterday".to_string()
+                } else {
+                    format!("from {age} days ago")
+                },
+            }
+        })
+        .collect();
+
+    views.sort_by(|a, b| {
+        a.done
+            .cmp(&b.done)
+            .then_with(|| a.created_on.cmp(&b.created_on))
+    });
+    Ok(views)
+}
+
+#[tauri::command]
+pub fn add_todo(state: tauri::State<AppState>, text: String) -> Result<(), String> {
+    let text = text.trim().to_string();
+    if text.is_empty() {
+        return Err("to-do needs some text".to_string());
+    }
+    let store = state.store.lock().map_err(|e| e.to_string())?;
+    let today = Env::load(&store)?.today;
+    let mut todos = store.load_todos().map_err(|e| e.to_string())?;
+    todos.push(crate::store::new_todo(text, today));
+    store.save_todos(&todos).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn toggle_todo(state: tauri::State<AppState>, todo_id: String) -> Result<(), String> {
+    let store = state.store.lock().map_err(|e| e.to_string())?;
+    let today = Env::load(&store)?.today;
+    let mut todos = store.load_todos().map_err(|e| e.to_string())?;
+    let todo = todos
+        .iter_mut()
+        .find(|t| t.id == todo_id)
+        .ok_or_else(|| "to-do not found".to_string())?;
+    todo.done = !todo.done;
+    // Clearing the date on un-ticking keeps the record honest: a completed_on
+    // left behind on an open item would misreport when it was actually done.
+    todo.completed_on = if todo.done { Some(today) } else { None };
+    store.save_todos(&todos).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn delete_todo(state: tauri::State<AppState>, todo_id: String) -> Result<(), String> {
+    let store = state.store.lock().map_err(|e| e.to_string())?;
+    let mut todos = store.load_todos().map_err(|e| e.to_string())?;
+    todos.retain(|t| t.id != todo_id);
+    store.save_todos(&todos).map_err(|e| e.to_string())
 }
 
 /// Marks the given event as done and opens a fresh Pending event for the
@@ -275,6 +404,58 @@ pub fn mark_done(state: tauri::State<AppState>, event_id: String) -> Result<(), 
     events[idx].status = EventStatus::Done;
     events[idx].completed_at = Some(today);
     events.push(new_pending_event(plant.id.clone(), task_type, next));
+
+    store.save_events(&events).map_err(|e| e.to_string())?;
+    Ok(())
+}
+
+/// Records care done off-schedule, and reschedules from when it actually
+/// happened.
+///
+/// `mark_done` needs a pending event the user can see, and only events due
+/// within five days are listed. That covers watering, whose intervals run
+/// one to seven days, but feeding cadences are 21 to 49 days, so for most
+/// of a feeding cycle there was no way to tell the app you had just fed a
+/// plant. It carried on counting down to a date it already knew was wrong.
+///
+/// Keyed on plant and task rather than an event id for exactly that reason:
+/// the caller has a plant in front of them, not a due reminder.
+#[tauri::command]
+pub fn log_care(
+    state: tauri::State<AppState>,
+    plant_id: String,
+    task_type: TaskType,
+    days_ago: Option<i64>,
+) -> Result<(), String> {
+    let store = state.store.lock().map_err(|e| e.to_string())?;
+    let plants = store.load_plants().map_err(|e| e.to_string())?;
+    let mut events = store.load_events().map_err(|e| e.to_string())?;
+    let env = Env::load(&store)?;
+    let today = env.today;
+
+    let plant = plants
+        .iter()
+        .find(|p| p.id == plant_id)
+        .ok_or_else(|| "plant not found".to_string())?
+        .clone();
+
+    // Same clamp as add_plant: care cannot have happened in the future.
+    let done_on = today - chrono::Duration::days(days_ago.unwrap_or(0).max(0));
+
+    // Close out whichever live event this satisfies, so logging a feed does
+    // not leave the old reminder sitting there to fire again later.
+    if let Some(idx) = events
+        .iter()
+        .position(|e| e.plant_id == plant_id && e.task_type == task_type && is_live(e))
+    {
+        events[idx].status = EventStatus::Done;
+        events[idx].completed_at = Some(done_on);
+    }
+
+    // Schedule from when it was actually done, not from today, then clamp so
+    // logging something long overdue cannot open an event in the past.
+    let next = schedule::next_due_ctx(done_on, &plant, task_type, env.ctx()).max(today);
+    events.push(new_pending_event(plant_id, task_type, next));
 
     store.save_events(&events).map_err(|e| e.to_string())?;
     Ok(())
@@ -396,9 +577,46 @@ pub fn add_plant(state: tauri::State<AppState>, plant: NewPlant) -> Result<Plant
 
     let env = Env::load(&store)?;
     let today = env.today;
-    events.push(new_pending_event(profile.id.clone(), TaskType::Water, today));
-    let fert_due = schedule::next_fertilize_due_ctx(today, &profile, env.ctx());
-    events.push(new_pending_event(profile.id.clone(), TaskType::Fertilize, fert_due));
+
+    // Anchor the first due dates to whatever history the user gave us.
+    // Scheduling from the stated date rather than from today is what makes
+    // "watered two days ago" mean something; clamping to today stops a long
+    // gap from opening an event in the past, which the catch-up rule would
+    // then have to unpick.
+    for (task, days_ago) in [
+        (TaskType::Water, plant.last_watered_days_ago),
+        (TaskType::Fertilize, plant.last_fertilized_days_ago),
+    ] {
+        // Negative would put the last watering in the future, which is
+        // nonsense; treat anything odd as "just done".
+        let last_done = days_ago.map(|d| today - chrono::Duration::days(d.max(0)));
+        let due = match last_done {
+            Some(done_on) => schedule::next_due_ctx(done_on, &profile, task, env.ctx()).max(today),
+            // No history: water is due now because an unwatered new arrival
+            // should be checked, and feeding waits a full cycle.
+            None => match task {
+                TaskType::Water => today,
+                TaskType::Fertilize => schedule::next_fertilize_due_ctx(today, &profile, env.ctx()),
+            },
+        };
+        events.push(new_pending_event(profile.id.clone(), task, due));
+
+        // Record the stated history as a completed event, so a plant added
+        // with a known last-watered date has the same shape of care log as
+        // one that has been watered through the app.
+        if let Some(done_on) = last_done {
+            events.push(CareEvent {
+                id: uuid::Uuid::new_v4().to_string(),
+                plant_id: profile.id.clone(),
+                task_type: task,
+                due_at: done_on,
+                status: EventStatus::Done,
+                completed_at: Some(done_on),
+                snoozed_until: None,
+                note: Some("recorded when the plant was added".to_string()),
+            });
+        }
+    }
 
     plants.push(profile.clone());
     store.save_plants(&plants).map_err(|e| e.to_string())?;

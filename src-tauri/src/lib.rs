@@ -70,6 +70,11 @@ pub fn run() {
             commands::is_autostart_enabled,
             commands::set_pinned_on_top,
             commands::set_active_space,
+            commands::log_care,
+            commands::list_todos,
+            commands::add_todo,
+            commands::toggle_todo,
+            commands::delete_todo,
         ])
         .setup(|app| {
             let app_data_dir = app.path().app_data_dir()?;
