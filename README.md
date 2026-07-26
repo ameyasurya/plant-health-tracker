@@ -1,9 +1,8 @@
 # Plant Health Tracker
 
-A desktop widget for Windows and macOS that helps you never miss watering or
-feeding again. It tracks watering and feeding, and adjusts the schedule to the
-season and to your local weather, so a week of rain doesn't have it nagging you
-to water.
+A Windows desktop widget that helps you never miss watering or feeding again. It
+tracks watering and feeding, and adjusts the schedule to the season and to
+your local weather, so a week of rain doesn't have it nagging you to water.
 
 ![Three copies of the widget on a desktop: one listing overdue plants with an unhappy mascot, one all-clear showing a plant fun fact, and one for a second space](docs/screenshot.png)
 
@@ -18,21 +17,13 @@ it's glanceable without reading a single row.
 
 ## Install
 
-Download the installer for your platform from [Releases](../../releases).
-
-**Windows.** Run the `.exe`. Windows will warn you the app is unsigned,
-showing "Windows protected your PC". That's expected: a code-signing
-certificate costs money and this is a free hobby project. Click **More
-info** then **Run anyway**.
-
-**macOS.** Open the `.dmg` and drag the app into Applications. The first
-launch is blocked because the app isn't notarised, which needs a paid Apple
-Developer account. Open **System Settings** then **Privacy & Security**,
-find the message naming the app, and click **Open Anyway**. You only do
-this once. The build is universal, so it runs on Apple Silicon and Intel.
-
-On first launch your plant list is empty. Press **+** to add plants, and
-open **Settings** to set your location.
+1. Download the latest `.exe` installer from
+   [Releases](../../releases) and run it.
+2. **Windows will warn you the app is unsigned**, showing "Windows protected your
+   PC". That's expected: a code-signing certificate costs money and this is
+   a free hobby project. Click **More info** → **Run anyway**.
+3. On first launch your plant list is empty. Press **+** to add plants, and
+   open **Settings** to set your location.
 
 Nothing is sent anywhere except the optional location and weather lookups
 described below.
@@ -89,17 +80,14 @@ making any network request on its own, and the schedule falls back to
 month-based seasons. The city search and "Detect" button still reach out
 when you actively use them.
 
-Data lives in `%APPDATA%\com.ameya.plant-health-tracker\` on Windows, and
-`~/Library/Application Support/com.ameya.plant-health-tracker/` on macOS, as
-`plants.json`, `care-log.json`, `spaces.json`, `settings.json` and
-`weather.json`.
+Data lives in `%APPDATA%\com.ameya.plant-health-tracker\` as `plants.json`,
+`care-log.json`, `spaces.json`, `settings.json` and `weather.json`.
 
 ## Building from source
 
-You need Rust and Node 18+, plus the Microsoft C++ Build Tools on Windows or
-the Xcode Command Line Tools on macOS:
+You need Rust, Node 18+ and the Microsoft C++ Build Tools:
 
-```sh
+```powershell
 npm install
 npm run tauri dev
 ```
@@ -109,11 +97,10 @@ tests, regenerating icons and cutting a release.
 
 ## Known gaps
 
-- **No Linux build.** Nothing in the app is deliberately Linux-hostile, but
-  it isn't built or tested there.
-- **The installers are unsigned**, so Windows SmartScreen warns on first
-  run and macOS needs an explicit "Open Anyway". A code-signing certificate
-  and Apple notarisation both cost money.
+- **Windows only.** Nothing is deliberately platform-locked apart from the
+  bundle targets and the autostart path, but it has only been built and run
+  on Windows.
+- **The installer is unsigned**, so SmartScreen warns on first run.
 - **Catalog care values are general guidance**, not a substitute for
   watching your own plants. A species entry is a sensible starting point;
   edit any plant if your conditions differ.

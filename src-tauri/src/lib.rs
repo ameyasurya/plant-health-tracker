@@ -132,8 +132,8 @@ pub fn run() {
 
                 // Minimize-to-tray: closing the window hides it instead of
                 // quitting the process, so the reminder engine keeps running.
-                // The taskbar (or Dock) button is the everyday way back; the
-                // tray is the way back after this hide, which removes it.
+                // The taskbar button is the everyday way back; the tray is the
+                // way back after this hide, which removes that button.
                 let window_handle = window.clone();
                 window.on_window_event(move |event| {
                     if let WindowEvent::CloseRequested { api, .. } = event {
