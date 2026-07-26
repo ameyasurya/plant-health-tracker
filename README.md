@@ -4,7 +4,10 @@ A small, frameless Windows desktop widget that keeps your plants alive. It
 tracks watering and feeding, and adjusts the schedule to the season and to
 your local weather — so a week of rain doesn't have it nagging you to water.
 
+<!-- Screenshot goes here. Save it as docs/screenshot.png and uncomment:
 ![The widget on the desktop](docs/screenshot.png)
+-->
+
 
 ## Why
 
