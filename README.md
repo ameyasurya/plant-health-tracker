@@ -150,9 +150,9 @@ catch-up, and atomic writes surviving a stray temp file.
 
 ## Known gaps
 
-- **Icons are placeholders.** `src-tauri/icons/` holds simple generated
-  icons; `tray-icon.png` is present but unreferenced, so the tray falls
-  back to the default window icon.
+- **The app icon is a placeholder** — a plain green ring rather than
+  anything plant-shaped. Cosmetic only; it appears in the Start menu,
+  taskbar and system tray.
 - **Windows only.** Nothing is deliberately platform-locked apart from the
   bundle targets and the autostart path, but it has only been built and run
   on Windows.
