@@ -27,8 +27,8 @@ it's glanceable without reading a single row.
 3. On first launch your plant list is empty. Press **+** to add plants, and
    open **Settings** to set your location.
 
-Nothing is sent anywhere except the weather lookups described below, and
-those are optional.
+Nothing is sent anywhere except the optional location and weather lookups
+described below.
 
 ## Features
 
@@ -64,18 +64,22 @@ those are optional.
 The app is offline-first. It has no account, no telemetry and no cloud
 sync; your data is plain JSON on your own machine.
 
-Two optional network calls exist, both free and keyless:
+Three network calls exist, all optional, and all free without an API key
+or account:
 
 | What | Service | When |
 |---|---|---|
+| Forecast | [Open-Meteo](https://open-meteo.com/) | Every ~6 hours, only if a location is set |
 | City search | [Open-Meteo geocoding](https://open-meteo.com/en/docs/geocoding-api) | Only while you type in the location search |
-| Forecast | [Open-Meteo](https://open-meteo.com/) | Every ~6 hours, if a location is set |
 | IP location | [ipwho.is](https://ipwho.is/) | **Only** when you press "Detect" |
 
-IP detection is never automatic — it sends your IP to a third party, so it
-sits behind an explicit button. Turning off *"Use weather to adjust
-watering"* in Settings stops all network activity entirely; the schedule
-then falls back to month-based seasons.
+IP detection is never automatic — it sends your IP address to a third
+party, so it sits behind a button you have to press.
+
+Turning off *"Use weather to adjust watering"* in Settings stops the app
+making any network request on its own, and the schedule falls back to
+month-based seasons. The city search and "Detect" button still reach out
+when you actively use them.
 
 Data lives in `%APPDATA%\com.ameya.plant-health-tracker\` as `plants.json`,
 `care-log.json`, `spaces.json`, `settings.json` and `weather.json`.
@@ -138,9 +142,9 @@ catch-up, and atomic writes surviving a stray temp file.
   on Windows.
 - **The installer is unsigned**, so SmartScreen warns on first run.
 - **Catalog care values are general guidance**, not a substitute for
-  watching your own plants. Two entries carried over from the original
-  inventory (Ixora's watering class, Indian Borage's light class) were
-  inferred and are flagged with a `*`.
+  watching your own plants. A species entry is a sensible starting point;
+  edit any plant if your conditions differ.
+- **No plant photos.** Rows and details are text only.
 
 ## Licence
 

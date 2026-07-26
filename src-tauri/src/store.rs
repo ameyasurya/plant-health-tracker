@@ -1,4 +1,5 @@
-//! Local JSON persistence for plants.json, care-log.json and settings.json.
+//! Local JSON persistence: plants.json, care-log.json, spaces.json,
+//! settings.json and weather.json.
 //!
 //! Every write goes through `write_atomic`: serialize to a sibling `.tmp`
 //! file, flush, then rename over the real file. Rename is atomic on both

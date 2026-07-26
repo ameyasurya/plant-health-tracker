@@ -111,9 +111,13 @@ pub fn soil_check_instruction(moisture: MoistureClass) -> &'static str {
 
 pub struct FertilizePlan {
     pub cadence_days: i64,
-    /// 1-indexed months (1 = January) this plant is fed. Outside this
-    /// window fertilizing is paused, per RHS/UF-IFAS guidance for
-    /// dormancy in Bengaluru's mild season.
+    /// 1-indexed months this plant is fed, in *northern* terms. Feeding
+    /// pauses outside the window, following general guidance that plants
+    /// should not be pushed to grow while dormant.
+    ///
+    /// Compared against the hemisphere-adjusted month rather than the raw
+    /// calendar month (see ScheduleContext::effective_month), so a plant
+    /// below the equator pauses over its own cool season, not January.
     pub active_months: &'static [u32],
     pub fertilizer_type: &'static str,
 }

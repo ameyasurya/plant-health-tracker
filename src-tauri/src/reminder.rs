@@ -1,10 +1,13 @@
 //! Background reminder engine.
 //!
 //! Fires ONE daily digest notification (e.g. "3 tasks due: Bougainvillea,
-//! Jasmine, Citrus") at the user's configured time, rather than a
-//! notification per plant/task -- per-task notifications would spam given
-//! up to 19 plants x 2 task types. Clicking the notification focuses the
-//! window, which already opens on the Due Today tab.
+//! Jasmine, Citrus") at the user's configured time, rather than one per
+//! plant/task -- with two task types per plant, a collection of any size
+//! would turn per-task notifications into spam. Clicking the notification
+//! focuses the window, which already opens on the Due Today tab.
+//!
+//! The digest time is interpreted in the user's configured local timezone
+//! (see time::now_local_time), falling back to the machine's own.
 //!
 //! Catch-up: if the app was closed for several days, overdue events keep
 //! their original due date (see commands::effective_due / the catch-up
