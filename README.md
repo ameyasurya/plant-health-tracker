@@ -4,7 +4,7 @@ A Windows desktop widget that helps you never miss watering or feeding again. It
 tracks watering and feeding, and adjusts the schedule to the season and to
 your local weather, so a week of rain doesn't have it nagging you to water.
 
-![Three widgets on a desktop: one listing overdue plants with a cross mascot, one all-clear with a smiling mascot, and one showing an undo confirmation](docs/screenshot.png)
+![Three copies of the widget on a desktop: one listing overdue plants with an unhappy mascot, one all-clear showing a plant fun fact, and one for a second space](docs/screenshot.png)
 
 
 ## Why
@@ -53,9 +53,10 @@ described below.
 - **Plant details** with uses, cultural background and a fun fact.
 - **All-clear state** that shows a fact about a plant you actually own,
   instead of an empty list.
-- Daily digest notification (one per day, not one per plant), tray icon,
-  pin-on-top, minimise-to-tray, single-instance guard, light/dark themes,
-  and a resizable window that stays usable down to two visible rows.
+- Daily digest notification (one per day, not one per plant), taskbar button
+  and tray icon, pin-on-top (also toggleable from the tray), hide-to-tray,
+  single-instance guard, light/dark themes, and a resizable window that stays
+  usable down to two visible rows.
 
 ## Privacy and network use
 

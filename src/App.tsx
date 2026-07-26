@@ -116,9 +116,16 @@ export default function App() {
 
     const unlistenMarkAll = listen("mark-all-viewed", () => refresh());
     const unlistenSettings = listen("open-settings", () => setOverlay({ kind: "settings" }));
+    // The tray has its own "Keep on top" toggle, which is the escape hatch
+    // when an unpinned widget is behind another window. Reflect it here so
+    // the pin button doesn't show a stale state.
+    const unlistenPin = listen<boolean>("pin-changed", (e) => {
+      setSettings((prev) => (prev ? { ...prev, pinned_on_top: e.payload } : prev));
+    });
     return () => {
       unlistenMarkAll.then((f) => f());
       unlistenSettings.then((f) => f());
+      unlistenPin.then((f) => f());
     };
   }, [refresh]);
 
@@ -179,10 +186,11 @@ export default function App() {
     await refresh();
   }
 
+  // The backend both persists this and applies it to the window, so the
+  // widget and the tray can't end up disagreeing about the current layer.
   async function handleTogglePin() {
     if (!settings) return;
     const pinned = !settings.pinned_on_top;
-    await appWindow.setAlwaysOnTop(pinned);
     await api.setPinnedOnTop(pinned);
     setSettings({ ...settings, pinned_on_top: pinned });
   }

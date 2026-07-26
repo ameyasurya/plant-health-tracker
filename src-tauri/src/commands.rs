@@ -687,12 +687,31 @@ fn apply_autostart(app: &tauri::AppHandle, enabled: bool) -> Result<(), String> 
 ///
 /// These exist so a click on the pin or a space change can't carry a whole
 /// stale Settings object with it and revert something else.
+/// Persists the pin state *and* applies it to the window.
+///
+/// Both halves live here so there is one place that decides what pinned and
+/// unpinned mean. The frontend used to call `setAlwaysOnTop` itself and then
+/// persist separately, which left two code paths able to disagree about the
+/// window's layer.
 #[tauri::command]
-pub fn set_pinned_on_top(state: tauri::State<AppState>, pinned: bool) -> Result<(), String> {
-    let store = state.store.lock().map_err(|e| e.to_string())?;
-    let mut settings = store.load_settings().map_err(|e| e.to_string())?;
-    settings.pinned_on_top = pinned;
-    store.save_settings(&settings).map_err(|e| e.to_string())
+pub fn set_pinned_on_top(
+    app: tauri::AppHandle,
+    state: tauri::State<AppState>,
+    pinned: bool,
+) -> Result<(), String> {
+    {
+        let store = state.store.lock().map_err(|e| e.to_string())?;
+        let mut settings = store.load_settings().map_err(|e| e.to_string())?;
+        settings.pinned_on_top = pinned;
+        store.save_settings(&settings).map_err(|e| e.to_string())?;
+    }
+
+    crate::PINNED_ON_TOP.store(pinned, std::sync::atomic::Ordering::Relaxed);
+    use tauri::Manager;
+    if let Some(window) = app.get_webview_window("main") {
+        let _ = window.set_always_on_top(pinned);
+    }
+    Ok(())
 }
 
 #[tauri::command]

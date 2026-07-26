@@ -7,15 +7,20 @@ pub mod store;
 pub mod time;
 pub mod weather;
 
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Mutex;
 
-use tauri::menu::{Menu, MenuItem};
+use tauri::menu::{CheckMenuItem, Menu, MenuItem};
 use tauri::tray::TrayIconBuilder;
 use tauri::{Emitter, Manager, WindowEvent};
 use tauri_plugin_autostart::MacosLauncher;
 
 use commands::AppState;
 use store::Store;
+
+/// Mirrors `Settings.pinned_on_top`, so the tray's "Keep on top" item can
+/// toggle without reading settings.json on every click.
+pub static PINNED_ON_TOP: AtomicBool = AtomicBool::new(true);
 
 pub fn run() {
     let mut builder = tauri::Builder::default();
@@ -118,13 +123,17 @@ pub fn run() {
                     let store = state.store.lock().expect("store lock");
                     store.load_settings().map(|s| s.pinned_on_top).unwrap_or(true)
                 };
+                PINNED_ON_TOP.store(pinned, Ordering::Relaxed);
                 let _ = window.set_always_on_top(pinned);
 
                 if launched_hidden {
                     window.hide()?;
                 }
+
                 // Minimize-to-tray: closing the window hides it instead of
                 // quitting the process, so the reminder engine keeps running.
+                // The taskbar button is the everyday way back; the tray is the
+                // way back after this hide, which removes that button.
                 let window_handle = window.clone();
                 window.on_window_event(move |event| {
                     if let WindowEvent::CloseRequested { api, .. } = event {
@@ -142,25 +151,69 @@ pub fn run() {
 }
 
 fn setup_tray(app: &tauri::App) -> tauri::Result<()> {
+    let pinned = {
+        let state = app.state::<AppState>();
+        let store = state.store.lock().expect("store lock");
+        store.load_settings().map(|s| s.pinned_on_top).unwrap_or(true)
+    };
+
+    // The pin button lives inside the widget's own title bar, so once the
+    // widget is unpinned and sitting behind a maximised window there is no way
+    // to reach it. This is the way back, and the only one.
+    let keep_on_top_i = CheckMenuItem::with_id(
+        app,
+        "keep_on_top",
+        "Keep on top",
+        true,
+        pinned,
+        None::<&str>,
+    )?;
     let show_i = MenuItem::with_id(app, "show", "Show widget", true, None::<&str>)?;
     let hide_i = MenuItem::with_id(app, "hide", "Hide widget", true, None::<&str>)?;
     let mark_all_i = MenuItem::with_id(app, "mark_all_viewed", "Mark all viewed", true, None::<&str>)?;
     let settings_i = MenuItem::with_id(app, "settings", "Settings", true, None::<&str>)?;
     let quit_i = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
-    let menu = Menu::with_items(app, &[&show_i, &hide_i, &mark_all_i, &settings_i, &quit_i])?;
+    let menu = Menu::with_items(
+        app,
+        &[&keep_on_top_i, &show_i, &hide_i, &mark_all_i, &settings_i, &quit_i],
+    )?;
 
     TrayIconBuilder::new()
         .icon(app.default_window_icon().cloned().expect("tray icon asset missing"))
         .menu(&menu)
         .show_menu_on_left_click(true)
-        .on_menu_event(|app, event| {
+        .on_menu_event(move |app, event| {
             let window = app.get_webview_window("main");
             match event.id().as_ref() {
+                "keep_on_top" => {
+                    let pinned = !PINNED_ON_TOP.load(Ordering::Relaxed);
+                    PINNED_ON_TOP.store(pinned, Ordering::Relaxed);
+                    let _ = keep_on_top_i.set_checked(pinned);
+
+                    if let Some(w) = &window {
+                        let _ = w.show();
+                        let _ = w.set_always_on_top(pinned);
+                        // Pinning is usually how someone retrieves a widget
+                        // they've lost behind something, so bring it forward.
+                        if pinned {
+                            let _ = w.unminimize();
+                            let _ = w.set_focus();
+                        }
+                    }
+
+                    let state = app.state::<AppState>();
+                    if let Ok(store) = state.store.lock() {
+                        if let Ok(mut settings) = store.load_settings() {
+                            settings.pinned_on_top = pinned;
+                            let _ = store.save_settings(&settings);
+                        }
+                    }
+                    // Keep the in-widget pin button in step with the tray.
+                    let _ = app.emit("pin-changed", pinned);
+                }
                 "show" => {
-                    // This is the recovery path when an unpinned widget has
-                    // been buried by another window, so it must raise as
-                    // well as unhide -- show() alone leaves it where it is
-                    // in the z-order.
+                    // Recovery path after the window has been hidden, when
+                    // there is no taskbar button to click.
                     if let Some(w) = &window {
                         let _ = w.unminimize();
                         let _ = w.show();
