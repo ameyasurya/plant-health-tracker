@@ -34,7 +34,7 @@
   },
   "plugins": {
     "updater": {
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IENDQzY4RTJDMjRFNDQ2RTUKUldUbFJ1UWtMSTdHeklVWG5mNllybGd0YWVlNDNJdmQyeG9HTmlNVjVrTHFZOEd3WUZsZnhEaFgK",
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEUyNjQ2MkI2OTgwRjREMTkKUldRWlRRK1l0bUprNG1uNFh0R0lhOG9RU0N4bTFMZzRXUEJNOFlWelhWbnpQeWg0STIwTGpob00K",
       "endpoints": [
         "https://github.com/ameyasurya/plant-health-tracker/releases/latest/download/latest.json"
       ]
