@@ -442,3 +442,81 @@ fn logging_long_overdue_care_never_schedules_into_the_past() {
         }
     }
 }
+
+/// Per-plant watering nudge (PlantProfile::water_interval_adjust).
+///
+/// Pot size, soil mix and exactly where a plant sits all change how fast it
+/// dries, and none of that is knowable from the species. The adjustment
+/// shifts the computed interval rather than replacing it, so seasonal and
+/// weather behaviour survive.
+#[test]
+fn watering_nudge_shifts_the_interval_by_exactly_that_many_days() {
+    let today = date(2026, 8, 10);
+    // Deliberately a drought-tolerant potted plant. Its base interval is long
+    // enough that a negative nudge does not run into the one-day floor, which
+    // would legitimately shorten the shift and is covered by the next test.
+    let base_plant = catalog::all()
+        .iter()
+        .map(|e| e.to_profile())
+        .find(|p| !p.is_hanging && matches!(p.moisture_class, plant_health_tracker_lib::models::MoistureClass::Drier))
+        .expect("catalog should contain a drought-tolerant potted plant");
+    let base_interval =
+        water_interval_days(base_plant.moisture_class, season_for_month(today.month()), base_plant.is_hanging);
+    let baseline = next_water_due(today, &base_plant);
+
+    for offset in [-2i64, -1, 1, 3, 14] {
+        assert!(base_interval + offset >= 1, "test setup: offset {offset} would hit the one-day floor");
+        let mut tuned = base_plant.clone();
+        tuned.water_interval_adjust = offset;
+        assert_eq!(
+            (next_water_due(today, &tuned) - baseline).num_days(),
+            offset,
+            "an adjustment of {offset} should move the next watering by exactly {offset} days"
+        );
+    }
+}
+
+/// A large negative nudge must not produce a plant that is due the moment it
+/// is watered, which would make the reminder fire forever.
+#[test]
+fn watering_nudge_never_drops_the_interval_below_a_day() {
+    let today = date(2026, 8, 10);
+    for plant in catalog::all().iter().map(|e| e.to_profile()) {
+        for offset in [-1i64, -5, -50, -1000] {
+            let mut tuned = plant.clone();
+            tuned.water_interval_adjust = offset;
+            assert!(
+                next_water_due(today, &tuned) > today,
+                "{} with adjustment {offset} became due immediately",
+                plant.id
+            );
+            // The skip path halves the interval and must stay sane too.
+            assert!(
+                skip_recheck_due(today, &tuned) > today,
+                "{} with adjustment {offset} would re-check in the past",
+                plant.id
+            );
+        }
+    }
+}
+
+/// The field defaults to 0, and every plant already on disk deserializes with
+/// that default, so existing schedules must be bit-for-bit unchanged.
+#[test]
+fn zero_watering_nudge_matches_the_previous_schedule_exactly() {
+    for month in 1..=12u32 {
+        let today = date(2026, month, 15);
+        for plant in catalog::all().iter().map(|e| e.to_profile()) {
+            assert_eq!(plant.water_interval_adjust, 0, "catalog profiles must not carry an adjustment");
+            let season = season_for_month(month);
+            let expected =
+                today + Duration::days(water_interval_days(plant.moisture_class, season, plant.is_hanging));
+            assert_eq!(
+                next_water_due(today, &plant),
+                expected,
+                "{} in month {month} drifted from the species schedule",
+                plant.id
+            );
+        }
+    }
+}

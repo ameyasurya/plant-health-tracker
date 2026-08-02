@@ -191,8 +191,10 @@ pub fn next_water_due_ctx(today: NaiveDate, plant: &PlantProfile, ctx: ScheduleC
     let base = water_interval_days(plant.moisture_class, season, plant.is_hanging);
     let adj = weather_adjustment(today, ctx.weather, WEATHER_LOOKBACK_DAYS);
     // Never below 1: even in a heatwave "water again today" would just
-    // re-fire the reminder that was completed moments ago.
-    let interval = (base + adj.extra_days).max(1);
+    // re-fire the reminder that was completed moments ago. The user's own
+    // adjustment is clamped by the same rule, so a large negative nudge
+    // cannot produce a plant that is permanently due.
+    let interval = (base + adj.extra_days + plant.water_interval_adjust).max(1);
     today + Duration::days(interval)
 }
 
@@ -257,7 +259,11 @@ pub fn skip_recheck_due(today: NaiveDate, plant: &PlantProfile) -> NaiveDate {
 
 pub fn skip_recheck_due_ctx(today: NaiveDate, plant: &PlantProfile, ctx: ScheduleContext) -> NaiveDate {
     let season = ctx.season(today);
-    let full_interval = water_interval_days(plant.moisture_class, season, plant.is_hanging);
+    // Apply the user's adjustment before halving, so a plant they have
+    // stretched to dry out longer also gets a proportionally later look,
+    // rather than snapping back to the species default on a skip.
+    let full_interval =
+        (water_interval_days(plant.moisture_class, season, plant.is_hanging) + plant.water_interval_adjust).max(1);
     let recheck = std::cmp::max(1, full_interval / 2);
     today + Duration::days(recheck)
 }

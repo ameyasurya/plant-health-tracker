@@ -45,6 +45,13 @@ described below.
 - **Feeding schedules** per plant group (flowering/fruiting, citrus,
   foliage, herb/succulent), with a dormancy window where feeding pauses
   over the cool months and resumes automatically.
+- **Tune the watering pace per plant.** Pot size, soil mix and exactly
+  where something sits all change how fast it dries, and no species table
+  knows that. Nudge a plant a few days either way and the seasonal and
+  weather adjustments still apply on top.
+- **Updates from inside the widget.** Settings has a **Check for updates**
+  button that downloads and installs a new version in place. It only runs
+  when you press it; nothing is checked or sent in the background.
 - **Log care you did off-schedule.** Fed a plant three weeks before it was
   due? Open it and say so, and the next feed is worked out from when you
   actually did it. Watering intervals are short enough that the reminder
@@ -71,13 +78,15 @@ described below.
   and tray icon, pin-on-top (also toggleable from the tray), hide-to-tray,
   single-instance guard, light/dark themes, and a resizable window that stays
   usable down to two visible rows.
+- **Comes back where you left it.** Starts with Windows if you want it to,
+  and reopens at the same position and size rather than in the tray.
 
 ## Privacy and network use
 
 The app is offline-first. It has no account, no telemetry and no cloud
 sync; your data is plain JSON on your own machine.
 
-Three network calls exist, all optional, and all free without an API key
+Four network calls exist, all optional, and all free without an API key
 or account:
 
 | What | Service | When |
@@ -85,6 +94,7 @@ or account:
 | Forecast | [Open-Meteo](https://open-meteo.com/) | Every ~6 hours, only if a location is set |
 | City search | [Open-Meteo geocoding](https://open-meteo.com/en/docs/geocoding-api) | Only while you type in the location search |
 | IP location | [ipwho.is](https://ipwho.is/) | **Only** when you press "Detect" |
+| Update check | This repo's releases | **Only** when you press "Check for updates" |
 
 IP detection is never automatic, because it sends your IP address to a third
 party, so it sits behind a button you have to press.

@@ -103,6 +103,15 @@ pub struct PlantProfile {
     /// One-line curiosity, surfaced in the all-clear empty state.
     #[serde(default)]
     pub fun_fact: String,
+    /// Days to add to (or subtract from) the computed watering interval for
+    /// this particular plant. 0 leaves the schedule exactly as it was.
+    ///
+    /// Pot size, soil mix and the precise spot a plant sits in all change
+    /// how fast it dries, and none of that is knowable from the species. This
+    /// nudges the result rather than replacing it, so the plant still gets
+    /// watered sooner in a heatwave and later after rain.
+    #[serde(default)]
+    pub water_interval_adjust: i64,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

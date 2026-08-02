@@ -1,7 +1,12 @@
 import { useEffect, useRef, useState } from "react";
+import { check, type Update } from "@tauri-apps/plugin-updater";
+import { relaunch } from "@tauri-apps/plugin-process";
+import { getVersion } from "@tauri-apps/api/app";
 import { Field, Panel } from "./Panel";
 import { api } from "../api";
 import type { Location, Settings } from "../types";
+
+type UpdateState = "idle" | "checking" | "uptodate" | "available" | "installing";
 
 interface Props {
   settings: Settings;
@@ -29,6 +34,42 @@ export function SettingsPanel({ settings, onClose, onSave }: Props) {
   useEffect(() => {
     api.isAutostartEnabled().then(setOsAutostart).catch(() => setOsAutostart(null));
   }, []);
+
+  const [updateState, setUpdateState] = useState<UpdateState>("idle");
+  const [update, setUpdate] = useState<Update | null>(null);
+  const [updateError, setUpdateError] = useState<string | null>(null);
+  const [appVersion, setAppVersion] = useState("");
+  useEffect(() => {
+    getVersion().then(setAppVersion).catch(() => setAppVersion(""));
+  }, []);
+
+  async function handleCheckUpdate() {
+    setUpdateState("checking");
+    setUpdateError(null);
+    try {
+      const found = await check();
+      setUpdate(found);
+      setUpdateState(found ? "available" : "uptodate");
+    } catch (e) {
+      // Offline, or GitHub unreachable. Not a failure worth alarming over,
+      // so it reports plainly and leaves the button usable.
+      setUpdateError(`Couldn't check for updates: ${e}`);
+      setUpdateState("idle");
+    }
+  }
+
+  async function handleInstall() {
+    if (!update) return;
+    setUpdateState("installing");
+    setUpdateError(null);
+    try {
+      await update.downloadAndInstall();
+      await relaunch();
+    } catch (e) {
+      setUpdateError(`Update failed: ${e}`);
+      setUpdateState("available");
+    }
+  }
 
   const timerRef = useRef<number | undefined>(undefined);
   useEffect(() => {
@@ -177,7 +218,7 @@ export function SettingsPanel({ settings, onClose, onSave }: Props) {
             checked={launchAtStartup}
             onChange={(e) => setLaunchAtStartup(e.target.checked)}
           />
-          <span>Start with Windows (hidden to tray)</span>
+          <span>Start with Windows</span>
         </label>
         {osAutostart !== null && osAutostart !== settings.launch_at_startup && (
           <div className="settings-note">
@@ -185,6 +226,32 @@ export function SettingsPanel({ settings, onClose, onSave }: Props) {
             your choice.
           </div>
         )}
+      </section>
+
+      {/* Checking is deliberately manual. The app makes no network request
+          on its own anywhere else, and starting one at launch just to look
+          for updates would quietly break that promise. */}
+      <section className="settings-section">
+        <h4>Updates</h4>
+        <div className="update-row">
+          <button onClick={handleCheckUpdate} disabled={updateState === "checking" || updateState === "installing"}>
+            {updateState === "checking" ? "Checking..." : "Check for updates"}
+          </button>
+          <span className="update-status">
+            {updateState === "uptodate" && `You're on the latest version (${appVersion}).`}
+            {updateState === "available" && update && `Version ${update.version} is available.`}
+            {updateState === "installing" && "Downloading and installing..."}
+          </span>
+        </div>
+        {updateState === "available" && update && (
+          <div className="update-detail">
+            {update.body && <p className="update-notes">{update.body}</p>}
+            <button className="btn-primary" onClick={handleInstall}>
+              Install and restart
+            </button>
+          </div>
+        )}
+        {updateError && <div className="settings-note update-error">{updateError}</div>}
       </section>
 
       {error && <div className="panel-error">{error}</div>}

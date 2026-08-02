@@ -117,5 +117,26 @@ Pushing a `v*` tag runs `.github/workflows/release.yml`, which type-checks,
 runs the tests, builds the installer and attaches it to a **draft** release.
 Publishing it is a manual step on GitHub.
 
+### Updater signing
+
+The in-app updater needs each installer signed with a minisign key, which is
+unrelated to Windows code signing and costs nothing. Two repository secrets
+drive it:
+
+- `TAURI_SIGNING_PRIVATE_KEY` — the **contents** of the private key file, not
+  a path. Tauri ignores `TAURI_SIGNING_PRIVATE_KEY_PATH` here and fails the
+  build with "a public key has been found, but no private key".
+- `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` — empty for the current key.
+
+The matching public key is committed in `tauri.conf.json` under
+`plugins.updater.pubkey`, and is baked into every build. **Losing the private
+key permanently cuts off every installed copy from updates**, because a new
+keypair will never match the public key already shipped. Regenerate with
+`npm run tauri signer generate` only if you accept that.
+
+Note this Tauri version signs the NSIS `setup.exe` directly and writes a
+sibling `.sig`. It does not produce the `.nsis.zip` the v1 updater used, so
+`latest.json` points at the `.exe`.
+
 The installer is unsigned, so Windows SmartScreen warns on first run. A
 code-signing certificate is the only fix and costs money.

@@ -573,6 +573,9 @@ pub fn add_plant(state: tauri::State<AppState>, plant: NewPlant) -> Result<Plant
         uses: known.map(|k| k.uses.clone()).unwrap_or_default(),
         significance: known.map(|k| k.significance.clone()).unwrap_or_default(),
         fun_fact: known.map(|k| k.fun_fact.clone()).unwrap_or_default(),
+        // Tuned later from the edit panel, once the owner has seen how this
+        // particular pot actually behaves.
+        water_interval_adjust: 0,
     };
 
     let env = Env::load(&store)?;

@@ -884,6 +884,58 @@ textarea {
   font-weight: 500;
 }
 
+/* ---- Update check --------------------------------------------------- */
+.update-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.update-status {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.update-detail {
+  margin-top: 8px;
+}
+.update-notes {
+  margin: 0 0 8px;
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+}
+.update-error {
+  color: var(--text-danger);
+}
+
+/* ---- Watering pace stepper ----------------------------------------- */
+.pace-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pace-step {
+  flex: 0 0 26px;
+  height: 26px;
+  padding: 0;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+.pace-step:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.pace-value {
+  flex: 1 1 auto;
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--text-secondary);
+}
+
 /* ---- "Already done it?" logging ------------------------------------ */
 .logcare-row {
   display: flex;

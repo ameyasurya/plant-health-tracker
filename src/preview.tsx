@@ -310,6 +310,7 @@ mockIPC((cmd, payload) => {
         uses: "Ornamental foliage and a bit of greenery for a small balcony.",
         significance: "Stand-in text so the details panel can be styled without the Rust backend.",
         fun_fact: FACTS[plant.id] ?? "This one has no fun fact recorded yet.",
+        water_interval_adjust: 0,
       };
       return profile;
     }
@@ -377,6 +378,14 @@ mockIPC((cmd, payload) => {
           m.scientific_name.toLowerCase().includes(q),
       );
     }
+    // The updater talks to GitHub and the real filesystem, neither of which
+    // belongs in a browser preview. Report "no update" so the Settings panel
+    // can still be laid out and its up-to-date state checked.
+    case "plugin:updater|check":
+      return null;
+    case "plugin:app|version":
+      return "0.0.0-preview";
+
     default:
       if (cmd.startsWith("plugin:window|") || cmd.startsWith("plugin:event|")) {
         return undefined;

@@ -14,6 +14,7 @@ use tauri::menu::{CheckMenuItem, Menu, MenuItem};
 use tauri::tray::TrayIconBuilder;
 use tauri::{Emitter, Manager, WindowEvent};
 use tauri_plugin_autostart::MacosLauncher;
+use tauri_plugin_window_state::StateFlags;
 
 use commands::AppState;
 use store::Store;
@@ -41,10 +42,23 @@ pub fn run() {
 
     builder
         .plugin(tauri_plugin_notification::init())
-        .plugin(tauri_plugin_autostart::init(
-            MacosLauncher::LaunchAgent,
-            Some(vec!["--hidden".into()]),
-        ))
+        // Restores where the user left the window. Deliberately limited to
+        // geometry: the default flags also restore visibility, decorations
+        // and maximized state, which would fight the frameless transparent
+        // config and the always-on-top handling in setup() below -- and
+        // restoring VISIBLE would reintroduce the "widget didn't come back
+        // after a reboot" bug this is here to fix.
+        .plugin(
+            tauri_plugin_window_state::Builder::default()
+                .with_state_flags(StateFlags::SIZE | StateFlags::POSITION)
+                .build(),
+        )
+        .plugin(tauri_plugin_updater::Builder::new().build())
+        .plugin(tauri_plugin_process::init())
+        // No launch arguments: the widget always starts visible. It used to
+        // pass --hidden, which meant every boot left it in the tray with the
+        // user having to click "Show widget" to get it back.
+        .plugin(tauri_plugin_autostart::init(MacosLauncher::LaunchAgent, None))
         .invoke_handler(tauri::generate_handler![
             commands::list_due_today,
             commands::list_soon,
@@ -116,7 +130,6 @@ pub fn run() {
                 };
             }
 
-            let launched_hidden = std::env::args().any(|arg| arg == "--hidden");
             if let Some(window) = app.get_webview_window("main") {
                 // Apply the saved pin state here rather than from the
                 // frontend: the webview loading is not a precondition for
@@ -130,10 +143,6 @@ pub fn run() {
                 };
                 PINNED_ON_TOP.store(pinned, Ordering::Relaxed);
                 let _ = window.set_always_on_top(pinned);
-
-                if launched_hidden {
-                    window.hide()?;
-                }
 
                 // Minimize-to-tray: closing the window hides it instead of
                 // quitting the process, so the reminder engine keeps running.

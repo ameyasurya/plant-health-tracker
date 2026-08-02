@@ -56,6 +56,9 @@ impl CatalogEntry {
             uses: self.uses.clone(),
             significance: self.significance.clone(),
             fun_fact: self.fun_fact.clone(),
+            // Species defaults carry no per-pot adjustment; that is something
+            // the owner discovers about their own plant and sets later.
+            water_interval_adjust: 0,
         }
     }
 }

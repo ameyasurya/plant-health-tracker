@@ -84,6 +84,9 @@ export interface PlantProfile {
   uses: string;
   significance: string;
   fun_fact: string;
+  /** Days added to (or taken off) the computed watering interval for this
+   *  plant. 0 means the schedule is untouched. */
+  water_interval_adjust: number;
 }
 
 export interface NewPlant {
